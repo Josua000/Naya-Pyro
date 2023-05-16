@@ -7,8 +7,10 @@
 
 
 import asyncio
+
 from pyrogram import Client, filters
 from pyrogram.types import Message
+
 from . import *
 
 
@@ -60,12 +62,12 @@ async def jwbsalamlngkp(client: Client, message: Message):
     )
 
 
-
 @bots.on_message(filters.command("as", cmd) & filters.me)
 async def salamarab(client: Client, message: Message):
     xx = await edit_or_reply(message, "Salam Dulu Gua..")
     await asyncio.sleep(2)
     await xx.edit("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ")
+
 
 __MODULE__ = "salam"
 __HELP__ = f"""
@@ -86,4 +88,3 @@ __HELP__ = f"""
 ๏ Perintah: <code>{cmd}as</code>
 ◉ Penjelasan: Coba sendiri.
 """
-

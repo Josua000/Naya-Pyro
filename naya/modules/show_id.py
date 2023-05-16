@@ -20,9 +20,7 @@ async def showid(client, message):
         )
     elif chat_type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         _id = ""
-        _id += (
-            f"💬 <b>ID {message.chat.title}:</b> <code>{message.chat.id}</code>\n"
-        )
+        _id += f"💬 <b>ID {message.chat.title}:</b> <code>{message.chat.id}</code>\n"
         if message.reply_to_message:
             _id += (
                 f"👤 <b> ID {message.reply_to_message.from_user.first_name} Adalah:</b> "

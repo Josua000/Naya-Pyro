@@ -9,7 +9,9 @@ import asyncio
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
+
 from . import *
+
 
 @bots.on_message(filters.me & filters.group & filters.command("jamet", cmd))
 async def ngejamet(client: Client, message: Message):
@@ -108,9 +110,7 @@ async def toxicso(client: Client, message: Message):
 async def toxicnb(client: Client, message: Message):
     user_id = await extract_user(message)
     if message.chat.id in BL_GCAST:
-        return await eor(
-            message, "**Perintah ini Dilarang digunakan di Group ini**"
-        )
+        return await eor(message, "**Perintah ini Dilarang digunakan di Group ini**")
     if user_id in DEVS:
         return await eor(
             message, "**Perintah ini Dilarang digunakan Kepada Developer Saya**"
@@ -282,9 +282,7 @@ async def toxicdih(client: Client, message: Message):
 async def toxicgcs(client: Client, message: Message):
     user_id = await extract_user(message)
     if message.chat.id in BL_GCAST:
-        return await eor(
-            message, "**Perintah ini Dilarang digunakan di Group ini**"
-        )
+        return await eor(message, "**Perintah ini Dilarang digunakan di Group ini**")
     if user_id in DEVS:
         return await eor(
             message, "**Perintah ini Dilarang digunakan Kepada Developer Saya**"
@@ -340,8 +338,6 @@ async def toxicvirtual(client: Client, message: Message):
     await xx.edit("**BHAHAHAHA**")
     await asyncio.sleep(1.5)
     await xx.edit("**KASIAN MANA MASIH MUDA**")
-
-
 
 
 __MODULE__ = "toxic"

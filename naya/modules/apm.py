@@ -89,7 +89,7 @@ async def allow(client, message):
     async for message in client.search_messages(
         chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
     ):
-    	await message.delete()
+        await message.delete()
     USERS_AND_WARNS.update({chat_id: 0})
 
 

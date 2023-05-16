@@ -164,13 +164,15 @@ async def pin_message(client: Client, message):
     r = message.reply_to_message
     if message.command[0][0] == "u":
         await r.unpin()
-        return await eor(message, 
+        return await eor(
+            message,
             f"**Unpinned [this]({r.link}) message.**",
             disable_web_page_preview=True,
         )
     try:
         await r.pin(disable_notification=True)
-        await eor(message, 
+        await eor(
+            message,
             f"**Pinned [this]({r.link}) message.**",
             disable_web_page_preview=True,
         )
