@@ -20,8 +20,10 @@ from pyrogram.types import Message
 
 from . import *
 
-__MODULE__ = "Vctools"
+__MODULE__ = "vctools"
 __HELP__ = f"""
+✘ Bantuan Untuk Voice Chat
+
 ๏ Perintah: <code>{cmd}startvc</code>
 ◉ Penjelasan: Untuk memulai voice chat grup.
 
