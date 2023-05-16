@@ -12,8 +12,10 @@ DOWN_PATH = "dowloads/"
 
 IMG_PATH = DOWN_PATH + "naya.jpg"
 
-__MODULE__ = "Rmbg"
+__MODULE__ = "rmbg"
 __HELP__ = f"""
+✘ Bantuan Untuk RemoveBG
+
 ๏ Perintah: <code>{cmd}rmbg</code> [reply to photo]
 ◉ Penjelasan: Untuk menghapus background dari foto.
 """

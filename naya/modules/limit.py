@@ -24,8 +24,10 @@ async def _(client, message):
     return await client.invoke(DeleteHistory(peer=bot_info, max_id=0, revoke=True))
 
 
-__MODULE__ = "Limit"
+__MODULE__ = "limit"
 __HELP__ = f"""
+✘ Bantuan Untuk Limited
+
 ๏ Perintah: <code>{cmd}limit</code>
 ◉ Penjelasan: Untuk mengecek akun anda terbatas atau tidak.
 """

@@ -6,8 +6,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Webshot"
+__MODULE__ = "webshot"
 __HELP__ = f"""
+✘ Bantuan Untuk Webshot
+
 ๏ Perintah: <code>{cmd}ss or webss</code> [link]
 ◉ Penjelasan: Untuk mendapatkan screenshot dari link tersebut.
 """

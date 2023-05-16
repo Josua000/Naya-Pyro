@@ -325,8 +325,10 @@ async def leave_vc_test(client, message):
     del GPC[(message.chat.id, client.me.id)]
 
 
-__MODULE__ = "Music"
+__MODULE__ = "music"
 __HELP__ = f"""
+✘ Bantuan Untuk Music
+
 ๏ Perintah: <code>{cmd}skip</code>
 ◉ Penjelasan: Untuk melewati trek.
 

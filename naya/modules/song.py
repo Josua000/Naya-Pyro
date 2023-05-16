@@ -23,8 +23,10 @@ from yt_dlp import YoutubeDL
 
 from . import *
 
-__MODULE__ = "Youtube"
+__MODULE__ = "youtube"
 __HELP__ = f"""
+✘ Bantuan Untuk Youtube
+
 ๏ Perintah: <code>{cmd}song</code> [judul]
 ◉ Penjelasan: Untuk mendownload lagu dari youtube.
 

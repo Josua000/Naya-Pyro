@@ -8,8 +8,10 @@ from pyrogram.raw.functions.messages import DeleteHistory
 
 from . import *
 
-__MODULE__ = "Convert"
+__MODULE__ = "convert"
 __HELP__ = f"""
+✘ Bantuan Untuk Convert
+
 ๏ Perintah: <code>{cmd}toaudio</code> [reply to video]
 ◉ Penjelasan: Untuk merubah video menjadi audio mp3.
            
@@ -89,22 +91,22 @@ async def _(client, message):
 @bots.on_message(filters.me & filters.command("toaudio", cmd))
 async def _(client, message):
     replied = message.reply_to_message
-    Tm = await eor(message, "<b>Tunggu sebentar</b>")
+    Tm = await eor(message, "<code>Processing...</code>")
     if not replied:
-        await Tm.edit("<b>Mohon Balas Ke Video</b>")
+        await Tm.edit("<code>Mohon Balas Ke Video</code>")
         return
     if replied.media == MessageMediaType.VIDEO:
-        await Tm.edit("<b>Downloading Video . . .</b>")
+        await Tm.edit("<code>Converting . . .</code>")
         file = await client.download_media(
             message=replied,
-            file_name="logs/",
+            file_name="naya/resources/",
         )
         out_file = file + ".mp3"
         try:
-            await Tm.edit("<b>Mencoba Ekstrak Audio. . .</b>")
+            await Tm.edit("<code>Processing. . .</code>")
             cmd = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
             await run_cmd(cmd)
-            await Tm.edit("<b>Uploading Audio . . .</b>")
+            await Tm.edit("<code>Uploading . . .</code>")
             await client.send_audio(
                 message.chat.id,
                 audio=out_file,
@@ -112,7 +114,7 @@ async def _(client, message):
             )
             await Tm.delete()
         except BaseException as e:
-            await Tm.edit(f"<b>INFO:</b> {e}")
+            await Tm.edit(f"<code>INFO:</code> {e}")
     else:
-        await Tm.edit("<b>Mohon Balas Ke Video</b>")
+        await Tm.edit("<code>Mohon Balas Ke Video</code>")
         return

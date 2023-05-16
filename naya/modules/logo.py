@@ -8,8 +8,10 @@ from pyrogram import enums, filters
 
 from naya import *
 
-__MODULE__ = "Logo"
+__MODULE__ = "logo"
 __HELP__ = f"""
+✘ Bantuan Untuk Logo
+
 ๏ Perintah: <code>{cmd}logo</code> [text]
 ◉ Penjelasan: Untuk membuat sebuah logo dengan background random .
 """

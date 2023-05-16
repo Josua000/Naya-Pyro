@@ -157,8 +157,10 @@ async def url_detector(client, message):
                 )
 
 
-__MODULE__ = "Locks"
+__MODULE__ = "locks"
 __HELP__ = f"""
+✘ Bantuan Untuk Locks
+
 ๏ Perintah: <code>{cmd}lock or unlock</code> [query]
 ◉ Penjelasan: Untuk mengunci atau membuka izin grup.
 

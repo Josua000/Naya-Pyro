@@ -15,8 +15,10 @@ from pyrogram import __version__
 
 from . import *
 
-__MODULE__ = "System"
+__MODULE__ = "system"
 __HELP__ = f"""
+✘ Bantuan Untuk System
+
 ๏ Perintah: <code>{cmd}spc</code>
 ◉ Penjelasan: Melihat statistik sistem.
 

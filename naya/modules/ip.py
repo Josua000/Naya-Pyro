@@ -158,8 +158,10 @@ async def whois_domain_target(client, message):
         await ran.edit(f"Error: {str(e)}")
 
 
-__MODULE__ = "IPSearch"
+__MODULE__ = "ipsearch"
 __HELP__ = f"""
+✘ Bantuan Untuk IP Search
+
 ๏ Perintah: <code>{cmd}ip</code> [ip host]
 ◉ Penjelasan: Untuk mencari lokasi ip addres.
 

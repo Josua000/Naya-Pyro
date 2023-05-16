@@ -6,8 +6,10 @@ from pyrogram.types import *
 
 from . import *
 
-__MODULE__ = "Broadcast"
+__MODULE__ = "broadcast"
 __HELP__ = f"""
+✘ Bantuan Untuk Broadcast
+
 ๏ Perintah: <code>{cmd}gucast</code> [text/reply to text/media]
 ◉ Penjelasan: Untuk mengirim pesan ke semua user 
            

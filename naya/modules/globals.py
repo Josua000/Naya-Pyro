@@ -20,7 +20,6 @@ from . import *
 @bots.on_message(filters.command(["gban", "ungban"], cmd) & filters.me)
 async def _(client, message):
     user_id = await extract_user(message)
-    nay = await message.reply("<b>Processing...</b>")
     try:
         user = await client.get_users(user_id)
     except Exception as error:
@@ -41,6 +40,7 @@ async def _(client, message):
                 ChatType.CHANNEL,
             ]:
                 chat_id = dialog.chat.id
+                nay = await message.reply("<b>Processing...</b>")
                 if not mmk:
                     return await nay.edit("<b>User tidak ditemukan</b>")
                 elif mmk == client.me.id:
@@ -130,8 +130,10 @@ async def _(client, message):
         )
 
 
-__MODULE__ = "Globals"
+__MODULE__ = "global"
 __HELP__ = f"""
+✘ Bantuan Untuk Global
+
 ๏ Perintah: <code>{cmd}gban</code> [balas pesan atau berikan username]
 ◉ Penjelasan: Untuk melakukan global blokir pengguna.
 

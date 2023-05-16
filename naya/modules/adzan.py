@@ -5,8 +5,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Adzan"
+__MODULE__ = "adzan"
 __HELP__ = f"""
+✘ Bantuan Untuk Adzan
+
 ๏ Perintah: <code>{cmd}adzan</code> [nama kota]
 ◉ Penjelasan: Untuk mengetahui jadwal adzan di lokasi anda.
 """

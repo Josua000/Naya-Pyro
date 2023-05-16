@@ -54,46 +54,30 @@ async def adminlist(client, message):
     for x in creator:
         teks += "• {}\n\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+            await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
     teks += "\n**{} Admin**\n".format(len(admin))
     for x in admin:
         teks += "• {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+            await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
     teks += "\n**{} Bot Admin**\n".format(len(badmin))
     for x in badmin:
         teks += "• {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+            await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
     teks += "\n**Total {} Admins**".format(totaladmins)
     if toolong:
-        await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+        await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
     else:
-        await message.reply(teks)
+        await eor(message, teks)
 
 
-@bots.on_message(filters.me & filters.command(["zombies"], cmd))
-async def kickdel_cmd(client: Client, message: Message):
-    kk = await message.reply("<b>Membersihkan akun depresi...</b>")
-    try:
-        values = [
-            await message.chat.ban_member(
-                member.user.id, datetime.now() + timedelta(seconds=31)
-            )
-            async for member in client.get_chat_members(message.chat.id)
-            if member.user.is_deleted
-        ]
-    except Exception as e:
-        return await message.edit(format_exc(e))
-    await asyncio.sleep(0.1)
-    await kk.delete()
-    await message.edit(f"<b>Berhasil ditendang {len(values)} akun depresi (s)</b>")
 
 
 @bots.on_message(filters.me & filters.command(["report"], cmd))
@@ -173,11 +157,13 @@ async def get_list_bots(client: Client, message: Message):
     if replyid:
         await client.send_message(message.chat.id, teks, reply_to_message_id=replyid)
     else:
-        await message.reply(teks)
+        await eor(message, teks)
 
 
-__MODULE__ = "Misc"
+__MODULE__ = "chats"
 __HELP__ = f"""
+✘ Bantuan Untuk Chat
+
 ๏ Perintah: <code>{cmd}admins</code>
 ◉ Penjelasan: Untuk melihat daftar admin.
 
@@ -186,7 +172,4 @@ __HELP__ = f"""
 
 ๏ Perintah: <code>{cmd}report</code> [balas pesan]
 ◉ Penjelasan: Untuk melaporkan pesan ke admin.
-
-๏ Perintah: <code>{cmd}zombies</code>
-◉ Penjelasan: Untuk membersihkan akun terhapus.
 """

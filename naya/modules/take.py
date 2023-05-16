@@ -48,8 +48,10 @@ async def _(client, message):
     )
 
 
-__MODULE__ = "Take"
+__MODULE__ = "spesial"
 __HELP__ = f"""
+✘ Bantuan Untuk Spesial
+
 ๏ Perintah: <code>{cmd}take</code> [foto/video][jumlah][username grup(contoh : kynansupport)]
 ◉ Penjelasan: Mengambil Pesan Dari Grup/Channel.
 """

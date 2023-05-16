@@ -83,8 +83,10 @@ __Pasangan baru dipilih {tomorrow}__"""
         await message.reply_text(e)
 
 
-__MODULE__ = "Couple"
+__MODULE__ = "couple"
 __HELP__ = f"""
+✘ Bantuan Untuk Couple
+
 ๏ Perintah: <code>{cmd}couple</code>
 ◉ Penjelasan: Melihat pasangan dalam grup.
 """

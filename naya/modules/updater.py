@@ -321,8 +321,10 @@ async def _(client, message):
         exit()
 
 
-__MODULE__ = "Updater"
+__MODULE__ = "updater"
 __HELP__ = f"""
+✘ Bantuan Untuk Updater
+
 Perintah: <code>{cmd}cekupdate</code>
 Penjelasan: Untuk mengetahui apa yang baru.
 

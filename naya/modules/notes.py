@@ -73,8 +73,10 @@ async def get_notes(client, message):
     await message.reply(msg)
 
 
-__MODULE__ = "Notes"
+__MODULE__ = "notes"
 __HELP__ = f"""
+✘ Bantuan Untuk Notes
+
 ๏ Perintah: <code>{cmd}save</code> [nama catatan] [balas pesan]
 ◉ Penjelasan: Untuk menyimpan catatan.
 

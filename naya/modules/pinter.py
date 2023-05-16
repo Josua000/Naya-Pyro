@@ -5,8 +5,10 @@ from pyrogram.raw.functions.messages import DeleteHistory
 
 from . import *
 
-__MODULE__ = "Pinterest"
+__MODULE__ = "pinterest"
 __HELP__ = f"""
+✘ Bantuan Untuk Pinterest
+
 ๏ Perintah: <code>{cmd}pinter</code> [link]
 ◉ Penjelasan: Untuk mengunduh media dari pinterest.
 """

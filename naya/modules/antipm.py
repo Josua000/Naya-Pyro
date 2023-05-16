@@ -49,8 +49,10 @@ async def setpmmsg(client, message):
     await eor(message, f"<b>Berhasil mengatur pesan AntiPM</b> ke <code>{naya}</code>")
 
 
-__MODULE__ = "Anti PM"
+__MODULE__ = "antipm"
 __HELP__ = f"""
+✘ Bantuan Untuk AntiPM
+
 ๏ Perintah: <code>{cmd}antipm</code> [on atau off]
 ◉ Penjelasan: Untuk menghidupkan atau mematikan antipm
 

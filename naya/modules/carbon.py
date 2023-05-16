@@ -34,8 +34,8 @@ async def carbon_func(client, message):
     if message.reply_to_message:
         text = message.reply_to_message.text or message.reply_to_message.caption
     if not text:
-        return await message.delete()
-    ex = await message.reply("`Processing . . .`")
+        return await eor(message, "`Berikan saya teks...`")
+    ex = await eor(message, "`Processing . . .`")
     carbon = await make_carbon(text)
     await ex.edit("`Uploading . . .`")
     await asyncio.gather(
@@ -50,8 +50,10 @@ async def carbon_func(client, message):
     carbon.close()
 
 
-__MODULE__ = "Carbon"
+__MODULE__ = "carbon"
 __HELP__ = f"""
+✘ Bantuan Untuk Carbon
+
 ๏ Perintah: <code>{cmd}carbon</code> [balas pesan]
 ◉ Penjelasan: Untuk membuat teks menjadi carbonara.
 """

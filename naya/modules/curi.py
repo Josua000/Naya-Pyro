@@ -6,9 +6,11 @@ from pyrogram.types import *
 
 from . import *
 
-__MODULE__ = "Curi"
+__MODULE__ = "curi"
 
 __HELP__ = f"""
+✘ Bantuan Untuk Curi
+
 ๏ Perintah: <code>{cmd}curi</code> [balas ke pesan]
 ◉ Penjelasan: Untuk mengambil pap timer, cek pesan tersimpan.
 """
@@ -17,36 +19,37 @@ __HELP__ = f"""
 @bots.on_message(filters.command(["curi"], cmd) & filters.me)
 async def pencuri(client, message):
     dia = message.reply_to_message
+    me = await get_botlog(user_id)
     if not dia:
         await eor(message, "`Mohon balas ke media.`")
     anjing = dia.caption or None
     await eor(message, "`Processing...`")
     if dia.text:
-        await dia.copy("me")
+        await dia.copy(me)
         await message.delete()
     if dia.photo:
         anu = await client.download_media(dia)
-        await client.send_photo("me", anu, anjing)
+        await client.send_photo(me, anu, anjing)
         await message.delete()
         os.remove(anu)
     if dia.video:
         anu = await client.download_media(dia)
-        await client.send_video("me", anu, anjing)
+        await client.send_video(me, anu, anjing)
         await message.delete()
         os.remove(anu)
     if dia.audio:
         anu = await client.download_media(dia)
-        await client.send_audio("me", anu, anjing)
+        await client.send_audio(me, anu, anjing)
         await message.delete()
         os.remove(anu)
     if dia.voice:
         anu = await client.download_media(dia)
-        await client.send_voice("me", anu, anjing)
+        await client.send_voice(me, anu, anjing)
         await message.delete()
         os.remove(anu)
     if dia.document:
         anu = await client.download_media(dia)
-        await client.send_document("me", anu, anjing)
+        await client.send_document(me, anu, anjing)
         await message.delete()
         os.remove(anu)
     else:

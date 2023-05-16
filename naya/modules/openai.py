@@ -2,8 +2,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "OpenAI"
+__MODULE__ = "openai"
 __HELP__ = f"""
+✘ Bantuan Untuk OpenAI
+
 ๏ Perintah: <code>{cmd}ai</code> [query]
 ◉ Penjelasan: Untuk mengajukan pertanyaan ke AI
 

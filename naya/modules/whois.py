@@ -6,13 +6,21 @@ from pyrogram.enums import ChatType
 
 from . import *
 
-__MODULE__ = "Info"
+__MODULE__ = "info"
 __HELP__ = f"""
+✘ Bantuan Untuk Info
+
 ๏ Perintah: <code>{cmd}info</code> [user_id/username/reply to users]
 ◉ Penjelasan: Untuk mendapatkan info pengguna telegram dengan deskripsi lengkap.
 
 ๏ Perintah: <code>{cmd}cinfo</code> [chat_id/username/reply to chat]
 ◉ Penjelasan: Untuk mendapatkan info group/channel dengan deskripsi lengkap.
+
+๏ Perintah: <code>{cmd}id</code>
+◉ Penjelasan: Untuk mengetahui ID dari user/grup/channel.
+
+๏ Perintah: <code>{cmd}id</code> [reply to user/media]
+◉ Penjelasan: Untuk mengetahui ID dari user/media.
 """
 
 

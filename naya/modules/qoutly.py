@@ -285,8 +285,10 @@ async def msg_quotly_cmd(self: Client, ctx: Message):
         return await eor(ctx, f"<code>Error : {e}</code>")
 
 
-__MODULE__ = "Quotly"
+__MODULE__ = "quote"
 __HELP__ = f"""
+✘ Bantuan Untuk Quote
+
 ๏ Perintah: <code>{cmd}q</code> [balas pesan]
 ◉ Penjelasan: Untuk quote.
 

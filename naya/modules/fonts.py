@@ -11,8 +11,10 @@ from pyrogram.types import *
 
 from . import *
 
-__MODULE__ = "Fonts"
+__MODULE__ = "fonts"
 __HELP__ = f"""
+✘ Bantuan Untuk Fonts
+
 ๏ Perintah: <code>{cmd}font</code> [nama font] [balas ke pesan]
 ◉ Penjelasan: Untuk membuat kata dengan font.
            

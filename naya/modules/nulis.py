@@ -25,8 +25,10 @@ async def handwrite(client, message):
     await nan.delete()
 
 
-__MODULE__ = "Nulis"
+__MODULE__ = "nulis"
 __HELP__ = f"""
+✘ Bantuan Untuk Nulis
+
 ๏ Perintah: <code>{cmd}nulis</code> [balas pesan atau berikan]
 ◉ Penjelasan: Untuk anda yang malas nulis.
 """

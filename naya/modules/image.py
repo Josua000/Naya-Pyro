@@ -69,8 +69,10 @@ async def generate_sketch(c: Client, m: Message):
         os.remove(sketch_path)
 
 
-__MODULE__ = "Image"
+__MODULE__ = "image"
 __HELP__ = f"""
+✘ Bantuan Untuk Image
+
 ๏ Perintah: <code>{cmd}pcil or sketch</code>
 ◉ Penjelasan: Membuat gambar hitam putih.
 

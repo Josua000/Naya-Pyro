@@ -85,10 +85,11 @@ async def allow(client, message):
         message,
         f"<b>Disetujui untuk mengirim pesan</b>",
     )
+    await message.delete()
     async for message in client.search_messages(
         chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
     ):
-        await message.delete()
+    	await message.delete()
     USERS_AND_WARNS.update({chat_id: 0})
 
 
@@ -125,7 +126,7 @@ async def reply_pm(client, message):
             await set.allow_user(chat_id)
             await client.send_message(
                 chat_id,
-                f"<b>Menerima Pesan!!!</b>\n{biji} <b>Terdeteksi Developer SkyProject Ubot.</b>",
+                f"<b>Menerima Pesan!!!</b>\n{biji} <b>Terdeteksi Developer Naya-Pyro.</b>",
                 parse_mode=enums.ParseMode.HTML,
             )
         except:

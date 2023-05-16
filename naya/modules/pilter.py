@@ -11,8 +11,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Filters"
+__MODULE__ = "filter"
 __HELP__ = f"""
+✘ Bantuan Untuk Filter
+
 ๏ Perintah: <code>{cmd}addfil</code> [nama filter] [balas ke pesan]
 ◉ Penjelasan: Untuk mengatur filter grup.
 

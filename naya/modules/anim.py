@@ -20,8 +20,10 @@ from . import *
 
 DEFAULTUSER = "Nay"
 
-__MODULE__ = "Animasi"
+__MODULE__ = "animasi"
 __HELP__ = f"""
+✘ Bantuan Untuk Animasi
+
 ๏ Perintah:  <code>{cmd}dino or babi</code>
 ◉ Penjelasan:  Coba sendiri.
 

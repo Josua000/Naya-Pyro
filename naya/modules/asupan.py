@@ -202,8 +202,10 @@ async def pap(client, message):
     await kazu.delete()
 
 
-__MODULE__ = "Asupan"
+__MODULE__ = "asupan"
 __HELP__ = f"""
+✘ Bantuan Untuk Asupan
+
 ๏ Perintah: <code>{cmd}pap</code>
 ◉ Penjelasan: Untuk mengirim pap secara random.
 

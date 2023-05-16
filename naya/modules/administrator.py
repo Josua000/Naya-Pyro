@@ -89,7 +89,7 @@ async def set_chat_photo(client: Client, message: Message):
     can_change_admin = zuzu.can_change_info
     can_change_member = message.chat.permissions.can_change_info
     if not (can_change_admin or can_change_member):
-        await message.reply("Kamu tidak punya akses wewenang")
+        await eor(message, f"`Kamu bukan admin di {message.chat.title}")
     if message.reply_to_message:
         if message.reply_to_message.photo:
             await client.set_chat_photo(
@@ -97,13 +97,13 @@ async def set_chat_photo(client: Client, message: Message):
             )
             return
     else:
-        await message.edit("Balas ke photo untuk set!")
+        await eor(message, "`Balas ke photo untuk set!`")
 
 
 @bots.on_message(filters.command(["ban", "dban"], cmd) & filters.me)
 async def member_ban(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
-    ky = await message.reply("`Processing...`")
+    ky = await eor(message, "`Processing...`")
     if not user_id:
         return await ky.edit("Tidak dapat menemukan pengguna.")
     if user_id == client.me.id:
@@ -136,9 +136,9 @@ async def member_ban(client: Client, message: Message):
 @bots.on_message(filters.command(["unban"], cmd) & filters.me)
 async def member_unban(client: Client, message: Message):
     reply = message.reply_to_message
-    zz = await message.reply("`Processing...`")
+    zz = await eor(message, "`Processing...`")
     if reply and reply.sender_chat and reply.sender_chat != message.chat.id:
-        return await zz.edit("Tidak bisa unban ch")
+        return await zz.edit("`Tidak bisa unban ch`")
 
     if len(message.command) == 2:
         user = message.text.split(None, 1)[1]
@@ -159,29 +159,29 @@ async def member_unban(client: Client, message: Message):
 @bots.on_message(filters.command(["pin", "unpin"], cmd) & filters.me)
 async def pin_message(client: Client, message):
     if not message.reply_to_message:
-        return await message.reply("Balas ke pesan untuk pin/unpin .")
-    await message.edit("`Processing...`")
+        return await eor(message, "Balas ke pesan untuk pin/unpin .")
+    await eor(message, "`Processing...`")
     r = message.reply_to_message
     if message.command[0][0] == "u":
         await r.unpin()
-        return await message.edit(
+        return await eor(message, 
             f"**Unpinned [this]({r.link}) message.**",
             disable_web_page_preview=True,
         )
     try:
         await r.pin(disable_notification=True)
-        await message.edit(
+        await eor(message, 
             f"**Pinned [this]({r.link}) message.**",
             disable_web_page_preview=True,
         )
     except ChatAdminRequired:
-        return await message.edit("**Anda bukan admin di group ini !**")
+        return await eor(message, "**Anda bukan admin di group ini !**")
 
 
 @bots.on_message(filters.command(["mute"], cmd) & filters.me)
 async def mute(client, message):
     user_id, reason = await extract_user_and_reason(message)
-    nay = await message.reply("`Processing...`")
+    nay = await eor(message, "`Processing...`")
     if not user_id:
         return await nay.edit("Pengguna tidak ditemukan.")
     if user_id == client.me.id:
@@ -208,7 +208,7 @@ async def mute(client, message):
 @bots.on_message(filters.command(["unmute"], cmd) & filters.me)
 async def unmute(client: Client, message: Message):
     user_id = await extract_user(message)
-    kl = await message.reply("`Processing...`")
+    kl = await eor(message, "`Processing...`")
     if not user_id:
         return await kl.edit("Pengguna tidak ditemukan.")
     try:
@@ -223,7 +223,7 @@ async def unmute(client: Client, message: Message):
 @bots.on_message(filters.command(["kick", "dkick"], cmd) & filters.me)
 async def kick_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message)
-    ny = await message.reply("`Processing...`")
+    ny = await eor(message, "`Processing...`")
     if not user_id:
         return await ny.edit("Pengguna tidak ditemukan.")
     if user_id == client.me.id:
@@ -255,7 +255,7 @@ async def kick_user(client: Client, message: Message):
 )
 async def promotte(client: Client, message: Message):
     user_id = await extract_user(message)
-    biji = await message.reply("`Processing...`")
+    biji = await eor(message, "`Processing...`")
     if not user_id:
         return await biji.edit("Pengguna tidak ditemukan.")
     (await client.get_chat_member(message.chat.id, client.me.id)).privileges
@@ -309,7 +309,7 @@ async def promotte(client: Client, message: Message):
 @bots.on_message(filters.group & filters.command(["demote"], cmd) & filters.me)
 async def demote(client: Client, message: Message):
     user_id = await extract_user(message)
-    sempak = await message.reply("`Processing...`")
+    sempak = await eor(message, "`Processing...`")
     if not user_id:
         return await sempak.edit("Pengguna tidak ditemukan")
     if user_id == client.me.id:
@@ -333,8 +333,10 @@ async def demote(client: Client, message: Message):
     await sempak.edit(f"Demoted! {umention}")
 
 
-__MODULE__ = "Admin"
+__MODULE__ = "admin"
 __HELP__ = f"""
+✘ Bantuan Untuk Admin
+
 ๏ Perintah: <code>{cmd}ban, dban or unban</code> [balas pesan atau berikan username]
 ◉ Penjelasan: Untuk blokir, hapus pesan dengan blokir serta buka blokir
 

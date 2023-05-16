@@ -4,8 +4,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Purge"
+__MODULE__ = "purge"
 __HELP__ = f"""
+✘ Bantuan Untuk Purge
+
 ๏ Perintah: <code>{cmd}purge</code> [reply to message]
 ◉ Penjelasan: Bersihkan (hapus semua pesan) obrolan dari pesan yang dibalas hingga yang terakhir.
 

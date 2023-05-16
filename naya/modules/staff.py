@@ -7,8 +7,10 @@ from pyrogram.types import Message
 
 from . import *
 
-__MODULE__ = "Staff"
+__MODULE__ = "staff"
 __HELP__ = f"""
+✘ Bantuan Untuk Staff
+
 ๏ Perintah: <code>{cmd}staff</code>
 ◉ Penjelasan: Untuk mengetahui daftar semua admin didalam grup.
 """

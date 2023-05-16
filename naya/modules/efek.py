@@ -9,8 +9,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Efek"
+__MODULE__ = "efek"
 __HELP__ = f"""
+✘ Bantuan Untuk Efek
+
 ๏ Perintah: <code>{cmd}efek</code> [efek_code - reply to voice note]
 ◉ Penjelasan: Untuk mengubah suara voice note.
 

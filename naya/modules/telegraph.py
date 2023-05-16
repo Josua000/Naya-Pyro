@@ -5,8 +5,10 @@ from telegraph import Telegraph, exceptions, upload_file
 
 from . import *
 
-__MODULE__ = "Telegraph"
+__MODULE__ = "telegraph"
 __HELP__ = f"""
+✘ Bantuan Untuk Telegraph
+
 ๏ Perintah: <code>{cmd}tg</code> [reply media/text]
 ◉ Penjelasan: Untuk mengapload media/text ke telegra.ph.
 """

@@ -17,8 +17,10 @@ from pyrogram.types import InputMediaPhoto
 
 from . import *
 
-__MODULE__ = "Search"
+__MODULE__ = "search"
 __HELP__ = f"""
+✘ Bantuan Untuk Search
+
 ๏ Perintah: <code>{cmd}pic</code> [query]
 ◉ Penjelasan: Untuk gambar secara limit 5.
 

@@ -5,8 +5,10 @@ from pyrogram.raw.functions.messages import DeleteHistory
 
 from . import *
 
-__MODULE__ = "Sosmed"
+__MODULE__ = "sosmed"
 __HELP__ = f"""
+✘ Bantuan Untuk Sosmed
+
 ๏ Perintah: <code>{cmd}sosmed</code> [link]
 ◉ Penjelasan: Untuk Mendownload Media Dari Facebook/Tiktok/Instagram/Twitter/YouTube.
 """

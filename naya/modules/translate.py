@@ -6,8 +6,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Translate"
+__MODULE__ = "translate"
 __HELP__ = f"""
+✘ Bantuan Untuk Translate
+
 ๏ Perintah: <code>{cmd}tr</code> [lang_code - reply/text]
 ◉ Penjelasan: Untuk menerjemahkan text dengan kode negara yang diinginkan.
 

@@ -192,8 +192,10 @@ async def set_pfp(client, message):
         await message.delete()
 
 
-__MODULE__ = "Profile"
+__MODULE__ = "profile"
 __HELP__ = f"""
+✘ Bantuan Untuk Profile
+
 ๏ Perintah: <code>{cmd}block</code> [balas pengguna]
 ◉ Penjelasan: Untuk blokir pengguna.
 

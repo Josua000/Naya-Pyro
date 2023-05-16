@@ -5,8 +5,10 @@ from pyrogram.raw.functions.messages import DeleteHistory
 
 from . import *
 
-__MODULE__ = "Nyolong"
+__MODULE__ = "nyolong"
 __HELP__ = f"""
+✘ Bantuan Untuk Nyolong
+
 ๏ Perintah: <code>{cmd}copy</code> [link]
 ◉ Penjelasan: Untuk mengambil konten ch private.
 """

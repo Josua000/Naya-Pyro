@@ -11,8 +11,10 @@ import random
 
 from . import *
 
-__MODULE__ = "Meme"
+__MODULE__ = "meme"
 __HELP__ = f"""
+✘ Bantuan Untuk Meme
+
 ๏ Perintah: <code>{cmd}meme or memes</code>
 ◉ Penjelasan: Membuat kata meme.
 """

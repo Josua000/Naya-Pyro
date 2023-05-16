@@ -58,8 +58,10 @@ async def stats(client: Client, message: Message):
     )
 
 
-__MODULE__ = "Stats"
+__MODULE__ = "stats"
 __HELP__ = f"""
+✘ Bantuan Untuk Stats
+
 ๏ Perintah: <code>{cmd}stats</code>
 ◉ Penjelasan: Melihat informasi akun anda.
 """

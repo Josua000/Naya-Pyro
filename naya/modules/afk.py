@@ -11,8 +11,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Afk"
+__MODULE__ = "afk"
 __HELP__ = f"""
+✘ Bantuan Untuk Afk
+
 ๏ Perintah: <code>{cmd[0]}akf</code> [alasan]
 ◉ Penjelasan: Untuk mengaktifkan mode afk.
 """

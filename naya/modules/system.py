@@ -297,8 +297,10 @@ async def del_db(client, message):
     await message.reply_text(f"**`{db_name}` telah dihapus dari database.**")
 
 
-__MODULE__ = "Variable"
+__MODULE__ = "heroku"
 __HELP__ = f"""
+✘ Bantuan Untuk Heroku
+
 ๏ Perintah: <code>{cmd}setvar</code> [variable][value]
 ◉ Penjelasan: Untuk mengatur variable di heroku atau vps.
 
@@ -308,12 +310,6 @@ __HELP__ = f"""
 ๏ Perintah: <code>{cmd}getvar</code> [variable]
 ◉ Penjelasan: Untuk mengambil variable di heroku atau vps.
 
-๏ Perintah: <code>{cmd}getdb</code>
-◉ Penjelasan: Untuk melihat variable di database mongo.
-
-๏ Perintah: <code>{cmd}deldb</code> [variable]
-◉ Penjelasan: Untuk menghapus variable di database mongo.
-
-๏ Perintah: <code>{cmd}setdb</code> [variable] [value]
-◉ Penjelasan: Untuk mengatur variable di database mongo.
+๏ Perintah: <code>{cmd}usage</code>
+◉ Penjelasan: Untuk mengecek dyno heroku only.
 """

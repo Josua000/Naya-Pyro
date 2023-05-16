@@ -6,8 +6,10 @@ from pyrogram.raw.functions.messages import DeleteHistory
 
 from . import *
 
-__MODULE__ = "Sangmata"
+__MODULE__ = "sangmata"
 __HELP__ = f"""
+✘ Bantuan Untuk Sangmata
+
 ๏ Perintah: <code>{cmd}sg</code> [user_id/reply user]
 ◉ Penjelasan: Untuk memeriksa histori nama/username.
 """

@@ -45,28 +45,14 @@ async def _(client, inline_query):
             else:
                 status = "owner"
                 expired = "__none__"
-            if int(get_id[2]) == DEVS:
                 button = [
                     [
                         InlineKeyboardButton(
-                            text="close",
+                            text="Close",
                             callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}",
                         ),
                         InlineKeyboardButton(
-                            text="support",
-                            url=f"https://t.me/kynansupport",
-                        ),
-                    ],
-                ]
-            else:
-                button = [
-                    [
-                        InlineKeyboardButton(
-                            text="close",
-                            callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}",
-                        ),
-                        InlineKeyboardButton(
-                            text="support",
+                            text="Support",
                             url=f"https://t.me/kynansupport",
                         ),
                     ]
@@ -119,7 +105,7 @@ async def _(cln, cq):
 
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
-    msg = f"<b>Help Inline Menu\nPrefixes: <code>{cmd}</code></b>"
+    msg = f"<b>Menu Bantuan\nPerintah: <code>{cmd}</code></b>"
     await client.answer_inline_query(
         inline_query.id,
         cache_time=60,
@@ -145,14 +131,14 @@ async def _(client, callback_query):
     back_match = re.match(r"help_back", callback_query.data)
     if mod_match:
         module = (mod_match.group(1)).replace(" ", "_")
-        text = f"<b>Bantuan Untuk {CMD_HELP[module].__MODULE__}\n{CMD_HELP[module].__HELP__}</b>\n"
+        text = f"<b>{CMD_HELP[module].__HELP__}</b>\n"
         button = [[InlineKeyboardButton("❮", callback_data="help_back")]]
         await callback_query.edit_message_text(
             text=text,
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )
-    top_text = f"<b>Help Inline Menu\nPrefixes: <code>{cmd}</code></b>"
+    top_text = f"<b>Menu Bantuan\nPerintah: <code>{cmd}</code></b>"
     if prev_match:
         curr_page = int(prev_match.group(1))
         await callback_query.edit_message_text(

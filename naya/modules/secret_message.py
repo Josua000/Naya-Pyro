@@ -9,10 +9,12 @@ from pyrogram.types import *
 
 from . import *
 
-__MODULE__ = "Dm"
+__MODULE__ = "dm"
 __HELP__ = f"""
+✘ Bantuan Untuk DM
+
 ๏ Perintah: <code>{cmd}dm</code> [reply to user - text]
-◉ Penjelasan: Untuk mengirim pesan secara rahasia.
+◉ Penjelasan: Untuk mengirim pesan pribadi.
 """
 
 
@@ -48,7 +50,7 @@ async def _(client, q):
                         ]
                     ),
                     input_message_content=InputTextMessageContent(
-                        f"<b>👉🏻 Ada Pesan Rahasia Untuk Mu Nih:</b> <a href=tg://user?id={m.reply_to_message.from_user.id}>{m.reply_to_message.from_user.first_name} {m.reply_to_message.from_user.last_name or ''}</a>"
+                        f"<b>👉🏻 BACA NJING :</b> <a href=tg://user?id={m.reply_to_message.from_user.id}>{m.reply_to_message.from_user.first_name} {m.reply_to_message.from_user.last_name or ''}</a>"
                     ),
                 )
             )
@@ -61,7 +63,7 @@ async def _(client, cq):
     m = [obj for obj in get_objects() if id(obj) == int(cq.data.split(None, 1)[1])][0]
     if not cq.from_user.id == m.reply_to_message.from_user.id:
         return await cq.answer(
-            f"❌ Jangan asal pencet gue jijik {cq.from_user.first_name} {cq.from_user.last_name or ''}",
+            f"**❌ JANGAN ASAL PENCET BABI GUE JIJIK**",
             True,
         )
     await cq.answer(m.text.split(None, 1)[1], True)

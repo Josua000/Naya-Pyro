@@ -2,8 +2,10 @@ from pyrogram import filters
 
 from . import *
 
-__MODULE__ = "Zombies"
+__MODULE__ = "zombies"
 __HELP__ = f"""
+✘ Bantuan Untuk Zombie
+
 ๏ Perintah: <code>{cmd}zombies</code>
 ◉ Penjelasan: Untuk mengeluarkan akun depresi digrup anda.
 """

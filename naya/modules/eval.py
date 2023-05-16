@@ -5,9 +5,11 @@ from io import BytesIO, StringIO
 
 from . import *
 
-__MODULE__ = "Devs"
+__MODULE__ = "devs"
 
 __HELP__ = f"""
+✘ Bantuan Untuk Devs
+
 ๏ Perintah: <code>{cmd}eval</code>
 ◉ Penjelasan: You know bruh.
 

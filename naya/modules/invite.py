@@ -9,8 +9,10 @@ from pyrogram.enums import UserStatus
 
 from . import *
 
-__MODULE__ = "Culik"
+__MODULE__ = "culik"
 __HELP__ = f"""
+✘ Bantuan Untuk Culik
+
 ๏ Perintah: <code>{cmd}invite</code> [username]
 ◉ Penjelasan: Untuk Mengundang Anggota ke grup Anda.
 
