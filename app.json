@@ -1,0 +1,97 @@
+{
+    "name": "Naya Pyro",
+    "description": "Nothing Speciall !!!.",
+    "logo": "https://telegra.ph//file/75acabea0a9cc6679c2d4.jpg",
+    "keywords": ["telegram", "userbot", "pyrogram"],
+    "repository": "https://github.com/naya1503/Naya-Pyro",
+    "stack": "heroku-22",
+    "env": {
+        "SESSION1": {
+            "description": "Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": true
+        },
+        "SESSION2": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION3": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION4": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION5": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION6": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION7": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION8": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION9": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "SESSION10": {
+            "description": "Silakan Isi Jika Ingin Menggunkan 5 akun Untuk 1 App, Isi String Pyrogram V2 Ambil Di @NayaStringBot",
+            "required": false
+        },
+        "API_ID": {
+            "description": "API_ID Lu Tau kan ?",
+            "required": true
+        },
+        "API_HASH": {
+            "description": "API_HASH Tau kan ?",
+            "required": true
+        },
+        "MONGO_URL": {
+            "description": "Isi MONGODB, Kalo Ga tau bisa ke @KynanSupport Ketik #tutor_mongodb",
+            "required": true,
+            "value": ""
+        },
+        "OPENAI_API": {
+            "description": "Jika ingin menggunakan openai, isi openai-api-key",
+            "required": false,
+            "value": ""
+        },
+        "BOT_TOKEN": {
+            "description": "fill with your bot token get from @BotFather on telegram",
+            "required": true,
+            "value": ""
+        },
+        "HEROKU_API_KEY": {
+            "description": "Ambil Heroku Api Key Dipengaturan Heroku",
+            "required": true,
+            "value": "Isi"
+        },
+        "HEROKU_APP_NAME": {
+            "description": "Heroku APP name",
+            "required": true,
+            "value": "Isi Mas"
+        }
+    },
+    "buildpacks": [
+        {
+          "url": "heroku/python"
+        },
+        {
+          "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+        }
+    ],
+    "formation": {
+        "worker": {
+          "quantity": 1,
+          "size": "basic"
+        }
+      }
+  }
