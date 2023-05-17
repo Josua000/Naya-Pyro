@@ -52,10 +52,11 @@ class Bot(Client):
 
 
 class Ubot(Client):
-    def __init__(self):
+    def __init__(self, name, **kwargs):
         super().__init__(**kwargs)
         self.group_call = GroupCallFactory(self).get_group_call()
         self.LOGGER = LOGGER
+        self.name = name
 
     async def start(self):
         await super().start()
