@@ -127,7 +127,7 @@ async def skip_m(client, message):
         group_call.song_name = vid_title
         return await eor(
             message,
-            f"📌 <b>Memutar Lagu Berikutnya</b>\n\n📀 <b>Judul</b>: {vid_title}\n💌 <b>Artis</b>: {uploade_r}",
+            f"📌 <b>Memutar Lagu Berikutnya</b>\n\n📀 <b>Judul</b>: {vid_title}\n💌 <b>Channel</b>: {uploade_r}",
         )
 
 
@@ -146,7 +146,7 @@ async def play_m(client, message):
         vid_title = audio.title or audio.file_name
         uploade_r = message.reply_to_message.audio.performer or "Unknown Artist."
         dura_ = message.reply_to_message.audio.duration
-        dur = datetime.datetime(seconds=dura_)
+        dur = datetime.now(seconds=dura_)
         raw_file_name = (
             "".join(random.choice(string.ascii_lowercase) for i in range(5)) + ".raw"
         )
