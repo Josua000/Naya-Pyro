@@ -35,3 +35,7 @@ aiosqlite>=0.16.0,<0.18.0
 textblob
 tracemoepy
 uwuify
+flask
+gunicorn
+googletrans
+aiofiles==22.1.0
