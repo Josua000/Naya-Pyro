@@ -13,7 +13,8 @@ from pyrogram import Client, enums, filters
 from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 
-from . import *
+from naya import *
+from kynaylibs.nan.utils import eor
 from .profile import extract_user, extract_userid
 
 admins_in_chat = {}
