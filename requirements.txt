@@ -28,7 +28,7 @@ openai
 APScheduler
 kynaylibs==1.5.9
 psutil
-httpx
+httpx[http2]
 pyaes==1.6.1
 pysocks==1.7.1
 aiosqlite>=0.16.0,<0.18.0
