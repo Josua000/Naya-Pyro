@@ -35,4 +35,3 @@ uwuify
 flask
 gunicorn
 googletrans
-aiofiles==22.1.0
