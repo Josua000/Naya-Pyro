@@ -7,17 +7,15 @@
 
 import os
 from asyncio import sleep
-from time import time
 
 from kynaylibs.nan.utils import eor
-from pyrogram import Client, enums
+from pyrogram import Client
 from pyrogram.types import Message
 
 from naya import *
 
 flood = {}
 profile_photo = "https://telegra.ph//file/94cc3c815a9e063dad4f0.jpg"
-
 
 
 @bots.on_message(filters.command(["unblock", "unblck"], cmd) & filters.me)
