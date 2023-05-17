@@ -1,9 +1,10 @@
-import os
 import sys
 import traceback
 from io import BytesIO, StringIO
-from pyrogram.types import *
+
 from pyrogram import *
+from pyrogram.types import *
+
 from . import *
 
 __MODULE__ = "devs"
@@ -27,18 +28,18 @@ async def _(client, message):
     if len(message.command) < 2:
         return await eor(message, "`Give me commands dude...`")
     try:
-            await eor(message, "`Processing...`")
-            screen = (await bash(message.text.split(None, 1)[1]))[0]
-            if int(len(str(screen))) > 4096:
-                with BytesIO(str.encode(str(screen))) as out_file:
-                    out_file.name = "result.txt"
-                    await message.reply_document(
-                        document=out_file,
-                    )
-                    # await msg.delete()
-            else:
-                await eor(message, screen)
+        await eor(message, "`Processing...`")
+        screen = (await bash(message.text.split(None, 1)[1]))[0]
+        if int(len(str(screen))) > 4096:
+            with BytesIO(str.encode(str(screen))) as out_file:
+                out_file.name = "result.txt"
+                await message.reply_document(
+                    document=out_file,
+                )
                 # await msg.delete()
+        else:
+            await eor(message, screen)
+            # await msg.delete()
     except Exception as error:
         await eor(message, error)
 
