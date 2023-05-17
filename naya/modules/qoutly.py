@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from kynaylibs.nan.utils import http, eor
+from kynaylibs.nan.utils import eor, http
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
