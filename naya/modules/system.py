@@ -13,7 +13,6 @@ from pyrogram import *
 from pyrogram.types import *
 
 from naya.config import *
-from naya.logging import LOGGER
 
 from . import *
 
