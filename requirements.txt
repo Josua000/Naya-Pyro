@@ -26,5 +26,5 @@ telegraph
 heroku3
 openai
 APScheduler
-kynaylibs==1.5.8
+kynaylibs==1.5.9
 psutil
