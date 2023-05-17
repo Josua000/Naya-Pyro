@@ -21,9 +21,9 @@ async def delayspammer(client, message):
         delay = float(args[1])
         count = int(args[2])
         if message.reply_to_message:
-            msg = await message.reply_to_message
-        elif get_arg:
-            msg = get_arg(message)
+            msg = await client.get_messages()
+        else:
+            msg = str(args[3])
     except BaseException:
         return await message.edit(
             f"**Penggunaan :** {cmd}dspam [waktu] [jumlah] [balas pesan]"
