@@ -21,7 +21,7 @@ async def delayspammer(client, message):
         delay = float(args[1])
         count = int(args[2])
         if message.reply_to_message:
-            msg = message.reply_to_message.text
+            msg = message.get_reply_message()
         else:
             msg = str(args[3])
     except BaseException:
