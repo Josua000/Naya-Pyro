@@ -6,6 +6,7 @@ load_dotenv(".env")
 
 
 API_ID = int(getenv("API_ID", "123"))
+OWNER = int(getenv("OWNER", "123"))
 API_HASH = getenv("API_HASH")
 MONGO_URL = getenv("MONGO_URL", "")
 BOT_TOKEN = getenv("BOT_TOKEN")
