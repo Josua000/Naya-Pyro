@@ -254,7 +254,12 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(buttons),
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
             )
         app.update_config(config_vars)
     else:
@@ -263,7 +268,12 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                reply_markup=InlineKeyboardMarkup(buttons),
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
             )
         with open(path, "a") as f:
             f.write(f"\n{to_set}={value}")
@@ -271,13 +281,23 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(buttons),
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
             )
         else:
             await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(buttons),
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
             )
 
 
