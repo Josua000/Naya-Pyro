@@ -1,8 +1,6 @@
 import os
 
 from pyrogram import filters
-from telegraph import Telegraph, exceptions, upload_file
-
 from . import *
 
 __MODULE__ = "telegraph"
