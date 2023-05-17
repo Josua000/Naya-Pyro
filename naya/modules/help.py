@@ -193,6 +193,103 @@ async def usereee(_, message):
         await message.reply(f"<b>{user}</b>")
 
 
+@app.on_callback_query(filters.regex("cl_ad"))
+async def close(_, query: CallbackQuery):
+    await query.message.delete()
+
+
+@app.on_callback_query(filters.regex("setong"))
+async def setdah(_, query: CallbackQuery):
+    return await query.edit_message_text(
+        f"""
+    <b> ☺️ Apa yang kamu butuhkan ?.</b>""",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                   InlineKeyboardButton(text="Multi Client", callback_data="multi"),
+                ],
+                [
+                   InlineKeyboardButton(text="Restart", callback_data="retor"),
+                ],
+                [
+                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
+                ],
+            ]
+        ),
+    )
+
+
+@app.on_callback_query(filters.regex("restart"))
+async def jadi(_, query: CallbackQuery):
+    try:
+        await query.edit_message_text("<b>Processing...</b>")
+        LOGGER(__name__).info("BOT SERVER RESTARTED !!")
+    except BaseException as err:
+        LOGGER(__name__).info(f"{err}")
+        return
+    await asyncio.sleep(2)
+    await query.edit_message_text(f"✅ <b>{app.me.mention} Berhasil Di Restart.</b>")
+    args = [sys.executable, "-m", "naya"]
+    execle(sys.executable, *args, environ)
+    
+    
+@app.on_callback_query(filters.regex(["multi"]))
+async def multi(_, query: CallbackQuery):
+    
+
+
+@app.on_callback_query(filters.regex(["retor"]))
+async def _(_, query: CallbackQuery):
+    user_id = callback_query.from_user.id
+    if user_id == OWNER:
+        return await message.reply("<b>❌ LU SIAPA ANJENG ?</b>")
+    buttons = [
+        [
+            InlineKeyboardButton(text="✅ Restart", callback_data="restart"),
+            InlineKeyboardButton("❌ Tidak", callback_data="cl_ad"),
+        ],
+    ]
+    await bot.send_message(
+        message.chat.id,
+        f"<b>Apakah kamu yakin ingin Melakukan Restart ?</b>",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(buttons),
+    )
+
+@app.on_message(filters.command(["start"]))
+async def _(_, message):
+    user_id = message.from_user.id
+    if user_id == OWNER:
+        await message.reply_text(
+        f"""
+<b>👋 Halo {message.from_user.first_name}
+💭 Apa ada yang bisa saya bantu ?
+💡 Silakan pilih tombol dibawah untuk kamu perlukan.
+</b>""",
+        buttons = [
+            [InlineKeyboardButton(text="Pengaturan", callback_data="setong")],
+            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+        ],
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(buttons)
+        )
+    else:
+        await message.reply_text(
+f"""
+<b>👋 Halo {message.from_user.first_name}
+💭 Apa ada yang bisa saya bantu ?
+💡 Saya Adalah Bot Milik : <a href=tg://openmessage?user_id=OWNER>OWNER</a> </b>
+""",
+        buttons = [
+            [InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER)],
+            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+        ],
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(buttons)
+        )
+        
+        
+        
 @app.on_message(filters.command(["getotp", "getnum"]) & filters.private)
 async def otp_and_numbereeee(_, message):
     if len(message.command) < 2:
