@@ -1,5 +1,4 @@
 from kynaylibs.nan.utils import eor
-
 from pyrogram import filters
 
 from naya import *
@@ -15,8 +14,9 @@ __HELP__ = f"""
 ◉ Penjelasan: Untuk mencari gambar ke AI
 """
 
-import random
+
 import openai
+
 from naya.config import OPENAI_API
 
 
