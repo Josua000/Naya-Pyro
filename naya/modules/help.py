@@ -230,8 +230,8 @@ async def close(_, query: CallbackQuery):
                 ]
             ),
         )
-    to_set = query.message.text.split(None, 0)[1].strip()
-    value = query.message.text.split(None, 1)[2].strip()
+    to_set = query.message.text.split(None, 1)[1].strip()
+    value = query.message.text.split(None, 2)[2].strip()
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
         app_name = os.environ["HEROKU_APP_NAME"]
@@ -323,7 +323,7 @@ async def close(_, query: CallbackQuery):
                 ]
             ),
         )
-    check_var = query.message.text.split(None, 0)[1]
+    check_var = query.message.text.split(None, 1)[1]
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
         app_name = os.environ["HEROKU_APP_NAME"]
