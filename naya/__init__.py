@@ -46,22 +46,18 @@ class Bot(Client):
             f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
         )
 
-    async def stop(self, *args):
-        await super().stop()
-        self.LOGGER(__name__).info("Naya-Pyro stopped. Bye.")
-
 
 class Ubot(Client):
     _bots = []
-
+    
     def __init__(self, name, **kwargs):
         super().__init__(name=name, **kwargs)
         self.group_call = GroupCallFactory(self).get_group_call()
 
     async def start(self):
         await super().start()
-        usr_bot_me = self.me
-        return (self, usr_bot_me.id)
+        if self not in self._bots:
+            self._bots.append(self)
 
 
 app = Bot()
