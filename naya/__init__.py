@@ -31,28 +31,6 @@ telegraph.create_account(short_name="ubot")
 aiosession = ClientSession()
 
 
-class Bot(Client):
-    def __init__(self):
-        super().__init__(
-            name="ubot",
-            api_hash=API_HASH,
-            api_id=API_ID,
-            bot_token=BOT_TOKEN,
-        )
-        self.LOGGER = LOGGER
-
-    async def start(self):
-        await super().start()
-        usr_bot_me = self.me
-        self.LOGGER(__name__).info(
-            f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
-        )
-
-    async def stop(self, *args):
-        await super().stop()
-        self.LOGGER(__name__).info("Naya-Pyro stopped. Bye.")
-
-
 class Ubot(Client):
     __module__ = "pyrogram.client"
     _bots = []
@@ -75,7 +53,12 @@ class Ubot(Client):
             self._bots.append(self)
 
 
-app = Bot()
+app = Bot(
+    name="ubot",
+    api_hash=API_HASH,
+    api_id=API_ID,
+    bot_token=BOT_TOKEN,
+)
 
 if not BOT_TOKEN:
     LOGGER(__name__).error("WARNING: BOT TOKEN TIDAK DITEMUKAN, SHUTDOWN BOT")
