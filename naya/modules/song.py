@@ -79,7 +79,7 @@ async def yt_video(client, message):
         title = ytdl_data["title"]
         url = f"https://youtu.be/{videoid}"
         duration = ytdl_data["duration"]
-        channel = ytdl_data["uploader"]
+        ytdl_data["uploader"]
         views = f"{ytdl_data['view_count']:,}".replace(",", ".")
         thumbs = f"https://img.youtube.com/vi/{videoid}/hqdefault.jpg"
     except Exception as error:
@@ -93,7 +93,7 @@ async def yt_video(client, message):
         duration=duration,
         supports_streaming=True,
         caption=f"<b>Upload By: {client.me.mention}</b>",
-        )
+    )
     await infomsg.delete()
     for files in (thumbnail, file_path):
         if files and os.path.exists(files):
@@ -140,7 +140,7 @@ async def yt_audio(client, message):
         title = ytdl_data["title"]
         url = f"https://youtu.be/{videoid}"
         duration = ytdl_data["duration"]
-        channel = ytdl_data["uploader"]
+        ytdl_data["uploader"]
         views = f"{ytdl_data['view_count']:,}".replace(",", ".")
         thumbs = f"https://img.youtube.com/vi/{videoid}/hqdefault.jpg"
     except Exception as error:
@@ -153,7 +153,7 @@ async def yt_audio(client, message):
         file_name=title,
         duration=duration,
         caption=f"<b>Upload By:</b> {clien.me.mention}",
-        )
+    )
     await infomsg.delete()
     for files in (thumbnail, file_path):
         if files and os.path.exists(files):
