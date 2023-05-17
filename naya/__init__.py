@@ -43,6 +43,7 @@ if not BOT_TOKEN:
     LOGGER(__name__).error("WARNING: BOT TOKEN TIDAK DITEMUKAN, SHUTDOWN BOT")
     sys.exit()
 
+
 class Ubot(Client):
     _bots = []
 
@@ -62,6 +63,7 @@ class Ubot(Client):
         await super().start()
         if self not in self._bots:
             self._bots.append(self)
+
 
 bot1 = (
     Ubot(
