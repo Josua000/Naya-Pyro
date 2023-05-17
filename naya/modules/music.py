@@ -146,7 +146,7 @@ async def play_m(client, message):
         vid_title = audio.title or audio.file_name
         uploade_r = message.reply_to_message.audio.performer or "Unknown Artist."
         dura_ = message.reply_to_message.audio.duration
-        dur = datetime.timedelta(seconds=dura_)
+        dur = datetime.now(seconds=dura_)
         raw_file_name = (
             "".join(random.choice(string.ascii_lowercase) for i in range(5)) + ".raw"
         )
@@ -338,7 +338,7 @@ __HELP__ = f"""
 ๏ Perintah: <code>{cmd}resume</code>
 ◉ Penjelasan: Untuk melanjutkan lagu.
 
-๏ Perintah: <code>{cmd}play</code> [judul lagu atau balas ke file]
+๏ Perintah: <code>{cmd}play</code> [judul lagu] atau [link youtube]
 ◉ Penjelasan: Untuk memutar lagu.
 
 ๏ Perintah: <code>{cmd}end</code>
