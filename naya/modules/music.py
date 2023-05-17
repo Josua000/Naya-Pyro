@@ -32,18 +32,18 @@ GPC = {}
 @bots.on_message(filters.me & filters.command(["playlist"], cmd))
 async def pl(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
-    play = await eor(message, "<b>Processing</b>")
+    play = await eor(message, "<code>Processing...</code>")
     song = f"<b>📋 Daftar Playlist {message.chat.title}</b> : \n"
     s = s_dict.get((message.chat.id, client.me.id))
     if not group_call:
-        return await play.edit("<b>Obrolan Suara Tidak Ditemukan</b>")
+        return await play.edit("<code>Obrolan Suara Tidak Ditemukan</code>")
     if not s:
         if group_call.is_connected:
             return await play.edit(
                 f"<b>📀 Sedang diputar :</b> <code>{group_call.song_name}</code>"
             )
         else:
-            return await play.edit("<b>Obrolan Suara Tidak Ditemukan</b>")
+            return await play.edit("<code>Obrolan Suara Tidak Ditemukan</code>")
     if group_call.is_connected:
         song += f"<b>📀 Sedang diputar :</b> <code>{group_call.song_name}</code> \n\n"
     for sno, i in enumerate(s, start=1):
@@ -96,9 +96,9 @@ async def skip_m(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
     s_d = s_dict.get((message.chat.id, client.me.id))
     if not group_call:
-        return await eor(message, "<b>Tidak sedang memutar apa-apa!</b>")
+        return await eor(message, "<code>Tidak sedang memutar apa-apa!</code>")
     if not s_d:
-        return await eor(message, "<b>Antrian kosong!</b>")
+        return await eor(message, "<code>Antrian kosong!</code>")
     next_song = s_d.pop(0)
     raw_file_name = next_song["raw"]
     vid_title = next_song["song_name"]
@@ -131,14 +131,11 @@ async def skip_m(client, message):
             f"📌 <b>Memutar Lagu Berikutnya</b>\n\n📀 <b>Judul</b>: {vid_title}\n💌 <b>Channel</b>: {uploade_r}",
         )
 
-File "/root/Naya-Pyro/naya/modules/music.py", line 149, in play_m    dur = datetime.now(seconds=dura_)
-TypeError: 'seconds' is an invalid keyword argument for now()
-
 
 @bots.on_message(filters.me & filters.command(["play"], cmd))
 async def play_m(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
-    u_s = await eor(message, "<b>Processing..</b>")
+    u_s = await eor(message, "<code>Processing..</code>")
     input_str = get_text(message)
     if not input_str:
         if not message.reply_to_message:
