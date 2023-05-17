@@ -52,25 +52,18 @@ class Bot(Client):
 
 
 class Ubot(Client):
-    __module__ = "pyrogram.client"
-    _bots = []
-
-    def __init__(self, name, **kwargs):
-        super().__init__(name=name, **kwargs)
+    def __init__(self):
+        super().__init__(**kwargs)
         self.group_call = GroupCallFactory(self).get_group_call()
-
-    def on_message(self, filters=filters.Filter, group=0):
-        def decorator(func):
-            for bot in self._bots:
-                bot.add_handler(MessageHandler(func, filters), group)
-            return func
-
-        return decorator
+        self.LOGGER = LOGGER
 
     async def start(self):
         await super().start()
-        if self not in self._bots:
-            self._bots.append(self)
+        usr_bot_me = self.me
+        self.LOGGER(__name__).info(
+            f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
+        )
+        return (self, usr_bot_me.id)
 
 
 app = Bot()
