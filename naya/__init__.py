@@ -49,11 +49,11 @@ class Bot(Client):
 
 class Ubot(Client):
     _bots = []
-    
+
     def __init__(self, name, **kwargs):
         super().__init__(name=name, **kwargs)
         self.group_call = GroupCallFactory(self).get_group_call()
-    
+
     def on_message(self, filters=filters.Filter):
         def decorator(func):
             for bot in self._bots:
