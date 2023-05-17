@@ -367,7 +367,7 @@ async def close(_, query: CallbackQuery):
                     ]
                 ),
             )
-          dotenv.unset_key(path, check_var)
+        dotenv.unset_key(path, check_var)
         if dotenv.get_key(path, check_var) is None:
             await app.send_message(
                 user_id,
