@@ -8,18 +8,13 @@
 
 import asyncio
 from time import time
-
-from kynaylibs import DEVS
-from kynaylibs.nan.utils import eor
 from pyrogram import Client, enums, filters
 from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 
-from naya import *
+from . import *
 
 from .profile import extract_user, extract_userid
-
-admins_in_chat = {}
 
 unmute_permissions = ChatPermissions(
     can_send_messages=True,
@@ -29,61 +24,6 @@ unmute_permissions = ChatPermissions(
     can_invite_users=True,
     can_pin_messages=False,
 )
-
-
-async def list_admins(client: Client, chat_id: int):
-    global admins_in_chat
-    if chat_id in admins_in_chat:
-        interval = time() - admins_in_chat[chat_id]["last_updated_at"]
-        if interval < 3600:
-            return admins_in_chat[chat_id]["data"]
-
-    admins_in_chat[chat_id] = {
-        "last_updated_at": time(),
-        "data": [
-            member.user.id
-            async for member in client.get_chat_members(
-                chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS
-            )
-        ],
-    }
-    return admins_in_chat[chat_id]["data"]
-
-
-async def extract_user_and_reason(message, sender_chat=False):
-    args = message.text.strip().split()
-    text = message.text
-    user = None
-    reason = None
-    if message.reply_to_message:
-        reply = message.reply_to_message
-        if not reply.from_user:
-            if (
-                reply.sender_chat
-                and reply.sender_chat != message.chat.id
-                and sender_chat
-            ):
-                id_ = reply.sender_chat.id
-            else:
-                return None, None
-        else:
-            id_ = reply.from_user.id
-
-        if len(args) < 2:
-            reason = None
-        else:
-            reason = text.split(None, 1)[1]
-        return id_, reason
-
-    if len(args) == 2:
-        user = text.split(None, 1)[1]
-        return await extract_userid(message, user), None
-
-    if len(args) > 2:
-        user, reason = text.split(None, 2)[1:]
-        return await extract_userid(message, user), reason
-
-    return user, reason
 
 
 @bots.on_message(filters.me & filters.command(["setgpic"], cmd))
