@@ -209,8 +209,6 @@ async def close(_, query: CallbackQuery):
     await query.message.delete()
 
 
-
-
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
@@ -390,7 +388,7 @@ async def close(_, query: CallbackQuery):
                     ]
                 ),
             )
-    
+
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
