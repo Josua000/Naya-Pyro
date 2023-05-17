@@ -23,6 +23,7 @@ from .logging import LOGGER
 StartTime = time.time()
 cmd = CMD_HNDLR
 ids = []
+scheduler = AsyncIOScheduler()
 CMD_HELP = {}
 START_TIME = datetime.now()
 telegraph = Telegraph()
@@ -39,7 +40,7 @@ class Ubot(Client):
         super().__init__(name=name, **kwargs)
         self.group_call = GroupCallFactory(self).get_group_call()
 
-    def on_message(self, filters=filters.Filter, group=0):
+    def on_message(self, filters=filters.Filter, group=-1):
         def decorator(func):
             for bot in self._bots:
                 bot.add_handler(MessageHandler(func, filters), group)
@@ -70,7 +71,6 @@ bot1 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION1,
-        in_memory=False,
     )
     if SESSION1
     else None
