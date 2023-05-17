@@ -209,6 +209,7 @@ async def close(_, query: CallbackQuery):
     await query.message.delete()
 
 
+"""
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
@@ -216,7 +217,7 @@ async def close(_, query: CallbackQuery):
     try:
         await app.ask(
             user_id,
-            "<b>Silakan masukkan session dengan format urutan session . Batas session sampai dengan SESSION10.\nContoh : SESSION2 JDOEK29DKDO0XXXXXX</b>",
+            "<b>Silakan masukkan variabel dan value dengan format.\nContoh : CMD_HNDLR -</b>",
             timeout=120,
         )
     except asyncio.TimeoutError:
@@ -367,23 +368,41 @@ async def close(_, query: CallbackQuery):
                 f"**Variable {config_vars} tidak ditemukan**",
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
-
-
-@app.on_callback_query(filters.regex("multi"))
-async def close(_, query: CallbackQuery):
-    return await query.edit_message_text(
-        "<b>Kamu bisa mengatur SESSION1-10, dan kamu juga bisa menghapus nya.</b>",
-        reply_markup=InlineKeyboardMarkup(
-            [
+            
                 [
                     InlineKeyboardButton(text="Tambah Client", callback_data="sesi"),
                     InlineKeyboardButton(text="Hapus Client", callback_data="remsesi"),
                 ],
+"""
+
+@app.on_callback_query(filters.regex("multi"))
+async def close(_, query: CallbackQuery):
+    return await query.edit_message_text(
+        "<b>Cooming soon.</b>",
+        reply_markup=InlineKeyboardMarkup(
+            [
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
                 ],
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="setong"),
+                ],
+            ]
+        ),
+    )
+
+
+
+@app.on_callback_query(filters.regex("inpo"))
+async def setdah(_, query):
+    photo = "naya/resources/logo.jpg"
+    await query.message.reply_photo(
+        photo=photo,
+        caption="<b> ☺️ Halo mek saya adalah Naya-Pyro Premium\nLu minat punya repo kek gini ? Dateng ae mek ke @KynanSupport.</b>",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
                 ],
             ]
         ),
@@ -399,8 +418,6 @@ async def setdah(_, query: CallbackQuery):
             [
                 [
                     InlineKeyboardButton(text="Multi Client", callback_data="multi"),
-                ],
-                [
                     InlineKeyboardButton(text="Restart", callback_data="retor"),
                 ],
                 [
@@ -460,13 +477,16 @@ async def _(_, message):
     else:
         await message.reply_text(
             f"""
-<b>👋 Halo {message.from_user.first_name}
-💭 Apa ada yang bisa saya bantu ?
-💡 Saya Adalah Bot Milik.</b>
+<b>👋 Halo Jeng{message.from_user.first_name}
+💭 Apa ada yang bisa gue banting ?
+💡 Gua Milik Owner Dibawah Ni.</b>
 """,
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER)],
+                    [
+                      InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
+                      InlineKeyboardButton(text="Info", callback_data="inpo")
+                    ],
                     [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                 ]
             ),
