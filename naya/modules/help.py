@@ -1,14 +1,11 @@
 import asyncio
 import datetime
-import os
 import re
 import sys
 from datetime import datetime
 from os import environ, execle
 
 HAPP = None
-import dotenv
-import heroku3
 import urllib3
 from pyrogram.raw.functions import Ping
 from pyrogram.types import *
@@ -375,6 +372,7 @@ async def close(_, query: CallbackQuery):
                 ],
 """
 
+
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
     return await query.edit_message_text(
@@ -390,7 +388,6 @@ async def close(_, query: CallbackQuery):
             ]
         ),
     )
-
 
 
 @app.on_callback_query(filters.regex("inpo"))
@@ -484,8 +481,8 @@ async def _(_, message):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                      InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
-                      InlineKeyboardButton(text="Info", callback_data="inpo")
+                        InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
+                        InlineKeyboardButton(text="Info", callback_data="inpo"),
                     ],
                     [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                 ]
