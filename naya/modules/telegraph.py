@@ -3,7 +3,7 @@ import os
 from pyrogram import filters
 from telegraph import Telegraph, exceptions, upload_file
 
-from naya import bots, cmd
+from . import *
 
 __MODULE__ = "telegraph"
 __HELP__ = f"""
