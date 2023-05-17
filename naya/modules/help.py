@@ -295,10 +295,10 @@ async def close(_, query: CallbackQuery):
             )
         else:
             await query.message.delete()
-            buttons = [
-                [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-            ]
+            buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             return await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
@@ -404,7 +404,6 @@ async def close(_, query: CallbackQuery):
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
-    await query.message.delete()
     await query.edit_message_text(
         "<b>Kamu bisa mengatur SESSION1-10, dan kamu juga bisa menghapus nya.</b>",
         reply_markup=InlineKeyboardMarkup(
