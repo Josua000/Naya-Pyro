@@ -93,9 +93,7 @@ async def yt_video(client, message):
         duration=duration,
         supports_streaming=True,
         caption=f"<b>Upload By: {client.me.mention}</b>",
-        ),
-        reply_to_message_id=message.id,
-    )
+        )
     await infomsg.delete()
     for files in (thumbnail, file_path):
         if files and os.path.exists(files):
@@ -155,9 +153,7 @@ async def yt_audio(client, message):
         file_name=title,
         duration=duration,
         caption=f"<b>Upload By:</b> {clien.me.mention}",
-        ),
-        reply_to_message_id=message.id,
-    )
+        )
     await infomsg.delete()
     for files in (thumbnail, file_path):
         if files and os.path.exists(files):
