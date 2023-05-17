@@ -48,7 +48,7 @@ async def _(client, message):
     uptime = await _human_time_duration(int(uptime_sec))
     _ping = f"""
 <b>❏ Pong !!</b> `{delta_ping} ms`
-<b>╰ Waktu Aktif:</b> `{uptime}`
+<b>╰ Aktif:</b> `{uptime}`
 """
     await eor(message, _ping)
 
