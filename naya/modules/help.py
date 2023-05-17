@@ -227,7 +227,7 @@ async def close(_, query: CallbackQuery):
             [InlineKeyboardButton(text="Kembali", callback_data="multi")],
             [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
         ]
-    except asyncio.TimeoutError:
+    await asyncio.TimeoutError:
         return await app.send_message(user_id, "<b>Waktu telah habis</b>")
     to_set = message.text.split(None, 1)[1].strip()
     value = message.text.split(None, 2)[2].strip()
