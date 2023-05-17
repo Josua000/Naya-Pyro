@@ -6,14 +6,14 @@ import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from typing import Any, Dict
-from telegraph import Telegraph
+
 from aiohttp import ClientSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from pyrogram import Client, __version__, enums, filters
 from pyrogram.handlers import MessageHandler
 from pyromod import listen
-from telegraph import Telegraph, exceptions, upload_file
 from pytgcalls import GroupCallFactory
+from telegraph import Telegraph, exceptions, upload_file
 
 from .config import (API_HASH, API_ID, BOT_TOKEN, CMD_HNDLR, SESSION1,
                      SESSION2, SESSION3, SESSION4, SESSION5, SESSION6,
