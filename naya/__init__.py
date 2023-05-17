@@ -54,7 +54,7 @@ class Ubot(Client):
             self._bots.append(self)
 
 
-app = Bot(
+app = Client(
     name="ubot",
     api_hash=API_HASH,
     api_id=API_ID,
