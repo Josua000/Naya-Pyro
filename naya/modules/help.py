@@ -241,10 +241,8 @@ async def _(_, query: CallbackQuery):
             InlineKeyboardButton("❌ Tidak", callback_data="cl_ad"),
         ],
     ]
-    await bot.send_message(
-        query.message.chat.id,
+    await query.edit_message_text(
         f"<b>Apakah kamu yakin ingin Melakukan Restart ?</b>",
-        disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
