@@ -1,9 +1,8 @@
-
-
-from pyrogram import Client, filters
-from pyrogram.types import Message
-from telegraph import Telegraph, exceptions, upload_file
 import os
+
+from pyrogram import filters
+from telegraph import Telegraph, exceptions, upload_file
+
 from naya import bots, cmd
 
 __MODULE__ = "telegraph"
@@ -23,9 +22,7 @@ auth_url = r["auth_url"]
 async def uptotelegraph(client, message):
     tex = await message.edit_text("`Processing . . .`")
     if not message.reply_to_message:
-        await tex.edit(
-            "**Balas ke File atau Teks**"
-        )
+        await tex.edit("**Balas ke File atau Teks**")
         return
     if message.reply_to_message.media:
         if message.reply_to_message.sticker:
@@ -38,9 +35,7 @@ async def uptotelegraph(client, message):
             await tex.edit(f"**ERROR:** `{exc}`")
             os.remove(m_d)
             return
-        U_done = (
-            f"**Uploaded on ** [Telegraph](https://telegra.ph/{media_url[0]})"
-        )
+        U_done = f"**Uploaded on ** [Telegraph](https://telegra.ph/{media_url[0]})"
         await tex.edit(U_done)
         os.remove(m_d)
     elif message.reply_to_message.text:
@@ -52,6 +47,7 @@ async def uptotelegraph(client, message):
         except exceptions.TelegraphException as exc:
             await tex.edit(f"**ERROR:** `{exc}`")
             return
-        wow_graph = f"**Uploaded as** [Telegraph](https://telegra.ph/{response['path']})"
+        wow_graph = (
+            f"**Uploaded as** [Telegraph](https://telegra.ph/{response['path']})"
+        )
         await tex.edit(wow_graph)
-  
