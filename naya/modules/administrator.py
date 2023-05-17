@@ -14,16 +14,7 @@ from kynaylibs.nan.utils import eor
 from pyrogram import Client, enums, filters
 from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import ChatPermissions, ChatPrivileges, Message
-from asyncio import get_event_loop, sleep
-from functools import partial, wraps
-from io import BytesIO
-from re import findall
-from time import time
 
-from pyrogram import Client, enums
-from pyrogram.enums import ChatMemberStatus, ChatType
-from pyrogram.errors import PeerIdInvalid, UserNotParticipant
-from pyrogram.types import Message
 from naya import *
 
 from .profile import extract_user, extract_userid
