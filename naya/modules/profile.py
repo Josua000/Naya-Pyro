@@ -8,12 +8,11 @@
 import os
 from asyncio import sleep
 
+from kynaylibs.nan.utils import eor
 from pyrogram import Client
 from pyrogram.types import Message
 
 from naya import *
-from kynaylibs.nan.utils import eor
-from kynaylibs.nan import DEVS
 
 flood = {}
 profile_photo = "https://telegra.ph//file/94cc3c815a9e063dad4f0.jpg"
