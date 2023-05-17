@@ -212,14 +212,15 @@ async def close(_, query: CallbackQuery):
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
+    await query.message.delete()
     try:
         await app.ask(
             user_id,
             "<b>Silakan masukkan session dengan format urutan session . Batas session sampai dengan SESSION10.\nContoh : SESSION2 JDOEK29DKDO0XXXXXX</b>",
             timeout=120,
         )
-        await query.message.delete()
     except asyncio.TimeoutError:
+        await query.message.delete()
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
@@ -240,6 +241,7 @@ async def close(_, query: CallbackQuery):
         config_vars = herotod.config()
         if to_set in config_vars:
             config_vars[to_set] = value
+            await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
@@ -252,6 +254,7 @@ async def close(_, query: CallbackQuery):
             )
         else:
             config_vars[to_set] = value
+            await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
@@ -266,6 +269,7 @@ async def close(_, query: CallbackQuery):
     else:
         path = ".env"
         if not os.path.exists(path):
+            await query.message.delete()
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
@@ -279,6 +283,7 @@ async def close(_, query: CallbackQuery):
         with open(path, "a") as f:
             f.write(f"\n{to_set}={value}")
         if dotenv.get_key(path, to_set):
+            await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
@@ -290,14 +295,16 @@ async def close(_, query: CallbackQuery):
                 ),
             )
         else:
-            buttons = [
-                [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-            ]
+            await query.message.delete()
             return await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(buttons),
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
             )
 
 
@@ -312,6 +319,7 @@ async def close(_, query: CallbackQuery):
             timeout=120,
         )
     except asyncio.TimeoutError:
+        await query.message.delete()
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
@@ -331,6 +339,7 @@ async def close(_, query: CallbackQuery):
         config_vars = herotod.config()
         if check_var in config_vars:
             del config_vars[check_var]
+            await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus var `{check_var}`**",
@@ -343,6 +352,7 @@ async def close(_, query: CallbackQuery):
             )
             herotod.update_config(config_vars)
         else:
+            await query.message.delete()
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
@@ -356,6 +366,7 @@ async def close(_, query: CallbackQuery):
     else:
         path = ".env"
         if not os.path.exists(path):
+            await query.message.delete()
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
@@ -368,6 +379,7 @@ async def close(_, query: CallbackQuery):
             )
         dotenv.unset_key(path, check_var)
         if dotenv.get_key(path, check_var) is None:
+            await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus variable `{check_var}`**",
@@ -379,6 +391,7 @@ async def close(_, query: CallbackQuery):
                 ),
             )
         else:
+            await query.message.delete()
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
