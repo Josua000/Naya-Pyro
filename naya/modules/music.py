@@ -78,7 +78,7 @@ async def playout_ended_handler(group_call, filename):
     raw_file = s[0]["raw"]
     link = s[0]["url"]
     file_size = humanbytes(os.stat(raw_file).st_size)
-    song_info = f'📌 <b>Sedang dimainkan</b> \n\n📀 <b>Judul:</b> <a href="{link}">{name_}</a> \n🎸 <b>Artis:</b> <code>{singer_}</code> \n⏲️ <b>Durasi:</b> <code>{dur_}</code> \n📂 <b>Ukuran:</b> <code>{file_size}</code>'
+    song_info = f'📌 <b>Sedang dimainkan</b> \n\n📀 <b>Judul:</b> <a href="{link}">{name_}</a> \n🎸 <b>Channel:</b> <code>{singer_}</code> \n⏲️ <b>Durasi:</b> <code>{dur_}</code> \n📂 <b>Ukuran:</b> <code>{file_size}</code>'
     await client_.send_message(
         chat_,
         song_info,
@@ -109,7 +109,7 @@ async def skip_m(client, message):
         group_call.song_name = vid_title
         return await eor(
             message,
-            f"📌 <b>Memutar Lagu Berikutnya</b>\n\n📀 <b>Judul</b>: <code>{vid_title}</code>\n💌 <b>Artis</b>: </code>{uploade_r}</code>",
+            f"📌 <b>Memutar Lagu Berikutnya</b>\n\n📀 <b>Judul</b>: <code>{vid_title}</code>\n💌 <b>Channel</b>: </code>{uploade_r}</code>",
         )
     else:
         start = time.time()
@@ -146,7 +146,7 @@ async def play_m(client, message):
         vid_title = audio.title or audio.file_name
         uploade_r = message.reply_to_message.audio.performer or "Unknown Artist."
         dura_ = message.reply_to_message.audio.duration
-        dur = datetime.now(seconds=dura_)
+        dur = datetime.time(seconds=dura_)
         raw_file_name = (
             "".join(random.choice(string.ascii_lowercase) for i in range(5)) + ".raw"
         )
