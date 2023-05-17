@@ -224,12 +224,12 @@ async def close(_, query: CallbackQuery):
             "<b>Silakan masukkan session dengan format urutan session . Batas session sampai dengan SESSION10.\nContoh : SESSION2 JDOEK29DKDO0XXXXXX</b>",
             timeout=120,
         )
-    buttons = [
+    except asyncio.TimeoutError:
+        return await app.send_message(user_id, "<b>Waktu telah habis</b>",
+        reply_markup=InlineKeyboardMarkup(buttons = [
             [InlineKeyboardButton(text="Kembali", callback_data="multi")],
             [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-        ]
-    except asyncio.TimeoutError:
-        return await app.send_message(user_id, "<b>Waktu telah habis</b>")
+        ]))
     to_set = message.text.split(None, 1)[1].strip()
     value = message.text.split(None, 2)[2].strip()
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
@@ -241,7 +241,10 @@ async def close(_, query: CallbackQuery):
         if to_set in config_vars:
             config_vars[to_set] = value
             await app.send_message(user_id, f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-            reply_markup=InlineKeyboardMarkup(buttons),
+            reply_markup=InlineKeyboardMarkup(buttons = [
+            [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+        ]),
             )
         else:
             config_vars[to_set] = value
