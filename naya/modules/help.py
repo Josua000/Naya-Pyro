@@ -1,6 +1,23 @@
 import re
 from datetime import datetime
-
+import heroku3
+import time
+import re
+import asyncio
+import math
+import shutil
+import sys
+import dotenv
+import datetime
+import asyncio
+import math
+import os
+import dotenv
+import heroku3
+import requests
+import urllib3
+from dotenv import load_dotenv
+from os import environ, execle, path
 from pyrogram.raw.functions import Ping
 from pyrogram.types import *
 
