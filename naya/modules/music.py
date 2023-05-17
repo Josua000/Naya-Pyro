@@ -7,6 +7,7 @@
 
 
 import asyncio
+import datetime
 import logging
 import os
 import random
@@ -338,7 +339,7 @@ __HELP__ = f"""
 ๏ Perintah: <code>{cmd}resume</code>
 ◉ Penjelasan: Untuk melanjutkan lagu.
 
-๏ Perintah: <code>{cmd}play</code> [judul lagu] atau [link youtube]
+๏ Perintah: <code>{cmd}play</code> [judul lagu/balas audio/link youtube]
 ◉ Penjelasan: Untuk memutar lagu.
 
 ๏ Perintah: <code>{cmd}end</code>
