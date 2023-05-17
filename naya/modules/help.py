@@ -291,8 +291,8 @@ async def close(_, query: CallbackQuery):
             )
         else:
             buttons = [
-            [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
             ]
             return await app.send_message(
                 user_id,
