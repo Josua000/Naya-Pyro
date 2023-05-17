@@ -218,7 +218,8 @@ async def close(_, query: CallbackQuery):
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
-    return await app.ask(
+    try:
+        await app.ask(
             user_id,
             "<b>Silakan masukkan session dengan format urutan session . Batas session sampai dengan SESSION10.\nContoh : SESSION2 JDOEK29DKDO0XXXXXX</b>",
             timeout=120,
@@ -227,7 +228,7 @@ async def close(_, query: CallbackQuery):
             [InlineKeyboardButton(text="Kembali", callback_data="multi")],
             [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
         ]
-    await asyncio.TimeoutError:
+    except asyncio.TimeoutError:
         return await app.send_message(user_id, "<b>Waktu telah habis</b>")
     to_set = message.text.split(None, 1)[1].strip()
     value = message.text.split(None, 2)[2].strip()
