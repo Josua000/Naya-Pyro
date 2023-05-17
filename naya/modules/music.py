@@ -14,6 +14,7 @@ import random
 import string
 import threading
 import time
+from datetime import timedelta
 
 import ffmpeg
 from pyrogram import filters
@@ -130,6 +131,9 @@ async def skip_m(client, message):
             f"📌 <b>Memutar Lagu Berikutnya</b>\n\n📀 <b>Judul</b>: {vid_title}\n💌 <b>Channel</b>: {uploade_r}",
         )
 
+File "/root/Naya-Pyro/naya/modules/music.py", line 149, in play_m    dur = datetime.now(seconds=dura_)
+TypeError: 'seconds' is an invalid keyword argument for now()
+
 
 @bots.on_message(filters.me & filters.command(["play"], cmd))
 async def play_m(client, message):
@@ -146,7 +150,7 @@ async def play_m(client, message):
         vid_title = audio.title or audio.file_name
         uploade_r = message.reply_to_message.audio.performer or "Unknown Artist."
         dura_ = message.reply_to_message.audio.duration
-        dur = datetime.now(seconds=dura_)
+        dur = timedelta(seconds=dura_)
         raw_file_name = (
             "".join(random.choice(string.ascii_lowercase) for i in range(5)) + ".raw"
         )
