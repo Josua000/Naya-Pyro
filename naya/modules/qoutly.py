@@ -1,10 +1,10 @@
 from io import BytesIO
 
-from kynaylibs.nan.utils import http
+from kynaylibs.nan.utils import http, eor
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from . import *
+from naya import *
 
 
 class QuotlyException(Exception):
