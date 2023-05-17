@@ -275,7 +275,7 @@ async def _(_, message):
             f"""
 <b>👋 Halo {message.from_user.first_name}
 💭 Apa ada yang bisa saya bantu ?
-💡 Saya Adalah Bot Milik : <a href=tg://openmessage?user_id=OWNER>OWNER</a> </b>
+💡 Saya Adalah Bot Milik.</b>
 """,
             reply_markup=InlineKeyboardMarkup(
                 [
