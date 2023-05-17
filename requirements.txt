@@ -34,4 +34,4 @@ tracemoepy
 uwuify
 flask
 gunicorn
-googletrans
+python-dotenv
