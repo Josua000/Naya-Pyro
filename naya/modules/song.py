@@ -44,9 +44,9 @@ async def yt_video(client, message):
     if len(message.command) < 2:
         return await eor(
             message,
-            "❌ <b>Video tidak ditemukan,</b>\nMohon masukan judul video dengan benar.",
+            "❌ <code>Video tidak ditemukan,</code>\nMohon masukan judul video dengan benar.",
         )
-    infomsg = await eor(message, "<code>🔍 Pencarian...</code>")
+    infomsg = await eor(message, "<code>Processing...</code>")
     try:
         search = (
             SearchVideos(
@@ -71,7 +71,7 @@ async def yt_video(client, message):
             "geo_bypass": True,
         }
     )
-    await infomsg.edit(f"<code>📥 Downloader...</code>")
+    await infomsg.edit(f"<code>Uploading...</code>")
     try:
         ytdl_data = await run_sync(ydl.extract_info, link, download=True)
         file_path = ydl.prepare_filename(ytdl_data)
@@ -83,7 +83,7 @@ async def yt_video(client, message):
         views = f"{ytdl_data['view_count']:,}".replace(",", ".")
         thumbs = f"https://img.youtube.com/vi/{videoid}/hqdefault.jpg"
     except Exception as error:
-        return await infomsg.edit(f"<code>📥 Downloader...\n\n❌ Error: {error}</code>")
+        return await infomsg.edit(f"<code>Error: {error}</code>")
     thumbnail = wget.download(thumbs)
     await client.send_video(
         message.chat.id,
@@ -92,14 +92,7 @@ async def yt_video(client, message):
         file_name=title,
         duration=duration,
         supports_streaming=True,
-        caption="<b>💡 Informasi {}</b>\n\n<b>🏷 Nama:</b> {}\n<b>🧭 Durasi:</b> {}\n<b>👀 Dilihat:</b> {}\n<b>📢 Channel:</b> {}\n<b>🔗 Tautan:</b> <a href={}>Youtube</a>\n\n<b>⚡ Upload By:</b> {}".format(
-            "video",
-            title,
-            duration,
-            views,
-            channel,
-            url,
-            client.me.mention,
+        caption=f"<b>Upload By: {client.me.mention}</b>",
         ),
         reply_to_message_id=message.id,
     )
@@ -114,9 +107,9 @@ async def yt_audio(client, message):
     if len(message.command) < 2:
         return await eor(
             message,
-            "❌ <b>Audio tidak ditemukan,</b>\nMohon masukan judul video dengan benar.",
+            "❌ <code>Audio tidak ditemukan,</code>\nMohon masukan judul video dengan benar.",
         )
-    infomsg = await eor(message, "<code>🔍 Pencarian...</code>")
+    infomsg = await eor(message, "<code>Processing...</code>")
     try:
         search = (
             SearchVideos(
@@ -141,7 +134,7 @@ async def yt_audio(client, message):
             "geo_bypass": True,
         }
     )
-    await infomsg.edit(f"<code>📥 Downloader...</code>")
+    await infomsg.edit(f"<code>Uploading...</code>")
     try:
         ytdl_data = await run_sync(ydl.extract_info, link, download=True)
         file_path = ydl.prepare_filename(ytdl_data)
@@ -153,7 +146,7 @@ async def yt_audio(client, message):
         views = f"{ytdl_data['view_count']:,}".replace(",", ".")
         thumbs = f"https://img.youtube.com/vi/{videoid}/hqdefault.jpg"
     except Exception as error:
-        return await infomsg.edit(f"<code>📥 Downloader...\n\n❌ Error: {error}</code>")
+        return await infomsg.edit(f"<code>Error: {error}</code>")
     thumbnail = wget.download(thumbs)
     await client.send_audio(
         message.chat.id,
@@ -161,14 +154,7 @@ async def yt_audio(client, message):
         thumb=thumbnail,
         file_name=title,
         duration=duration,
-        caption="<b>💡 Informasi {}</b>\n\n<b>🏷 Nama:</b> {}\n<b>🧭 Durasi:</b> {}\n<b>👀 Dilihat:</b> {}\n<b>📢 Channel:</b> {}\n<b>🔗 Tautan:</b> <a href={}>Youtube</a>\n\n<b>⚡ Upload By:</b> {}".format(
-            "Audio",
-            title,
-            duration,
-            views,
-            channel,
-            url,
-            client.me.mention,
+        caption=f"<b>Upload By:</b> {clien.me.mention}",
         ),
         reply_to_message_id=message.id,
     )
