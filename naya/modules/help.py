@@ -212,6 +212,7 @@ async def close(_, query: CallbackQuery):
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
+    await query.message.delete()
     try:
         await app.ask(
             user_id,
@@ -295,10 +296,10 @@ async def close(_, query: CallbackQuery):
             )
         else:
             await query.message.delete()
-            buttons = [
-                [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-            ]
+            buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             return await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
