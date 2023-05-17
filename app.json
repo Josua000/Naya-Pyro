@@ -50,6 +50,10 @@
             "description": "API_ID Lu Tau kan ?",
             "required": true
         },
+        "OWNER": {
+            "description": "Isi ID Mu Untuk Bot",
+            "required": true
+        },
         "API_HASH": {
             "description": "API_HASH Tau kan ?",
             "required": true
