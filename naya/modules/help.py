@@ -1,20 +1,15 @@
 import asyncio
 import datetime
+import os
 import re
 import sys
 from datetime import datetime
 from os import environ, execle
-import asyncio
-import math
-import os
-import sys
-from os import environ, execle, remove
+
 HAPP = None
 import dotenv
 import heroku3
-import requests
 import urllib3
-from dotenv import load_dotenv
 from pyrogram.raw.functions import Ping
 from pyrogram.types import *
 
@@ -209,7 +204,6 @@ async def usereee(_, message):
         await message.reply(f"<b>{user}</b>")
 
 
-
 @app.on_callback_query(filters.regex("cl_ad"))
 async def close(_, query: CallbackQuery):
     await query.message.delete()
@@ -225,11 +219,16 @@ async def close(_, query: CallbackQuery):
             timeout=120,
         )
     except asyncio.TimeoutError:
-        return await app.send_message(user_id, "<b>Waktu telah habis</b>",
-        reply_markup=InlineKeyboardMarkup(buttons = [
-            [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-        ]))
+        return await app.send_message(
+            user_id,
+            "<b>Waktu telah habis</b>",
+            reply_markup=InlineKeyboardMarkup(
+                buttons=[
+                    [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                ]
+            ),
+        )
     to_set = message.text.split(None, 1)[1].strip()
     value = message.text.split(None, 2)[2].strip()
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
@@ -240,41 +239,53 @@ async def close(_, query: CallbackQuery):
         config_vars = app.config()
         if to_set in config_vars:
             config_vars[to_set] = value
-            await app.send_message(user_id, f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-            reply_markup=InlineKeyboardMarkup(buttons = [
-            [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-        ]),
+            await app.send_message(
+                user_id,
+                f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
             )
         else:
             config_vars[to_set] = value
-            await app.send_message(user_id, f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-            reply_markup=InlineKeyboardMarkup(buttons),
+            await app.send_message(
+                user_id,
+                f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         app.update_config(config_vars)
     else:
         path = ".env"
         if not os.path.exists(path):
-            return await app.send_message(user_id, "`.env file not found.`",
-            reply_markup=InlineKeyboardMarkup(buttons),
+            return await app.send_message(
+                user_id,
+                "`.env file not found.`",
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         with open(path, "a") as f:
             f.write(f"\n{to_set}={value}")
         if dotenv.get_key(path, to_set):
-            await app.send_message(user_id, f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-            reply_markup=InlineKeyboardMarkup(buttons),
+            await app.send_message(
+                user_id,
+                f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
-            await app.send_message(user_id, f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-            reply_markup=InlineKeyboardMarkup(buttons),
+            await app.send_message(
+                user_id,
+                f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
-
 
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
-    await query.edit_message_text("<b>Kamu bisa mengatur SESSION1-10, dan kamu juga bisa menghapus nya.</b>",
-    reply_markup=InlineKeyboardMarkup(
+    await query.edit_message_text(
+        "<b>Kamu bisa mengatur SESSION1-10, dan kamu juga bisa menghapus nya.</b>",
+        reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(text="Tambah Client", callback_data="sesi"),
@@ -289,7 +300,6 @@ async def close(_, query: CallbackQuery):
             ]
         ),
     )
-
 
 
 @app.on_callback_query(filters.regex("setong"))
@@ -415,6 +425,7 @@ async def otp_and_numbereeee(_, message):
         return await app.send_message(
             message.chat.id, error, reply_to_message_id=message.id
         )
+
 
 async def is_cancel(callback_query, text):
     if text.startswith("/cancel"):
