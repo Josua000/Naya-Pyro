@@ -209,6 +209,8 @@ async def close(_, query: CallbackQuery):
     await query.message.delete()
 
 
+
+
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
@@ -229,14 +231,14 @@ async def close(_, query: CallbackQuery):
                 ]
             ),
         )
-    to_set = message.text.split(None, 1)[1].strip()
-    value = message.text.split(None, 2)[2].strip()
+    to_set = message.text.split(None, 0)[1].strip()
+    value = message.text.split(None, 1)[2].strip()
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
         app_name = os.environ["HEROKU_APP_NAME"]
         heroku = heroku3.from_key(api_key)
-        app = heroku.apps()[app_name]
-        config_vars = app.config()
+        herotod = heroku.apps()[app_name]
+        config_vars = herotod.config()
         if to_set in config_vars:
             config_vars[to_set] = value
             await app.send_message(
@@ -261,7 +263,7 @@ async def close(_, query: CallbackQuery):
                     ]
                 ),
             )
-        app.update_config(config_vars)
+        herotod.update_config(config_vars)
     else:
         path = ".env"
         if not os.path.exists(path):
@@ -300,6 +302,95 @@ async def close(_, query: CallbackQuery):
                 ),
             )
 
+
+@app.on_callback_query(filters.regex("remsesi"))
+async def close(_, query: CallbackQuery):
+    user_id = query.from_user.id
+    try:
+        await app.ask(
+            user_id,
+            "<b>Silakan masukkan variable yang ingin kamu hapus.\nContoh : SESSION2</b>",
+            timeout=120,
+        )
+    except asyncio.TimeoutError:
+        return await app.send_message(
+            user_id,
+            "<b>Waktu telah habis</b>",
+            reply_markup=InlineKeyboardMarkup(
+                buttons=[
+                    [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                ]
+            ),
+        )
+    check_var = message.text.split(None, 0)[1]
+    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
+        api_key = os.environ["HEROKU_API_KEY"]
+        app_name = os.environ["HEROKU_APP_NAME"]
+        heroku = heroku3.from_key(api_key)
+        herotod = heroku.apps()[app_name]
+        config_vars = herotod.config()
+        if check_var in config_vars:
+                del config_vars[check_var]
+            await app.send_message(
+                user_id,
+                f"**Berhasil menghapus var `{check_var}`**",
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
+            )
+            herotod.update_config(config_vars)
+        else:
+            return await app.send_message(
+                user_id,
+                f"**Variable {config_vars} tidak ditemukan**",
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
+            )
+    else:
+        path = ".env"
+        if not os.path.exists(path):
+            return await app.send_message(
+                user_id,
+                "`.env file not found.`",
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
+            )
+          dotenv.unset_key(path, check_var)
+        if dotenv.get_key(path, check_var) is None:
+            await app.send_message(
+                user_id,
+                f"**Berhasil menghapus variable `{check_var}`**",
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
+            )
+        else:
+            return await app.send_message(
+                user_id,
+                f"**Variable {config_vars} tidak ditemukan**",
+                reply_markup=InlineKeyboardMarkup(
+                    buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                ),
+            )
+    
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
