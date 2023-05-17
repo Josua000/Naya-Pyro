@@ -242,7 +242,7 @@ async def _(_, query: CallbackQuery):
         ],
     ]
     await bot.send_message(
-        message.chat.id,
+        query.message.chat.id,
         f"<b>Apakah kamu yakin ingin Melakukan Restart ?</b>",
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(buttons),
