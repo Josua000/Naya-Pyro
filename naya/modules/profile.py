@@ -7,15 +7,28 @@
 
 import os
 from asyncio import sleep
+from asyncio import get_event_loop, sleep
+from functools import partial, wraps
+from io import BytesIO
+from re import findall
+from time import time
 
-from kynaylibs.nan.utils import eor
+from pyrogram import Client, enums
+from pyrogram.enums import ChatMemberStatus, ChatType
+from pyrogram.errors import PeerIdInvalid, UserNotParticipant
+from pyrogram.types import Message
 from pyrogram import Client
 from pyrogram.types import Message
 
 from naya import *
+from kynaylibs.nan.utils import eor
+from kynaylibs import DEVS
 
 flood = {}
 profile_photo = "https://telegra.ph//file/94cc3c815a9e063dad4f0.jpg"
+
+
+admins_in_chat = {}
 
 
 async def list_admins(client: Client, chat_id: int):
@@ -37,8 +50,8 @@ async def list_admins(client: Client, chat_id: int):
     return admins_in_chat[chat_id]["data"]
 
 
-async def extract_userid(message, text: str):
-    def is_int(text: str):
+async def extract_userid(message, text):
+    def is_int(text):
         try:
             int(text)
         except ValueError:
@@ -52,12 +65,10 @@ async def extract_userid(message, text: str):
 
     entities = message.entities
     app = message._client
-    if len(entities) < 2:
+    entity = entities[1 if message.text.startswith("/") else 0]
+    if entity.type == enums.MessageEntityType.MENTION:
         return (await app.get_users(text)).id
-    entity = entities[1]
-    if entity.type == "mention":
-        return (await app.get_users(text)).id
-    if entity.type == "text_mention":
+    if entity.type == enums.MessageEntityType.TEXT_MENTION:
         return entity.user.id
     return None
 
