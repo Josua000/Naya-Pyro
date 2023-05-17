@@ -14,7 +14,7 @@ __HELP__ = f"""
 """
 
 telegraph = Telegraph()
-get_result = telegraph.create_account(short_name="Naya")
+get_result = telegraph.create_account(short_name="Naya-Pyro)
 auth_url = get_result["auth_url"]
 
 
