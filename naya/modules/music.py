@@ -178,6 +178,7 @@ async def play_m(client, message):
         return await u_s.edit(f"<b>Error :</b> <code>{e}</code>")
     if os.path.exists(audio_original):
         os.remove(audio_original)
+        os.remove(raw_file_name)
     if not group_call:
         group_call = GroupCallFactory(client).get_file_group_call()
         group_call.song_name = vid_title
