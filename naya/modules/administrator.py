@@ -13,7 +13,6 @@ from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 
 from . import *
-from .profile import extract_user
 
 unmute_permissions = ChatPermissions(
     can_send_messages=True,
