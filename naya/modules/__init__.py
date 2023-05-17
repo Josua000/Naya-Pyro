@@ -1,6 +1,7 @@
 from glob import glob
 from os.path import basename, dirname, isfile
-
+from pyrogram.types import *
+from pyrogram import *
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.utils import *
