@@ -48,8 +48,13 @@ class Bot(Client):
             f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
         )
 
+    async def stop(self, *args):
+        await super().stop()
+        self.LOGGER(__name__).info("Naya-Pyro stopped. Bye.")
+
 
 class Ubot(Client):
+    __module__ = "pyrogram.client"
     _bots = []
 
     def __init__(self, name, **kwargs):
@@ -59,7 +64,7 @@ class Ubot(Client):
     def on_message(self, filters=filters.Filter, group=0):
         def decorator(func):
             for bot in self._bots:
-                bot.add_handler(MessageHandler(func, filters))
+                bot.add_handler(MessageHandler(func, filters), group)
             return func
 
         return decorator
