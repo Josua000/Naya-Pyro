@@ -2,8 +2,12 @@ import os
 
 from pyrogram import filters
 from telegraph import Telegraph, exceptions, upload_file
-
-from . import *
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from telegraph import Telegraph, exceptions, upload_file
+import os
+from kynaylibs.nan.utils.tools import *
+from naya import *
 
 __MODULE__ = "telegraph"
 __HELP__ = f"""
