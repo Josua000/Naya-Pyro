@@ -98,6 +98,7 @@ async def skip_m(client, message):
         return await eor(message, "<code>Tidak sedang memutar apa-apa!</code>")
     if not s_d:
         return await eor(message, "<code>Antrian kosong!</code>")
+        await group_call.stop()
     next_song = s_d.pop(0)
     raw_file_name = next_song["raw"]
     vid_title = next_song["song_name"]
