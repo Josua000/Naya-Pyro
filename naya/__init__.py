@@ -32,28 +32,6 @@ telegraph.create_account(short_name="ubot")
 aiosession = ClientSession()
 
 
-class Ubot(Client):
-    __module__ = "pyrogram.client"
-    _bots = []
-
-    def __init__(self, name, **kwargs):
-        super().__init__(name=name, **kwargs)
-        self.group_call = GroupCallFactory(self).get_group_call()
-
-    def on_message(self, filters=filters.Filter, group=-1):
-        def decorator(func):
-            for bot in self._bots:
-                bot.add_handler(MessageHandler(func, filters), group)
-            return func
-
-        return decorator
-
-    async def start(self):
-        await super().start()
-        if self not in self._bots:
-            self._bots.append(self)
-
-
 app = Client(
     name="ubot",
     api_hash=API_HASH,
@@ -64,6 +42,7 @@ app = Client(
 if not BOT_TOKEN:
     LOGGER(__name__).error("WARNING: BOT TOKEN TIDAK DITEMUKAN, SHUTDOWN BOT")
     sys.exit()
+
 
 bot1 = (
     Ubot(
@@ -190,3 +169,4 @@ botlist = [
 
 for bot in botlist:
     bots._bots.append(bot)
+    bot.on_message(bots._handle_message)
