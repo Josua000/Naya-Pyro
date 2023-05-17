@@ -35,3 +35,4 @@ uwuify
 flask
 gunicorn
 python-dotenv
+uvloop
