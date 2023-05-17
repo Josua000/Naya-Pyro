@@ -227,9 +227,8 @@ async def close(_, query: CallbackQuery):
             buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                    ],
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
     to_set = query.message.text.split(None, 1)[1].strip()
     value = query.message.text.split(None, 2)[2].strip()
@@ -249,8 +248,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
             config_vars[to_set] = value
@@ -262,8 +260,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         herotod.update_config(config_vars)
     else:
@@ -277,8 +274,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         with open(path, "a") as f:
             f.write(f"\n{to_set}={value}")
@@ -291,8 +287,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
             await query.message.delete()
@@ -326,8 +321,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
     check_var = query.message.text.split(None, 1)[1]
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
@@ -346,8 +340,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
             herotod.update_config(config_vars)
         else:
@@ -359,8 +352,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
     else:
         path = ".env"
@@ -373,8 +365,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         dotenv.unset_key(path, check_var)
         if dotenv.get_key(path, check_var) is None:
@@ -386,8 +377,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
             await query.message.delete()
@@ -398,8 +388,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
 
 
