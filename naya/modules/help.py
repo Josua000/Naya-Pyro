@@ -290,28 +290,27 @@ async def close(_, query: CallbackQuery):
                 ),
             )
         else:
-            await app.send_message(
+            buttons = [
+            [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+            ]
+            return await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
-                ),
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
 
 
 @app.on_callback_query(filters.regex("remsesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
+    await query.message.delete()
     try:
         await app.ask(
             user_id,
             "<b>Silakan masukkan variable yang ingin kamu hapus.\nContoh : SESSION2</b>",
             timeout=120,
         )
-        await query.message.delete()
     except asyncio.TimeoutError:
         return await app.send_message(
             user_id,
