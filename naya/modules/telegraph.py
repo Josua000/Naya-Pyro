@@ -1,9 +1,12 @@
 import os
 
-from kynaylibs.nan.utils.tools import *
 from pyrogram import filters
 from telegraph import Telegraph, exceptions, upload_file
-
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from telegraph import Telegraph, exceptions, upload_file
+import os
+from kynaylibs.nan.utils.tools import *
 from naya import *
 
 __MODULE__ = "telegraph"
@@ -15,8 +18,8 @@ __HELP__ = f"""
 """
 
 telegraph = Telegraph()
-get_result = telegraph.create_account(short_name="Naya-Pyro")
-auth_url = get_result["auth_url"]
+r = telegraph.create_account(short_name="Naya-Pyro")
+auth_url = r["auth_url"]
 
 
 @bots.on_message(filters.me & filters.command("tg", cmd))
