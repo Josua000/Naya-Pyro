@@ -7,22 +7,13 @@
 
 import os
 from asyncio import sleep
-from asyncio import get_event_loop, sleep
-from functools import partial, wraps
-from io import BytesIO
-from re import findall
 from time import time
 
+from kynaylibs.nan.utils import eor
 from pyrogram import Client, enums
-from pyrogram.enums import ChatMemberStatus, ChatType
-from pyrogram.errors import PeerIdInvalid, UserNotParticipant
-from pyrogram.types import Message
-from pyrogram import Client
 from pyrogram.types import Message
 
 from naya import *
-from kynaylibs.nan.utils import eor
-from kynaylibs import DEVS
 
 flood = {}
 profile_photo = "https://telegra.ph//file/94cc3c815a9e063dad4f0.jpg"
