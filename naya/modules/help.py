@@ -224,7 +224,7 @@ async def close(_, query: CallbackQuery):
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
-            buttons=[
+            buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ],
@@ -244,7 +244,7 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -256,7 +256,7 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -270,7 +270,7 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -283,7 +283,7 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -291,7 +291,7 @@ async def close(_, query: CallbackQuery):
             )
         else:
             await query.message.delete()
-            buttons=[
+            buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -336,7 +336,7 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus var `{check_var}`**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -348,7 +348,7 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -361,7 +361,7 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -373,7 +373,7 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus variable `{check_var}`**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
@@ -384,7 +384,7 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
-                buttons=[
+                buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
