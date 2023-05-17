@@ -294,7 +294,7 @@ async def close(_, query: CallbackQuery):
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-            await query.message.delete()
+        await query.message.delete()
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
