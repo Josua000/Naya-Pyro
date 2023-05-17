@@ -320,9 +320,6 @@ __MODULE__ = "updater"
 __HELP__ = f"""
 ✘ Bantuan Untuk Updater
 
-Perintah: <code>{cmd}cekupdate</code>
-Penjelasan: Untuk mengetahui apa yang baru.
-
 Perintah: <code>{cmd}update gas</code>
 Penjelasan: Untuk melakukan update Naya-Pyro.
 """
