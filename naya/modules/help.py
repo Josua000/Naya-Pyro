@@ -206,10 +206,10 @@ async def setdah(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                   InlineKeyboardButton(text="Multi Client", callback_data="multi"),
+                    InlineKeyboardButton(text="Multi Client", callback_data="multi"),
                 ],
                 [
-                   InlineKeyboardButton(text="Restart", callback_data="retor"),
+                    InlineKeyboardButton(text="Restart", callback_data="retor"),
                 ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
@@ -231,7 +231,6 @@ async def jadi(_, query: CallbackQuery):
     await query.edit_message_text(f"✅ <b>{app.me.mention} Berhasil Di Restart.</b>")
     args = [sys.executable, "-m", "naya"]
     execle(sys.executable, *args, environ)
-    
 
 
 @app.on_callback_query(filters.regex("retor"))
@@ -252,40 +251,40 @@ async def _(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
+
 @app.on_message(filters.command(["start"]))
 async def _(_, message):
     user_id = message.from_user.id
     if user_id == OWNER:
         await message.reply_text(
-        f"""
+            f"""
 <b>👋 Halo {message.from_user.first_name}
 💭 Apa ada yang bisa saya bantu ?
 💡 Silakan pilih tombol dibawah untuk kamu perlukan.
 </b>""",
-        buttons = [
-            [InlineKeyboardButton(text="Pengaturan", callback_data="setong")],
-            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-        ],
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(buttons)
+            buttons=[
+                [InlineKeyboardButton(text="Pengaturan", callback_data="setong")],
+                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+            ],
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(buttons),
         )
     else:
         await message.reply_text(
-f"""
+            f"""
 <b>👋 Halo {message.from_user.first_name}
 💭 Apa ada yang bisa saya bantu ?
 💡 Saya Adalah Bot Milik : <a href=tg://openmessage?user_id=OWNER>OWNER</a> </b>
 """,
-        buttons = [
-            [InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER)],
-            [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-        ],
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(buttons)
+            buttons=[
+                [InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER)],
+                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+            ],
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(buttons),
         )
-        
-        
-        
+
+
 @app.on_message(filters.command(["getotp", "getnum"]) & filters.private)
 async def otp_and_numbereeee(_, message):
     if len(message.command) < 2:
