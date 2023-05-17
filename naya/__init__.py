@@ -13,7 +13,7 @@ from pyrogram import Client, __version__, enums, filters
 from pyrogram.handlers import MessageHandler
 from pyromod import listen
 from pytgcalls import GroupCallFactory
-from telegraph import Telegraph, exceptions, upload_file
+#from telegraph import Telegraph, exceptions, upload_file
 
 from .config import (API_HASH, API_ID, BOT_TOKEN, CMD_HNDLR, SESSION1,
                      SESSION2, SESSION3, SESSION4, SESSION5, SESSION6,
@@ -26,8 +26,8 @@ ids = []
 scheduler = AsyncIOScheduler()
 CMD_HELP = {}
 START_TIME = datetime.now()
-telegraph = Telegraph()
-telegraph.create_account(short_name="ubot")
+#telegraph = Telegraph()
+#telegraph.create_account(short_name="ubot")
 
 aiosession = ClientSession()
 
@@ -43,6 +43,25 @@ if not BOT_TOKEN:
     LOGGER(__name__).error("WARNING: BOT TOKEN TIDAK DITEMUKAN, SHUTDOWN BOT")
     sys.exit()
 
+class Ubot(Client):
+    _bots = []
+
+    def __init__(self, name, **kwargs):
+        super().__init__(name=name, **kwargs)
+        self.group_call = GroupCallFactory(self).get_group_call()
+
+    def on_message(self):
+        def decorator(func):
+            for bot in self._bots:
+                bot.add_handler(MessageHandler(func))
+            return func
+
+        return decorator
+
+    async def start(self):
+        await super().start()
+        if self not in self._bots:
+            self._bots.append(self)
 
 bot1 = (
     Ubot(
@@ -169,4 +188,3 @@ botlist = [
 
 for bot in botlist:
     bots._bots.append(bot)
-    bot.on_message(bots._handle_message)
