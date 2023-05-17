@@ -4,6 +4,7 @@ services:
     build: .
     environment:
       API_ID: $API_ID
+      OWNER: $OWNER
       API_HASH: $API_HASH
       HEROKU_APP_NAME: $HEROKU_APP_NAME
       HEROKU_API_KEY: $HEROKU_API_KEY
