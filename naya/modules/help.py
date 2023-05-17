@@ -220,15 +220,15 @@ async def close(_, query: CallbackQuery):
             timeout=120,
         )
     except asyncio.TimeoutError:
-        await query.message.delete()
+        buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+            await query.message.delete()
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
-            buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ],
-                reply_markup=InlineKeyboardMarkup(buttons),
+            reply_markup=InlineKeyboardMarkup(buttons),
             )
     to_set = query.message.text.split(None, 1)[1].strip()
     value = query.message.text.split(None, 2)[2].strip()
@@ -240,61 +240,38 @@ async def close(_, query: CallbackQuery):
         config_vars = herotod.config()
         if to_set in config_vars:
             config_vars[to_set] = value
-            await query.message.delete()
-            await app.send_message(
-                user_id,
-                f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                buttons = [
+            buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(buttons),
-            )
-        else:
-            config_vars[to_set] = value
             await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
         herotod.update_config(config_vars)
     else:
         path = ".env"
         if not os.path.exists(path):
+            buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             await query.message.delete()
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
         with open(path, "a") as f:
             f.write(f"\n{to_set}={value}")
         if dotenv.get_key(path, to_set):
-            await query.message.delete()
-            await app.send_message(
-                user_id,
-                f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
-                reply_markup=InlineKeyboardMarkup(buttons),
-            )
-        else:
-            await query.message.delete()
             buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+            await query.message.delete()
             return await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
@@ -313,15 +290,15 @@ async def close(_, query: CallbackQuery):
             timeout=120,
         )
     except asyncio.TimeoutError:
-        await query.message.delete()
-        return await app.send_message(
-            user_id,
-            "<b>Waktu telah habis</b>",
-            buttons=[
+        buttons = [
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                reply_markup=InlineKeyboardMarkup(buttons),
+            await query.message.delete()
+        return await app.send_message(
+            user_id,
+            "<b>Waktu telah habis</b>",
+            reply_markup=InlineKeyboardMarkup(buttons),
             )
     check_var = query.message.text.split(None, 1)[1]
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
@@ -332,62 +309,62 @@ async def close(_, query: CallbackQuery):
         config_vars = herotod.config()
         if check_var in config_vars:
             del config_vars[check_var]
+            buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus var `{check_var}`**",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
             herotod.update_config(config_vars)
         else:
+            buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             await query.message.delete()
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
     else:
         path = ".env"
         if not os.path.exists(path):
+            buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             await query.message.delete()
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
         dotenv.unset_key(path, check_var)
         if dotenv.get_key(path, check_var) is None:
+            buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             await query.message.delete()
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus variable `{check_var}`**",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
+            buttons = [
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             await query.message.delete()
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
-                buttons = [
-                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
 
