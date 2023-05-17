@@ -331,7 +331,7 @@ async def close(_, query: CallbackQuery):
         herotod = heroku.apps()[app_name]
         config_vars = herotod.config()
         if check_var in config_vars:
-                del config_vars[check_var]
+            del config_vars[check_var]
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus var `{check_var}`**",
