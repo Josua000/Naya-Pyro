@@ -49,7 +49,7 @@ class Bot(Client):
 
 class Ubot(Client):
     _bots = []
-    
+
     def __init__(self, name, **kwargs):
         super().__init__(name=name, **kwargs)
         self.group_call = GroupCallFactory(self).get_group_call()
