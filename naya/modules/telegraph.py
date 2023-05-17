@@ -1,4 +1,4 @@
-"""
+
 
 import os
 
@@ -7,12 +7,12 @@ from pyrogram import filters
 from . import *
 
 __MODULE__ = "telegraph"
-__HELP__ = f"
+__HELP__ = f"""
 ✘ Bantuan Untuk Telegraph
 
 ๏ Perintah: <code>{cmd}tg</code> [reply media/text]
 ◉ Penjelasan: Untuk mengapload media/text ke telegra.ph.
-"
+"""
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name="Naya-Pyro")
@@ -52,4 +52,3 @@ async def uptotelegraph(client, message):
             f"**Uploaded as** [Telegraph](https://telegra.ph/{response['path']})"
         )
         await tex.edit(wow_graph)
-"""
