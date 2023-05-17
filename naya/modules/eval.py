@@ -2,7 +2,8 @@ import os
 import sys
 import traceback
 from io import BytesIO, StringIO
-
+from pyrogram.types import *
+from pyrogram import *
 from . import *
 
 __MODULE__ = "devs"
@@ -26,12 +27,6 @@ async def _(client, message):
     if len(message.command) < 2:
         return await eor(message, "`Give me commands dude...`")
     try:
-        if message.command[1] == "restart":
-            # await message.delete()
-            os.system(f"kill -9 {os.getpid()} && python3 -m naya")
-        elif message.command[1] == "gitpull":
-            # await message.delete()
-            os.system(f"kill -9 {os.getpid()} && git pull && python3 -m naya")
             await eor(message, "`Processing...`")
             screen = (await bash(message.text.split(None, 1)[1]))[0]
             if int(len(str(screen))) > 4096:
