@@ -224,13 +224,13 @@ async def close(_, query: CallbackQuery):
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
-            reply_markup=InlineKeyboardMarkup(
-                buttons=[
-                    [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                ]
-            ),
-        )
+            buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                reply_markup=InlineKeyboardMarkup(
+                ),
+            )
     to_set = query.message.text.split(None, 1)[1].strip()
     value = query.message.text.split(None, 2)[2].strip()
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
@@ -245,11 +245,11 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
         else:
@@ -258,11 +258,11 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
         herotod.update_config(config_vars)
@@ -273,11 +273,11 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
         with open(path, "a") as f:
@@ -287,19 +287,19 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil Mengubah var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
         else:
             await query.message.delete()
-            buttons = [
-                [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-            ]
+            buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
             return await app.send_message(
                 user_id,
                 f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
@@ -322,13 +322,13 @@ async def close(_, query: CallbackQuery):
         return await app.send_message(
             user_id,
             "<b>Waktu telah habis</b>",
-            reply_markup=InlineKeyboardMarkup(
-                buttons=[
-                    [InlineKeyboardButton(text="Kembali", callback_data="multi")],
-                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                ]
-            ),
-        )
+            buttons=[
+                        [InlineKeyboardButton(text="Kembali", callback_data="multi")],
+                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                reply_markup=InlineKeyboardMarkup(
+                ),
+            )
     check_var = query.message.text.split(None, 1)[1]
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
@@ -342,11 +342,11 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus var `{check_var}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
             herotod.update_config(config_vars)
@@ -355,11 +355,11 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
     else:
@@ -369,11 +369,11 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 "`.env file not found.`",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
         dotenv.unset_key(path, check_var)
@@ -382,11 +382,11 @@ async def close(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"**Berhasil menghapus variable `{check_var}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
         else:
@@ -394,11 +394,11 @@ async def close(_, query: CallbackQuery):
             return await app.send_message(
                 user_id,
                 f"**Variable {config_vars} tidak ditemukan**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+                buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
+                reply_markup=InlineKeyboardMarkup(
                 ),
             )
 
@@ -406,7 +406,7 @@ async def close(_, query: CallbackQuery):
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
     await query.message.delete()
-    await bot.send_mesaage(
+    await app.send_mesaage(
         "<b>Kamu bisa mengatur SESSION1-10, dan kamu juga bisa menghapus nya.</b>",
         reply_markup=InlineKeyboardMarkup(
             [
