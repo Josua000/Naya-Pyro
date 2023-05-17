@@ -232,10 +232,6 @@ async def jadi(_, query: CallbackQuery):
     args = [sys.executable, "-m", "naya"]
     execle(sys.executable, *args, environ)
     
-    
-@app.on_callback_query(filters.regex(["multi"]))
-async def multi(_, query: CallbackQuery):
-    
 
 
 @app.on_callback_query(filters.regex(["retor"]))
