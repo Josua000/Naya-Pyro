@@ -26,7 +26,7 @@ telegraph
 heroku3
 openai
 APScheduler
-kynaylibs==1.5.9
+kynaylibs==1.6.0
 psutil
 httpx[http2]
 textblob
