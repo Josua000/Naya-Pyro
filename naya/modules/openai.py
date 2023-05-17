@@ -1,6 +1,7 @@
 from pyrogram import filters
-
-from . import *
+from naya import *
+from kynaylibs.nan.utils import eor
+from kynaylibs.nan.utils.ai import *
 
 __MODULE__ = "openai"
 __HELP__ = f"""
