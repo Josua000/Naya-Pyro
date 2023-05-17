@@ -296,15 +296,14 @@ async def close(_, query: CallbackQuery):
             )
         else:
             await query.message.delete()
-            return await app.send_message(
-                user_id,
-                f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
-                reply_markup=InlineKeyboardMarkup(
-                    buttons=[
+            buttons=[
                         [InlineKeyboardButton(text="Kembali", callback_data="multi")],
                         [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                     ]
-                ),
+            return await app.send_message(
+                user_id,
+                f"**Berhasil Menambahkan var `{to_set}` menjadi `{value}`**",
+                reply_markup=InlineKeyboardMarkup(buttons),
             )
 
 
