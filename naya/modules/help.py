@@ -209,6 +209,8 @@ async def close(_, query: CallbackQuery):
     await query.message.delete()
 
 
+
+
 @app.on_callback_query(filters.regex("sesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
@@ -218,6 +220,7 @@ async def close(_, query: CallbackQuery):
             "<b>Silakan masukkan session dengan format urutan session . Batas session sampai dengan SESSION10.\nContoh : SESSION2 JDOEK29DKDO0XXXXXX</b>",
             timeout=120,
         )
+        await query.message.delete()
     except asyncio.TimeoutError:
         return await app.send_message(
             user_id,
@@ -229,8 +232,8 @@ async def close(_, query: CallbackQuery):
                 ]
             ),
         )
-    to_set = message.text.split(None, 0)[1].strip()
-    value = message.text.split(None, 1)[2].strip()
+    to_set = query.message.text.split(None, 0)[1].strip()
+    value = query.message.text.split(None, 1)[2].strip()
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
         app_name = os.environ["HEROKU_APP_NAME"]
@@ -310,6 +313,7 @@ async def close(_, query: CallbackQuery):
             "<b>Silakan masukkan variable yang ingin kamu hapus.\nContoh : SESSION2</b>",
             timeout=120,
         )
+        await query.message.delete()
     except asyncio.TimeoutError:
         return await app.send_message(
             user_id,
@@ -321,7 +325,7 @@ async def close(_, query: CallbackQuery):
                 ]
             ),
         )
-    check_var = message.text.split(None, 0)[1]
+    check_var = query.message.text.split(None, 0)[1]
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
         app_name = os.environ["HEROKU_APP_NAME"]
@@ -388,7 +392,7 @@ async def close(_, query: CallbackQuery):
                     ]
                 ),
             )
-
+    
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
