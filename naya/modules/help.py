@@ -235,9 +235,6 @@ async def jadi(_, query: CallbackQuery):
 
 @app.on_callback_query(filters.regex("retor"))
 async def _(_, query: CallbackQuery):
-    user_id = query.from_user.id
-    if user_id not OWNER:
-        return await query.edit_message_text("<b>❌ LU SIAPA ANJENG ?</b>")
     buttons = [
         [
             InlineKeyboardButton(text="✅ Restart", callback_data="restart"),
