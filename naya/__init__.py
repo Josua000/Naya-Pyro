@@ -6,12 +6,13 @@ import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from typing import Any, Dict
-
+from telegraph import Telegraph
 from aiohttp import ClientSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from pyrogram import Client, __version__, enums, filters
 from pyrogram.handlers import MessageHandler
 from pyromod import listen
+from telegraph import Telegraph, exceptions, upload_file
 from pytgcalls import GroupCallFactory
 
 from .config import (API_HASH, API_ID, BOT_TOKEN, CMD_HNDLR, SESSION1,
@@ -24,7 +25,8 @@ cmd = CMD_HNDLR
 ids = []
 CMD_HELP = {}
 START_TIME = datetime.now()
-
+telegraph = Telegraph()
+telegraph.create_account(short_name="ubot")
 
 aiosession = ClientSession()
 
