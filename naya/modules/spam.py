@@ -23,7 +23,7 @@ async def delayspammer(client, message):
         if message.reply_to_message:
             msg = message.reply_to_message.text
         else:
-            msg = str(message.text.split(None, 3)[3])
+            msg = str(args[3])
     except BaseException:
         return await message.edit(
             f"**Penggunaan :** {cmd}dspam [waktu] [jumlah] [balas pesan]"
