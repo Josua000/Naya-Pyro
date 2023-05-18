@@ -192,7 +192,7 @@ async def upstream(client, message):
                 photo = "naya/resources/logo.jpg"
                 await client.send_document(
                     message.chat.id,
-                    photo=photo
+                    photo=photo,
                     "output.txt",
                     caption=f"**Type** `{cmd}update gas` **To Update Userbot.**",
                     reply_to_message_id=status.id,
