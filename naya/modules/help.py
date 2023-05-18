@@ -4,7 +4,6 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-
 import heroku3
 from dotenv import dotenv_values, set_key
 
@@ -258,26 +257,26 @@ async def close(_, query: CallbackQuery):
                     InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
             ]
-            return await app.send_message(
+            await app.send_message(
                 user_id,
                 f"**Berhasil mengatur variable {variabel} dengan value {value}",
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
+            herotod.update_config(config_vars)
         else:
-            env_vars = dotenv_values(".env")
-            env_vars[variable] = value
-            set_key(".env", variable, value)
-            buttons = [
+            path = ".env"
+            with open(path, "a") as file:
+            file.write(f"\n{variable}={value}")
+            if dotenv.get_key(path, variable):
+                buttons = [
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="multi"),
                     InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
-            ]
-            return await app.send_message(
-                user_id,
-                f"**Berhasil mengatur variable {variabel} dengan value {value}",
+                ]
+                return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
                 reply_markup=InlineKeyboardMarkup(buttons),
-            )
+                )
 
 
 @app.on_callback_query(filters.regex("multi"))
