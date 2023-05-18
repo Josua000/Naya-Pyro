@@ -116,7 +116,6 @@ async def _(cln, cq):
             )
 
 
-
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
     msg = f"<b>Menu Bantuan\nPerintah: <code>{cmd}</code></b>"
