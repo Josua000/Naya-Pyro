@@ -242,10 +242,36 @@ async def close(_, query: CallbackQuery):
         return
 
     value = val.text
-
-    env_vars = dotenv_values(".env")
-    env_vars[variable] = value
-    set_key(".env", variable, value)
+    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
+        api_key = os.environ["HEROKU_API_KEY"]
+        app_name = os.environ["HEROKU_APP_NAME"]
+        heroku = heroku3.from_key(api_key)
+        herotod = heroku.apps()[app_name]
+        config_vars = herotod.config()
+        if variable in config_vars:
+            config_vars[variable] = value
+            buttons = [
+                [
+                  InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                  InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                  ],
+                ]
+                return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
+                reply_markup=InlineKeyboardMarkup(buttons),
+                )
+        else:
+             env_vars = dotenv_values(".env")
+             env_vars[variable] = value
+             set_key(".env", variable, value)
+             buttons = [
+                [
+                  InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                  InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                  ],
+                ]
+                return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
+                reply_markup=InlineKeyboardMarkup(buttons),
+                )
 
 
 @app.on_callback_query(filters.regex("multi"))
