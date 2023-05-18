@@ -22,6 +22,7 @@ from .system import anu_heroku
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+photo = "naya/resources/logo.jpg"
 
 @bots.on_message(filters.command(["help", "alive"], cmd) & filters.me)
 async def _(client, message):
@@ -238,7 +239,6 @@ async def close(_, query: CallbackQuery):
 
 @app.on_callback_query(filters.regex("pm"))
 async def close(_, query: CallbackQuery):
-    photo = "naya/resources/logo.jpg"
     await query.message.delete()
     await query.message.reply_photo(
         photo=photo,
@@ -258,7 +258,6 @@ async def close(_, query: CallbackQuery):
 
 @app.on_callback_query(filters.regex("log"))
 async def close(_, query: CallbackQuery):
-    photo = "naya/resources/logo.jpg"
     await query.message.delete()
     await query.message.reply_photo(
         photo=photo,
@@ -278,7 +277,6 @@ async def close(_, query: CallbackQuery):
 
 @app.on_callback_query(filters.regex("inpo"))
 async def setdah(_, query):
-    photo = "naya/resources/logo.jpg"
     await query.message.delete()
     await query.message.reply_photo(
         photo=photo,
@@ -351,8 +349,9 @@ async def _(_, query: CallbackQuery):
 async def _(_, message):
     user_id = message.from_user.id
     if user_id == OWNER:
-        await message.reply_text(
-            f"""
+        await message.reply_photo(
+            photo=photo,
+            caption=f"""
 <b>👋 Halo <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa saya bantu ?
 💡 Silakan pilih tombol dibawah untuk kamu perlukan.
@@ -366,8 +365,9 @@ async def _(_, message):
             disable_web_page_preview=True,
         )
     else:
-        await message.reply_text(
-            f"""
+        await message.reply_photo(
+            photo=photo,
+            caption=f"""
 <b>👋 Halo Jeng <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa gue banting ?
 💡 Gua Milik Owner Dibawah Ni.</b>
