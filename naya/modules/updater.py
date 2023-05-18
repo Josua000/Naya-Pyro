@@ -30,6 +30,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from naya.config import *
+
 from . import *
 
 if GIT_TOKEN:
@@ -44,8 +45,10 @@ requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
 )
 
+
 def restart():
     os.execvp(sys.executable, [sys.executable, "-m", "naya"])
+
 
 async def is_heroku():
     return "heroku" in socket.getfqdn()
@@ -75,9 +78,7 @@ async def updateme_requirements():
         return repr(e)
 
 
-@bots.on_message(
-    filters.command("diupdate", ["."]) & filters.user(DEVS) & ~filters.me
-)
+@bots.on_message(filters.command("diupdate", ["."]) & filters.user(DEVS) & ~filters.me)
 @bots.on_message(filters.command("update", cmd) & filters.me)
 async def upstream(client: Client, message: Message):
     status = await edit_or_reply(message, "`Mengecek Pembaruan, Tunggu Sebentar...`")
@@ -172,9 +173,7 @@ async def upstream(client: Client, message: Message):
             )
             repo.__del__()
             return
-        await status.edit(
-            "`[HEROKU]: Update Deploy Naya-Pyro Sedang Dalam Proses...`"
-        )
+        await status.edit("`[HEROKU]: Update Deploy Naya-Pyro Sedang Dalam Proses...`")
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
