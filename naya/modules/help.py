@@ -4,7 +4,13 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
+import asyncio
+import math
 
+import dotenv
+import heroku3
+import requests
+import urllib3
 import dotenv
 import heroku3
 
@@ -408,12 +414,8 @@ async def close(_, query: CallbackQuery):
         return
 
     value = val.text
-    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
-        api_key = os.environ["HEROKU_API_KEY"]
-        app_name = os.environ["HEROKU_APP_NAME"]
-        heroku = heroku3.from_key(api_key)
-        herotod = heroku.apps()[app_name]
-        config_vars = herotod.config()
+    if await in_heroku:
+        config_vars = HAPP.config()
         config_vars[variable] = value
         buttons = [
             [
@@ -426,7 +428,7 @@ async def close(_, query: CallbackQuery):
             f"**Berhasil mengatur variable `{variable}` dengan value `{value}`\n\nJangan lupa untuk melakukan restart setelah menambah variabel baru.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-        herotod.update_config(config_vars)
+        #herotod.update_config(config_vars)
     else:
         path = ".env"
         with open(path, "a") as file:
@@ -470,12 +472,8 @@ async def close(_, query: CallbackQuery):
         return
 
     pariabel = ver.text
-    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
-        api_key = os.environ["HEROKU_API_KEY"]
-        app_name = os.environ["HEROKU_APP_NAME"]
-        heroku = heroku3.from_key(api_key)
-        herotod = heroku.apps()[app_name]
-        config_vars = herotod.config()
+    if await in_heroku:
+        config_vars = HAPP.config()
         del config_vars[pariabel]
         buttons = [
             [
