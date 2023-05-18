@@ -406,36 +406,33 @@ async def close(_, query: CallbackQuery):
         heroku = heroku3.from_key(api_key)
         herotod = heroku.apps()[app_name]
         config_vars = herotod.config()
-        if variable in config_vars:
-            config_vars[variable] = value
-            buttons = [
+        config_vars[variable] = value
+        buttons = [
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="multi"),
                     InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
-            ]
-            await app.send_message(
-                user_id,
-                f"**Berhasil mengatur variable {variable} dengan value {value}**",
-                reply_markup=InlineKeyboardMarkup(buttons),
+        ]
+        await app.send_message(
+            user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
+        reply_markup=InlineKeyboardMarkup(buttons),
             )
-            herotod.update_config(config_vars)
-        else:
-            path = ".env"
-            with open(path, "a") as file:
-                file.write(f"\n{variable}={value}")
-            if dotenv.get_key(path, variable):
-                buttons = [
-                    [
-                        InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                        InlineKeyboardButton("Tutup", callback_data="cl_ad"),
-                    ],
-                ]
-                await app.send_message(
-                    user_id,
-                    f"**Berhasil mengatur variable {variable} dengan value {value}**",
-                    reply_markup=InlineKeyboardMarkup(buttons),
-                )
+        herotod.update_config(config_vars)
+    else:
+        path = ".env"
+        with open(path, "a") as file:
+            file.write(f"\n{variable}={value}")
+        if dotenv.get_key(path, variable):
+        buttons = [
+                [
+                  InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                  InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+        ]
+        await app.send_message(
+          user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
+        reply_markup=InlineKeyboardMarkup(buttons),
+        )
 
 
 async def batal(query, text):
