@@ -134,9 +134,9 @@ async def updateme_requirements():
         return repr(e)
 
 
-@bots.on_message(filters.command(["update", "cekupdate"], cmd) & filters.me)
+@bots.on_message(filters.command(["update"], cmd) & filters.me)
 async def _(client, message):
-    status = await message.edit("`Sebentar sedang memeriksa pembaruan...`")
+    status = await message.edit("`Melakukan pembaruan, tunggu sebentar...`")
     conf = get_arg(message)
     off_repo = UPSTREAM_REPO_URL
     txt = None
