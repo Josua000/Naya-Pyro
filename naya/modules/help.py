@@ -85,7 +85,7 @@ async def _(client, inline_query):
 """
             await client.answer_inline_query(
                 inline_query.id,
-                cache_time=60,
+                cache_time=300,
                 results=[
                     (
                         InlineQueryResultArticle(
