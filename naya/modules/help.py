@@ -408,15 +408,16 @@ async def close(_, query: CallbackQuery):
         config_vars = herotod.config()
         config_vars[variable] = value
         buttons = [
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
-                ],
+            [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+            ],
         ]
         await app.send_message(
-            user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
-        reply_markup=InlineKeyboardMarkup(buttons),
-            )
+            user_id,
+            f"**Berhasil mengatur variable {variable} dengan value {value}**",
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
         herotod.update_config(config_vars)
     else:
         path = ".env"
@@ -425,13 +426,15 @@ async def close(_, query: CallbackQuery):
         if dotenv.get_key(path, variable):
             buttons = [
                 [
-                  InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                  InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
             ]
-            await app.send_message(user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
-            reply_markup=InlineKeyboardMarkup(buttons),
-              )
+            await app.send_message(
+                user_id,
+                f"**Berhasil mengatur variable {variable} dengan value {value}**",
+                reply_markup=InlineKeyboardMarkup(buttons),
+            )
 
 
 async def batal(query, text):
