@@ -85,7 +85,7 @@ async def _(client, inline_query):
 """
             await client.answer_inline_query(
                 inline_query.id,
-                cache_time=300,
+                cache_time=60,
                 results=[
                     (
                         InlineQueryResultArticle(
@@ -216,7 +216,7 @@ async def close(_, query: CallbackQuery):
     try:
         var = await app.ask(
             user_id,
-            "<b>Silakan masukkan variabel.\nContoh : CMD_HNDL</b>",
+            "<b>Silakan masukkan variabel.\nContoh : CMD_HNDL\n\nKetik /cancel untuk membatalkan proses.</b>",
             timeout=120,
         )
     except asyncio.TimeoutError:
@@ -230,7 +230,7 @@ async def close(_, query: CallbackQuery):
     try:
         val = await app.ask(
             user_id,
-            "<b>Silakan masukkan value.\nContoh : ?</b>",
+            "<b>Silakan masukkan value.\nContoh : ?\n\nKetik /cancel untuk membatalkan proses.</b>",
             timeout=120,
         )
     except asyncio.TimeoutError:
@@ -252,6 +252,9 @@ async def close(_, query: CallbackQuery):
         "<b>Cooming soon.</b>",
         reply_markup=InlineKeyboardMarkup(
             [
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="sesi"),
+                ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
                 ],
