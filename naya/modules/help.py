@@ -4,7 +4,7 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-
+import heroku3
 from dotenv import dotenv_values, set_key
 
 HAPP = None
