@@ -24,6 +24,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 photo = "naya/resources/logo.jpg"
 
+
 @bots.on_message(filters.command(["help", "alive"], cmd) & filters.me)
 async def _(client, message):
     if message.command[0] == "alive":
