@@ -238,6 +238,7 @@ async def close(_, query: CallbackQuery):
 @app.on_callback_query(filters.regex("inpo"))
 async def setdah(_, query):
     photo = "naya/resources/logo.jpg"
+    await query.message.delete()
     await query.message.reply_photo(
         photo=photo,
         caption="<b> ☺️ Halo mek saya adalah Naya-Pyro Premium\nLu minat punya repo kek gini ? Dateng ae mek ke @KynanSupport.</b>",
