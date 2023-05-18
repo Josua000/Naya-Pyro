@@ -4,8 +4,8 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
+
 import heroku3
-from dotenv import dotenv_values, set_key
 
 HAPP = None
 import urllib3
@@ -441,7 +441,6 @@ async def close(_, query: CallbackQuery):
                     f"**Berhasil mengatur variable {variable} dengan value {value}**",
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
-
 
 
 async def batal(query, text):
