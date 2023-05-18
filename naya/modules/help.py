@@ -6,10 +6,9 @@ from datetime import datetime
 from os import environ, execle
 
 import dotenv
-import urllib3
-import dotenv
 import heroku3
-import requests
+import urllib3
+
 HAPP = None
 import urllib3
 from pyrogram.raw.functions import Ping
@@ -236,6 +235,7 @@ async def close(_, query: CallbackQuery):
         ),
     )
 
+
 @app.on_callback_query(filters.regex("pm"))
 async def close(_, query: CallbackQuery):
     photo = "naya/resources/logo.jpg"
@@ -255,6 +255,7 @@ async def close(_, query: CallbackQuery):
         ),
     )
 
+
 @app.on_callback_query(filters.regex("log"))
 async def close(_, query: CallbackQuery):
     photo = "naya/resources/logo.jpg"
@@ -273,7 +274,7 @@ async def close(_, query: CallbackQuery):
             ]
         ),
     )
-    
+
 
 @app.on_callback_query(filters.regex("inpo"))
 async def setdah(_, query):
