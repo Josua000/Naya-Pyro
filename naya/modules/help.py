@@ -490,7 +490,7 @@ async def close(_, query: CallbackQuery):
             f"**Berhasil menghapus variable `{pariabel}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-        #herotod.update_config(config_vars)
+        # herotod.update_config(config_vars)
     else:
         path = ".env"
         dotenv.unset_key(path, pariabel)
