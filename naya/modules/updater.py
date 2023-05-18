@@ -189,8 +189,10 @@ async def upstream(client, message):
                 file = open("output.txt", "w+")
                 file.write(changelog_str)
                 file.close()
+                photo = "naya/resources/logo.jpg"
                 await client.send_document(
                     message.chat.id,
+                    photo=photo
                     "output.txt",
                     caption=f"**Type** `{cmd}update gas` **To Update Userbot.**",
                     reply_to_message_id=status.id,
@@ -198,7 +200,7 @@ async def upstream(client, message):
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\n**Type** `update deploy` **To Update Userbot.**",
+                    f"{changelog_str}\n**Type** `{cmd}update gas` **To Update Userbot.**",
                     disable_web_page_preview=True,
                 )
         else:
@@ -264,7 +266,7 @@ async def upstream(client, message):
         return
 
 
-@bots.on_message(filters.command("cekupdate", cmd) & filters.me)
+@bots.on_message(filters.command("gasupdate", cmd) & filters.me)
 async def updatees(client, message):
     if await is_heroku():
         if HAPP is None:
@@ -325,6 +327,9 @@ __MODULE__ = "updater"
 __HELP__ = f"""
 ✘ Bantuan Untuk Updater
 
-Perintah: <code>{cmd}update gas</code>
-Penjelasan: Untuk melakukan update Naya-Pyro.
+๏ Perintah: <code>{cmd}update gas</code>
+◉ Penjelasan: Untuk melakukan update heroku deploy Naya-Pyro.
+
+๏ Perintah: <code>{cmd}gasupdate</code>
+◉ Penjelasan: Untuk melakukan update vps deploy Naya-Pyro.
 """
