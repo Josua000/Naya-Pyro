@@ -47,11 +47,14 @@ async def _(client, inline_query):
                     enums.ChatType.SUPERGROUP,
                 ):
                     group += 1
-            if int(get_id[2]) == DEVS:
+            if int(get_id[2]) in DEVS:
                 status = "founder"
                 expired = "__none__"
-            else:
+            elif int(get_id[2]) == OWNER:
                 status = "owner"
+                expired = "__none__"
+            else:
+                status = "admin"
                 expired = "__none__"
                 button = [
                     [
@@ -218,12 +221,12 @@ async def close(_, query: CallbackQuery):
         )
     except asyncio.TimeoutError:
         return await app.send_message(user_id, "Waktu Telah Habis")
-
+    
     if await batal(query, var.text):
         return
-
+    
     variable = var.text
-
+    
     try:
         val = await app.ask(
             user_id,
@@ -232,16 +235,17 @@ async def close(_, query: CallbackQuery):
         )
     except asyncio.TimeoutError:
         return await app.send_message(user_id, "Waktu Telah Habis")
-
+    
     if await batal(query, var.text):
         return
-
+        
     value = val.text
 
-    env_vars = dotenv_values(".env")
+    env_vars = dotenv_values('.env')
     env_vars[variable] = value
-    set_key(".env", variable, value)
-
+    set_key('.env', variable, value)
+        
+        
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
