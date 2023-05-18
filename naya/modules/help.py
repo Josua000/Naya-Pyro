@@ -37,11 +37,11 @@ async def _(client, inline_query):
     get_id = inline_query.query.split()
     expired = "__none__"
     status1 = "premium"
-    for my in botlist:
-        if int(get_id[2]) == int(my.me.id):
+    for bot in botlist:
+        if int(get_id[2]) == client.me.id:
             users = 0
             group = 0
-            async for dialog in my.get_dialogs():
+            async for dialog in bot.get_dialogs():
                 if dialog.chat.type == enums.ChatType.PRIVATE:
                     users += 1
                 elif dialog.chat.type in (
@@ -59,7 +59,7 @@ async def _(client, inline_query):
                 status = "admin"
                 expired = "__none__"
             start = datetime.now()
-            await my.invoke(Ping(ping_id=0))
+            await bot.invoke(Ping(ping_id=0))
             ping = (datetime.now() - start).microseconds / 1000
             uptime_sec = (datetime.utcnow() - START_TIME).total_seconds()
             uptime = await _human_time_duration(int(uptime_sec))
