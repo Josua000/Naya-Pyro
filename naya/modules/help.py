@@ -4,7 +4,9 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-from dotenv import dotenv_values, set_key, get_key,unset_key
+
+from dotenv import dotenv_values, set_key
+
 HAPP = None
 import urllib3
 from pyrogram.raw.functions import Ping
