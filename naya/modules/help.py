@@ -423,16 +423,15 @@ async def close(_, query: CallbackQuery):
         with open(path, "a") as file:
             file.write(f"\n{variable}={value}")
         if dotenv.get_key(path, variable):
-        buttons = [
+            buttons = [
                 [
                   InlineKeyboardButton(text="Kembali", callback_data="multi"),
                   InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
-        ]
-        await app.send_message(
-          user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
-        reply_markup=InlineKeyboardMarkup(buttons),
-        )
+              ]
+              await app.send_message(user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
+              reply_markup=InlineKeyboardMarkup(buttons),
+              )
 
 
 async def batal(query, text):
