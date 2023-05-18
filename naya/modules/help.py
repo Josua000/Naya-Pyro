@@ -266,7 +266,7 @@ async def close(_, query: CallbackQuery):
         else:
             path = ".env"
             with open(path, "a") as file:
-            file.write(f"\n{variable}={value}")
+                file.write(f"\n{variable}={value}")
             if dotenv.get_key(path, variable):
                 buttons = [
                 [
