@@ -42,7 +42,7 @@ class OpenAi:
 
 @bots.on_message(filters.me & filters.command(["ai", "ask"], cmd))
 async def _(client, message):
-    Tm = await eor(message, "<code>Memproses...</code>")
+    Tm = await message.reply("<code>Memproses...</code>")
     if len(message.command) < 2:
         return await Tm.edit(f"<b>Gunakan format :<code>ai</code> [pertanyaan]</b>")
     try:
