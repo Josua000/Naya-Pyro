@@ -73,18 +73,6 @@ async def _(client, inline_query):
           <b>uptime:</b> <code>{uptime}</code>
           <b>expired:</b> <code>{expired}</code>
 """
-            button = [
-                [
-                    InlineKeyboardButton(
-                        text="Close",
-                        callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}",
-                    ),
-                    InlineKeyboardButton(
-                        text="Support",
-                        url=f"https://t.me/kynansupport",
-                    ),
-                ]
-            ]
             await client.answer_inline_query(
                 inline_query.id,
                 cache_time=60,
@@ -92,7 +80,18 @@ async def _(client, inline_query):
                     (
                         InlineQueryResultArticle(
                             title="💬",
-                            reply_markup=InlineKeyboardMarkup(button),
+                            reply_markup=InlineKeyboardMarkup(
+                              [
+                                [
+                                  InlineKeyboardButton(
+                                    text="Close",
+                                    callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}"),
+                                    InlineKeyboardButton(
+                                      text="Support",
+                                      url=f"https://t.me/kynansupport"),
+                                ],
+                                ],
+                                ),
                             input_message_content=InputTextMessageContent(msg),
                         )
                     )
@@ -256,8 +255,8 @@ async def close(_, query: CallbackQuery):
                   InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                   ],
                 ]
-                return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
-                reply_markup=InlineKeyboardMarkup(buttons),
+            return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
+            reply_markup=InlineKeyboardMarkup(buttons),
                 )
         else:
              env_vars = dotenv_values(".env")
@@ -269,8 +268,8 @@ async def close(_, query: CallbackQuery):
                   InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                   ],
                 ]
-                return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
-                reply_markup=InlineKeyboardMarkup(buttons),
+             return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
+             reply_markup=InlineKeyboardMarkup(buttons),
                 )
 
 
