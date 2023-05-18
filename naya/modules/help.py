@@ -7,7 +7,9 @@ from os import environ, execle
 
 import dotenv
 import urllib3
-
+import dotenv
+import heroku3
+import requests
 HAPP = None
 import urllib3
 from pyrogram.raw.functions import Ping
@@ -234,6 +236,44 @@ async def close(_, query: CallbackQuery):
         ),
     )
 
+@app.on_callback_query(filters.regex("pm"))
+async def close(_, query: CallbackQuery):
+    photo = "naya/resources/logo.jpg"
+    await query.message.delete()
+    await query.message.reply_photo(
+        photo=photo,
+        caption="<b> ☺️ Fitur ini akan hadir dalam beberapa pekan\n\nTunggu update nya di @KynanSupport.</b>",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="setong"),
+                ],
+                [
+                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
+                ],
+            ]
+        ),
+    )
+
+@app.on_callback_query(filters.regex("log"))
+async def close(_, query: CallbackQuery):
+    photo = "naya/resources/logo.jpg"
+    await query.message.delete()
+    await query.message.reply_photo(
+        photo=photo,
+        caption="<b> ☺️ Fitur ini akan hadir dalam beberapa pekan\n\nTunggu update nya di @KynanSupport.</b>",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="setong"),
+                ],
+                [
+                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
+                ],
+            ]
+        ),
+    )
+    
 
 @app.on_callback_query(filters.regex("inpo"))
 async def setdah(_, query):
@@ -244,6 +284,9 @@ async def setdah(_, query):
         caption="<b> ☺️ Halo mek saya adalah Naya-Pyro Premium\nLu minat punya repo kek gini ? Dateng ae mek ke @KynanSupport.</b>",
         reply_markup=InlineKeyboardMarkup(
             [
+                [
+                    InlineKeyboardButton(text="Support", url=f"https://kynansupport"),
+                ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
                 ],
@@ -262,6 +305,10 @@ async def setdah(_, query: CallbackQuery):
                 [
                     InlineKeyboardButton(text="Multi Client", callback_data="multi"),
                     InlineKeyboardButton(text="Restart", callback_data="retor"),
+                ],
+                [
+                    InlineKeyboardButton(text="Logger", callback_data="log"),
+                    InlineKeyboardButton(text="PM Permit", callback_data="pm"),
                 ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
