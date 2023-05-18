@@ -300,7 +300,7 @@ async def setdah(_, query):
 async def setdah(_, query: CallbackQuery):
     return await query.edit_message_text(
         f"""
-    <b> ☺️Halo sayang ! \n Apa yang kamu butuhkan ?.</b>""",
+    <b> ☺️Halo <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> ! \n Apa yang kamu butuhkan ?.</b>""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -353,7 +353,7 @@ async def _(_, message):
     if user_id == OWNER:
         await message.reply_text(
             f"""
-<b>👋 Halo {message.from_user.first_name}
+<b>👋 Halo <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa saya bantu ?
 💡 Silakan pilih tombol dibawah untuk kamu perlukan.
 </b>""",
@@ -368,7 +368,7 @@ async def _(_, message):
     else:
         await message.reply_text(
             f"""
-<b>👋 Halo Jeng{message.from_user.first_name}
+<b>👋 Halo Jeng <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa gue banting ?
 💡 Gua Milik Owner Dibawah Ni.</b>
 """,
