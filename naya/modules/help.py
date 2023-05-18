@@ -299,7 +299,7 @@ async def setdah(_, query):
 async def setdah(_, query: CallbackQuery):
     return await query.edit_message_text(
         f"""
-    <b> ☺️Halo <a href=tg://openmessage?user_id={query.message.from_user.id}>{query.message.from_user.first_name} {query.message.from_user.last_name or ''}</a> ! \n Apa yang kamu butuhkan ?.</b>""",
+    <b> ☺️Halo aku adalah <a href=tg://openmessage?user_id={query.message.from_user.id}>{query.message.from_user.first_name} {query.message.from_user.last_name or ''}</a> asisten mu yang siap membantu kamu ! \n Apa yang kamu butuhkan ?.</b>""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
