@@ -222,7 +222,7 @@ async def close(_, query: CallbackQuery):
                     ),
                 ],
                 [
-                    InlineKeyboardButton(text="Cek Variabel", callback_data="remsesi"),
+                    InlineKeyboardButton(text="Cek Variabel", callback_data="getsesi"),
                 ],
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="setong"),
