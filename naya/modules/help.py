@@ -408,7 +408,7 @@ async def otp_and_numbereeee(_, message):
         )
 
 
-async def is_cancel(callback_query, text):
+async def batal(callback_query, text):
     if text.startswith("/cancel"):
         user_id = callback_query.from_user.id
         await app.send_message(user_id, "<b>Dibatalkan !</b>")
