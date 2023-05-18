@@ -408,7 +408,7 @@ async def close(_, query: CallbackQuery):
         return
 
     value = val.text
-    if await in_heroku:
+    if in_heroku:
         config_vars = HAPP.config()
         config_vars[variable] = value
         buttons = [
@@ -466,7 +466,7 @@ async def close(_, query: CallbackQuery):
         return
 
     pariabel = ver.text
-    if await in_heroku:
+    if in_heroku:
         config_vars = HAPP.config()
         del config_vars[pariabel]
         buttons = [
