@@ -410,8 +410,12 @@ async def close(_, query: CallbackQuery):
         return
 
     value = val.text
-    if in_heroku:
-        config_vars = HAPP.config()
+    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
+        api_key = os.environ["HEROKU_API_KEY"]
+        app_name = os.environ["HEROKU_APP_NAME"]
+        heroku = heroku3.from_key(api_key)
+        hero = heroku.apps()[app_name]
+        config_vars = hero.config()
         config_vars[variable] = value
         buttons = [
             [
@@ -468,8 +472,12 @@ async def close(_, query: CallbackQuery):
         return
 
     pariabel = ver.text
-    if in_heroku:
-        config_vars = HAPP.config()
+    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
+        api_key = os.environ["HEROKU_API_KEY"]
+        app_name = os.environ["HEROKU_APP_NAME"]
+        heroku = heroku3.from_key(api_key)
+        hero = heroku.apps()[app_name]
+        config_vars = hero.config()
         del config_vars[pariabel]
         buttons = [
             [
@@ -482,7 +490,7 @@ async def close(_, query: CallbackQuery):
             f"**Berhasil menghapus variable `{pariabel}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-        herotod.update_config(config_vars)
+        #herotod.update_config(config_vars)
     else:
         path = ".env"
         dotenv.unset_key(path, pariabel)
