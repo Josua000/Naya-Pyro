@@ -4,7 +4,7 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-
+from dotenv import dotenv_values, set_key, get_key,unset_key
 HAPP = None
 import urllib3
 from pyrogram.raw.functions import Ping
@@ -253,7 +253,7 @@ async def close(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Kembali", callback_data="sesi"),
+                    InlineKeyboardButton(text="Klik Disini", callback_data="sesi"),
                 ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
