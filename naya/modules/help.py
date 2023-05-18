@@ -218,11 +218,11 @@ async def close(_, query: CallbackQuery):
                 [
                     InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
                     InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
+                        text="Hapus Variabel", callback_data="hapus"
                     ),
                 ],
                 [
-                    InlineKeyboardButton(text="Cek Variabel", callback_data="getsesi"),
+                    InlineKeyboardButton(text="Cek Variabel", callback_data="get"),
                 ],
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="setong"),
@@ -455,7 +455,7 @@ async def batal(query, text):
     return False
 
 
-@app.on_callback_query(filters.regex("remsesi"))
+@app.on_callback_query(filters.regex("hapus"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
     await query.message.delete()
