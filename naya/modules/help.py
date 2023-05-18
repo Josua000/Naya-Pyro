@@ -4,8 +4,8 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
+
 import heroku3
-from dotenv import dotenv_values, set_key
 
 HAPP = None
 import urllib3
@@ -269,13 +269,15 @@ async def close(_, query: CallbackQuery):
                 file.write(f"\n{variable}={value}")
             if dotenv.get_key(path, variable):
                 buttons = [
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
-                ],
+                    [
+                        InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                        InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                    ],
                 ]
-                return await app.send_message(user_id, f"**Berhasil mengatur variable {variabel} dengan value {value}",
-                reply_markup=InlineKeyboardMarkup(buttons),
+                return await app.send_message(
+                    user_id,
+                    f"**Berhasil mengatur variable {variabel} dengan value {value}",
+                    reply_markup=InlineKeyboardMarkup(buttons),
                 )
 
 
