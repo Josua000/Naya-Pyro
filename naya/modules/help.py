@@ -99,6 +99,7 @@ async def _(client, inline_query):
             ],
         )
 
+
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
     msg = f"<b>Menu Bantuan\nPerintah: <code>{cmd}</code></b>"
@@ -198,6 +199,7 @@ async def _(cln, cq):
             await bot.delete_messages(
                 unPacked.chat_id, [int(get_id[0]), unPacked.message_id]
             )
+
 
 @app.on_callback_query(filters.regex("cl_ad"))
 async def close(_, query: CallbackQuery):
