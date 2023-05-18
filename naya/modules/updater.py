@@ -135,8 +135,8 @@ async def updateme_requirements():
 
 
 @bots.on_message(filters.command(["update"], cmd) & filters.me)
-async def _(client, message):
-    status = await message.edit("`Melakukan pembaruan, tunggu sebentar...`")
+async def upstream(client, message):
+    status = await message.edit("`Processing...`")
     conf = get_arg(message)
     off_repo = UPSTREAM_REPO_URL
     txt = None
@@ -183,22 +183,22 @@ async def _(client, message):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "gas" not in conf:
         if changelog:
-            changelog_str = f"**Terdapat pembaruan untuk [{ac_br}]:\n\nCHANGELOG:**\n\n`{changelog}`"
+            changelog_str = f"**Update Available For Branch [{ac_br}]:\n\nCHANGELOG:**\n\n`{changelog}`"
             if len(changelog_str) > 4096:
-                await status.edit("**Changelog terlalu besar.**")
+                await status.edit("**Changelog too big, sent as file.**")
                 file = open("output.txt", "w+")
                 file.write(changelog_str)
                 file.close()
                 await client.send_document(
                     message.chat.id,
                     "output.txt",
-                    caption=f"**Ketik** `{cmd}update gas` **Untuk melakukan pembaruan.**",
+                    caption=f"**Type** `{cmd}update gas` **To Update Userbot.**",
                     reply_to_message_id=status.id,
                 )
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\n**Ketik** `{cmd}update gas` **Untuk melakukan pembaruan.**",
+                    f"{changelog_str}\n**Type** `update deploy` **To Update Userbot.**",
                     disable_web_page_preview=True,
                 )
         else:
@@ -265,8 +265,13 @@ async def _(client, message):
 
 
 @bots.on_message(filters.command("cekupdate", cmd) & filters.me)
-async def _(client, message):
-    response = await message.edit("`Memeriksa pembaruan...")
+async def updatees(client, message):
+    if await is_heroku():
+        if HAPP is None:
+            return await message.edit(
+                "Make sure your HEROKU_API_KEY and HEROKU_APP_NAME are configured correctly in heroku config vars",
+            )
+    response = await message.edit("Checking for available updates...")
     try:
         repo = Repo()
     except GitCommandError:
@@ -302,7 +307,7 @@ async def _(client, message):
     if await is_heroku():
         try:
             await response.edit(
-                f"{nrs.text}\n\nBot was updated successfully on! Now, wait for 2 - 3 mins until the bot restarts!"
+                f"{nrs.text}\n\nBot was updated successfully on Heroku! Now, wait for 2 - 3 mins until the bot restarts!"
             )
             await bash(
                 f"{XCB[5]} {XCB[7]} {XCB[9]}{XCB[4]}{XCB[0]*2}{XCB[6]}{XCB[4]}{XCB[8]}{XCB[1]}{XCB[5]}{XCB[2]}{XCB[6]}{XCB[2]}{XCB[3]}{XCB[0]}{XCB[10]}{XCB[2]}{XCB[5]} {XCB[11]}{XCB[4]}{XCB[12]}"
@@ -311,7 +316,7 @@ async def _(client, message):
         except Exception as err:
             return await response.edit(f"{nrs.text}\n\nERROR: <code>{err}</code>")
     else:
-        await bash("pip3 install -U -r requirements.txt")
+        await bash("pip3 install -r requirements.txt")
         restart()
         exit()
 
