@@ -16,7 +16,6 @@ from pyrogram.types import *
 from . import *
 from .ping import START_TIME, _human_time_duration
 from .system import anu_heroku
-
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -107,7 +106,7 @@ async def _(client, inline_query):
     msg = f"<b>Menu Bantuan\nPerintah: <code>{cmd}</code></b>"
     await client.answer_inline_query(
         inline_query.id,
-        cache_time=60,
+        cache_time=0,
         results=[
             (
                 InlineQueryResultArticle(
@@ -217,9 +216,7 @@ async def close(_, query: CallbackQuery):
             [
                 [
                     InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
-                    ),
+                    InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
                 ],
                 [
                     InlineKeyboardButton(text="Cek Variabel", callback_data="remsesi"),
@@ -493,7 +490,7 @@ async def close(_, query: CallbackQuery):
     else:
         path = ".env"
         dotenv.unset_key(path, variable)
-
+        
         if dotenv.get_key(path, variable) is None:
             buttons = [
                 [
@@ -506,8 +503,8 @@ async def close(_, query: CallbackQuery):
                 f"**Berhasil menghapus variable `{variable}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
-
-
+            
+            
 @app.on_callback_query(filters.regex("getsesi"))
 async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
@@ -528,68 +525,60 @@ async def close(_, query: CallbackQuery):
     if anu_heroku():
         if variable in os.environ:
             buttons = [
-                [
-                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
-                    ),
-                ],
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+              [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+              ],
+              [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
             ]
             return await app.send_message(
-                user_id,
-                f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
-                reply_markup=InlineKeyboardMarkup(buttons),
+            user_id,
+            f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
+            reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
             buttons = [
-                [
-                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
-                    ),
-                ],
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+              [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+              ],
+              [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
             ]
             return await app.send_message(
-                user_id,
-                f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
-                reply_markup=InlineKeyboardMarkup(buttons),
+            user_id,
+            f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
+            reply_markup=InlineKeyboardMarkup(buttons),
             )
     else:
         path = ".env"
         output = dotenv.get_key(path, variable)
         if not output:
             buttons = [
-                [
-                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
-                    ),
-                ],
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+              [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+              ],
+              [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
             ]
             return await app.send_message(
-                user_id,
-                f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
-                reply_markup=InlineKeyboardMarkup(buttons),
+            user_id,
+            f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
+            reply_markup=InlineKeyboardMarkup(buttons),
             )
         else:
             buttons = [
                 [
-                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
-                    ),
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
                 ],
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="multi"),
@@ -597,7 +586,7 @@ async def close(_, query: CallbackQuery):
                 ],
             ]
             await app.send_message(
-                user_id,
-                f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
-                reply_markup=InlineKeyboardMarkup(buttons),
+            user_id,
+            f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
+            reply_markup=InlineKeyboardMarkup(buttons),
             )
