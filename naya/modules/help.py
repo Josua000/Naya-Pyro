@@ -24,7 +24,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 photo = "naya/resources/logo.jpg"
 
-
 @bots.on_message(filters.command(["help", "alive"], cmd) & filters.me)
 async def _(client, message):
     if message.command[0] == "alive":
@@ -363,7 +362,6 @@ async def _(_, message):
                     [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                 ]
             ),
-            disable_web_page_preview=True,
         )
     else:
         await message.reply_photo(
@@ -382,7 +380,6 @@ async def _(_, message):
                     [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
                 ]
             ),
-            disable_web_page_preview=True,
         )
 
 
