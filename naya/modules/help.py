@@ -4,15 +4,9 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-import asyncio
-import math
 
 import dotenv
-import heroku3
-import requests
 import urllib3
-import dotenv
-import heroku3
 
 HAPP = None
 import urllib3
@@ -428,7 +422,7 @@ async def close(_, query: CallbackQuery):
             f"**Berhasil mengatur variable `{variable}` dengan value `{value}`\n\nJangan lupa untuk melakukan restart setelah menambah variabel baru.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-        #herotod.update_config(config_vars)
+        # herotod.update_config(config_vars)
     else:
         path = ".env"
         with open(path, "a") as file:
