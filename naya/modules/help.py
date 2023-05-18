@@ -166,7 +166,7 @@ async def _(client, callback_query):
 @app.on_message(filters.command(["user"]) & filters.private)
 async def usereee(_, message):
     user_id = message.from_user.id
-    if user_id not OWNER and user_id not in DEVS:
+    if user_id not in (OWNER, DEVS):
         return await message.reply(
             "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya OWNER yang bisa menggunakan perintah ini"
         )
@@ -342,7 +342,7 @@ async def otp_and_numbereeee(_, message):
             f"<code>{message.text} user_id userbot yang aktif</code>",
             reply_to_message_id=message.id,
         )
-    elif user_id not OWNER and user_id not in DEVS:
+    elif user_id not in (OWNER, DEVS):
         return await message.reply(
             "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya OWNER yang bisa menggunakan perintah ini"
         )
