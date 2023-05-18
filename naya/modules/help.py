@@ -460,7 +460,7 @@ async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
     await query.message.delete()
     try:
-        var = await app.ask(
+        ver = await app.ask(
             user_id,
             "<b>Silakan masukkan variabel.\nContoh : SESSION2\n\nKetik /cancel untuk membatalkan proses.</b>",
             timeout=120,
@@ -468,17 +468,17 @@ async def close(_, query: CallbackQuery):
     except asyncio.TimeoutError:
         return await app.send_message(user_id, "Waktu Telah Habis")
 
-    if await batal(query, var.text):
+    if await batal(query, ver.text):
         return
 
-    variable = var.text
+    pariabel = ver.text
     if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
         api_key = os.environ["HEROKU_API_KEY"]
         app_name = os.environ["HEROKU_APP_NAME"]
         heroku = heroku3.from_key(api_key)
         herotod = heroku.apps()[app_name]
         config_vars = herotod.config()
-        del config_vars[variable]
+        del config_vars[pariabel]
         buttons = [
             [
                 InlineKeyboardButton(text="Kembali", callback_data="multi"),
@@ -487,15 +487,15 @@ async def close(_, query: CallbackQuery):
         ]
         await app.send_message(
             user_id,
-            f"**Berhasil menghapus variable `{variable}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
+            f"**Berhasil menghapus variable `{pariabel}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
         herotod.update_config(config_vars)
     else:
         path = ".env"
-        dotenv.unset_key(path, variable)
+        dotenv.unset_key(path, pariabel)
 
-        if dotenv.get_key(path, variable) is None:
+        if dotenv.get_key(path, pariabel) is None:
             buttons = [
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="multi"),
@@ -504,7 +504,7 @@ async def close(_, query: CallbackQuery):
             ]
             await app.send_message(
                 user_id,
-                f"**Berhasil menghapus variable `{variable}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
+                f"**Berhasil menghapus variable `{pariabel}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
 
@@ -514,7 +514,7 @@ async def close(_, query: CallbackQuery):
     user_id = query.from_user.id
     await query.message.delete()
     try:
-        var = await app.ask(
+        get = await app.ask(
             user_id,
             "<b>Silakan masukkan variabel.\nContoh : SESSION2\n\nKetik /cancel untuk membatalkan proses.</b>",
             timeout=120,
@@ -522,10 +522,10 @@ async def close(_, query: CallbackQuery):
     except asyncio.TimeoutError:
         return await app.send_message(user_id, "Waktu Telah Habis")
 
-    if await batal(query, var.text):
+    if await batal(query, get.text):
         return
 
-    variable = var.text
+    variable = get.text
     if anu_heroku():
         if variable in os.environ:
             buttons = [
