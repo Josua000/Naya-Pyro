@@ -34,35 +34,35 @@ async def _(client, message):
 
 @app.on_inline_query(filters.regex("^user_alive_command"))
 async def _(client, inline_query):
-    get_id = inline_query.query.split()
+    inline_query.query.split()
     expired = "__none__"
     status1 = "premium"
     for bot in botlist:
-            users = 0
-            group = 0
-            async for dialog in bot.get_dialogs():
-                if dialog.chat.type == enums.ChatType.PRIVATE:
-                    users += 1
-                elif dialog.chat.type in (
-                    enums.ChatType.GROUP,
-                    enums.ChatType.SUPERGROUP,
-                ):
-                    group += 1
-            if bot.client.me.id in DEVS:
-                status = "founder"
-                expired = "__none__"
-            elif bot.client.me.id == OWNER:
-                status = "owner"
-                expired = "__none__"
-            else:
-                status = "admin"
-                expired = "__none__"
-            start = datetime.now()
-            await bot.invoke(Ping(ping_id=0))
-            ping = (datetime.now() - start).microseconds / 1000
-            uptime_sec = (datetime.utcnow() - START_TIME).total_seconds()
-            uptime = await _human_time_duration(int(uptime_sec))
-            msg = f"""
+        users = 0
+        group = 0
+        async for dialog in bot.get_dialogs():
+            if dialog.chat.type == enums.ChatType.PRIVATE:
+                users += 1
+            elif dialog.chat.type in (
+                enums.ChatType.GROUP,
+                enums.ChatType.SUPERGROUP,
+            ):
+                group += 1
+        if bot.client.me.id in DEVS:
+            status = "founder"
+            expired = "__none__"
+        elif bot.client.me.id == OWNER:
+            status = "owner"
+            expired = "__none__"
+        else:
+            status = "admin"
+            expired = "__none__"
+        start = datetime.now()
+        await bot.invoke(Ping(ping_id=0))
+        ping = (datetime.now() - start).microseconds / 1000
+        uptime_sec = (datetime.utcnow() - START_TIME).total_seconds()
+        uptime = await _human_time_duration(int(uptime_sec))
+        msg = f"""
 <b>Naya-Pyro</b>
      <b>status:</b> <code>{status1}[{status}]</code>
           <b>dc_id:</b> <code>{my.me.dc_id}
@@ -72,32 +72,32 @@ async def _(client, inline_query):
           <b>uptime:</b> <code>{uptime}</code>
           <b>expired:</b> <code>{expired}</code>
 """
-            await client.answer_inline_query(
-                inline_query.id,
-                cache_time=60,
-                results=[
-                    (
-                        InlineQueryResultArticle(
-                            title="💬",
-                            reply_markup=InlineKeyboardMarkup(
+        await client.answer_inline_query(
+            inline_query.id,
+            cache_time=60,
+            results=[
+                (
+                    InlineQueryResultArticle(
+                        title="💬",
+                        reply_markup=InlineKeyboardMarkup(
+                            [
                                 [
-                                    [
-                                        InlineKeyboardButton(
-                                            text="Close",
-                                            callback_data=f"alv_cls",
-                                        ),
-                                        InlineKeyboardButton(
-                                            text="Support",
-                                            url=f"https://t.me/kynansupport",
-                                        ),
-                                    ],
+                                    InlineKeyboardButton(
+                                        text="Close",
+                                        callback_data=f"alv_cls",
+                                    ),
+                                    InlineKeyboardButton(
+                                        text="Support",
+                                        url=f"https://t.me/kynansupport",
+                                    ),
                                 ],
-                            ),
-                            input_message_content=InputTextMessageContent(msg),
-                        )
+                            ],
+                        ),
+                        input_message_content=InputTextMessageContent(msg),
                     )
-                ],
-            )
+                )
+            ],
+        )
 
 
 @app.on_callback_query(filters.regex("^alv_cls"))
