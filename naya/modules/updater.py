@@ -4,78 +4,33 @@
 # Kok Bacot
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
-
+#
+# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
+#
+# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
+#
+# All rights reserved.
+#
+# Ported by @mrismanaziz
+# FROM Otan-Userbot < https://github.com/mrismanaziz/Otan-Userbot/ >
+# t.me/Lunatic0de & t.me/SharingUserbot
+#
 
 import asyncio
-import os
 import socket
 import sys
 from datetime import datetime
 from os import environ, execle, path, remove
 
-import aiohttp
-import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
-from pyrogram import *
-from pyrogram import filters
-from pyrogram.types import *
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from naya.config import *
-
 from . import *
-
-HAPP = None
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-XCB = [
-    "/",
-    "@",
-    ".",
-    "com",
-    ":",
-    "git",
-    "heroku",
-    "push",
-    str(HEROKU_API_KEY),
-    "https",
-    str(HEROKU_APP_NAME),
-    "HEAD",
-    "main",
-]
-
-BASE = "https://batbin.me/"
-
-
-def get_arg(message: Message):
-    msg = message.text
-    msg = msg.replace(" ", "", 1) if msg[1] == " " else msg
-    split = msg[1:].replace("\n", " \n").split(" ")
-    if " ".join(split[1:]).strip() == "":
-        return ""
-    return " ".join(split[1:])
-
-
-async def post(url: str, *args, **kwargs):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, *args, **kwargs) as resp:
-            try:
-                data = await resp.json()
-            except Exception:
-                data = await resp.text()
-        return data
-
-
-async def PasteBin(text):
-    resp = await post(f"{BASE}api/v2/paste", data=text)
-    if not resp["success"]:
-        return
-    link = BASE + resp["message"]
-    return link
-
 
 if GIT_TOKEN:
     GIT_USERNAME = REPO_URL.split("com/")[1].split("/")[0]
@@ -89,25 +44,11 @@ requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
 )
 
-
 def restart():
     os.execvp(sys.executable, [sys.executable, "-m", "naya"])
 
-
 async def is_heroku():
     return "heroku" in socket.getfqdn()
-
-
-async def bash(cmd):
-    process = await asyncio.create_subprocess_shell(
-        cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await process.communicate()
-    err = stderr.decode().strip()
-    out = stdout.decode().strip()
-    return out, err
 
 
 async def gen_chlog(repo, diff):
@@ -134,25 +75,26 @@ async def updateme_requirements():
         return repr(e)
 
 
-@bots.on_message(filters.command(["update"], cmd) & filters.me)
-async def upstream(client, message):
-    status = await message.edit("`Processing...`")
+@bots.on_message(
+    filters.command("diupdate", ["."]) & filters.user(DEVS) & ~filters.me
+)
+@bots.on_message(filters.command("update", cmd) & filters.me)
+async def upstream(client: Client, message: Message):
+    status = await edit_or_reply(message, "`Mengecek Pembaruan, Tunggu Sebentar...`")
     conf = get_arg(message)
     off_repo = UPSTREAM_REPO_URL
-    txt = None
-    repo = None
     try:
         txt = (
-            "**Update Could Not Continue Due "
-            + "Several ERROR Occurred**\n\n**LOGTRACE:**\n"
+            "**Pembaruan Tidak Dapat Di Lanjutkan Karna "
+            + "Terjadi Beberapa ERROR**\n\n**LOGTRACE:**\n"
         )
         repo = Repo()
     except NoSuchPathError as error:
-        await status.edit(f"{txt}\n**Directory** `{error}` **Can not be found.**")
+        await status.edit(f"{txt}\n**Directory** `{error}` **Tidak Dapat Di Temukan.**")
         repo.__del__()
         return
     except GitCommandError as error:
-        await status.edit(f"{txt}\n**Early failure!** `{error}`")
+        await status.edit(f"{txt}\n**Kegagalan awal!** `{error}`")
         repo.__del__()
         return
     except InvalidGitRepositoryError:
@@ -176,31 +118,29 @@ async def upstream(client, message):
         return
     try:
         repo.create_remote("upstream", off_repo)
-    except BaseException as a:
-        print(a)
+    except BaseException:
+        pass
     ups_rem = repo.remote("upstream")
     ups_rem.fetch(ac_br)
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "gas" not in conf:
         if changelog:
-            changelog_str = f"**Update Available For Branch [{ac_br}]:\n\nCHANGELOG:**\n\n`{changelog}`"
+            changelog_str = f"**Tersedia Pembaruan Untuk Branch [{ac_br}]:\n\nCHANGELOG:**\n\n`{changelog}`"
             if len(changelog_str) > 4096:
-                await status.edit("**Changelog too big, sent as file.**")
+                await status.edit("**Changelog terlalu besar, dikirim sebagai file.**")
                 file = open("output.txt", "w+")
                 file.write(changelog_str)
                 file.close()
-                photo = "naya/resources/logo.jpg"
                 await client.send_document(
                     message.chat.id,
                     "output.txt",
-                    photo,
-                    caption=f"**Type** `{cmd}update gas` **To Update Userbot.**",
+                    caption=f"**Ketik** `{cmd}update deploy` **Untuk Mengupdate Userbot.**",
                     reply_to_message_id=status.id,
                 )
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\n**Type** `{cmd}update gas` **To Update Userbot.**",
+                    f"{changelog_str}\n**Ketik** `{cmd}update deploy` **Untuk Mengupdate Userbot.**",
                     disable_web_page_preview=True,
                 )
         else:
@@ -233,7 +173,7 @@ async def upstream(client, message):
             repo.__del__()
             return
         await status.edit(
-            "`[HEROKU]: Naya-Pyro Premium Deploy Update is in Progress...`"
+            "`[HEROKU]: Update Deploy Naya-Pyro Sedang Dalam Proses...`"
         )
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
@@ -250,7 +190,7 @@ async def upstream(client, message):
         except GitCommandError:
             pass
         await status.edit(
-            "`Naya-Pyro Premium Successfully Updated! Userbot can be used again.`"
+            "`Naya-Pyro Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`"
         )
     else:
         try:
@@ -259,21 +199,23 @@ async def upstream(client, message):
             repo.git.reset("--hard", "FETCH_HEAD")
         await updateme_requirements()
         await status.edit(
-            "`Naya-Pyro Premium Successfully Updated! Userbot can be used again.`",
+            "`Naya-Pyro Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`",
         )
         args = [sys.executable, "-m", "naya"]
         execle(sys.executable, *args, environ)
         return
 
 
-@bots.on_message(filters.command("gasupdate", cmd) & filters.me)
-async def updatees(client, message):
+@bots.on_message(filters.command("cupdate", ["."]) & filters.user(DEVS) & ~filters.me)
+@bots.on_message(filters.command("goupdate", cmd) & filters.me)
+async def updaterman(client: Client, message: Message):
     if await is_heroku():
         if HAPP is None:
-            return await message.edit(
-                "Make sure your HEROKU_API_KEY and HEROKU_APP_NAME are configured correctly in heroku config vars",
+            return await edit_or_reply(
+                message,
+                "Pastikan HEROKU_API_KEY dan HEROKU_APP_NAME anda dikonfigurasi dengan benar di config vars heroku",
             )
-    response = await message.edit("Checking for available updates...")
+    response = await edit_or_reply(message, "Checking for available updates...")
     try:
         repo = Repo()
     except GitCommandError:
