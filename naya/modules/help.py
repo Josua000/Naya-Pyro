@@ -15,7 +15,7 @@ from pyrogram.types import *
 
 from . import *
 from .ping import START_TIME, _human_time_duration
-
+from .system import anu_heroku
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -75,7 +75,7 @@ async def _(client, inline_query):
 """
         await client.answer_inline_query(
             inline_query.id,
-            cache_time=60,
+            cache_time=300,
             results=[
                 (
                     InlineQueryResultArticle(
@@ -165,9 +165,10 @@ async def _(client, callback_query):
 
 @app.on_message(filters.command(["user"]) & filters.private)
 async def usereee(_, message):
-    if message.from_user.id not in DEVS:
+    user_id = message.from_user.id
+    if user_id == OWNER and user_id not in DEVS:
         return await message.reply(
-            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini"
+            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya OWNER yang bisa menggunakan perintah ini"
         )
     count = 0
     user = ""
@@ -210,17 +211,21 @@ async def close(_, query: CallbackQuery):
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
     return await query.edit_message_text(
-        "<b>Cooming soon.</b>",
+        "<b>Disini kamu bisa menambahkan, menghapus serta melihat variabel dan value, seperti OPENAI_API, SESSION2-SESSION10.</b>",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Klik Disini", callback_data="sesi"),
+                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                    InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
                 ],
                 [
-                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
+                    InlineKeyboardButton(text="Cek Variabel", callback_data="remsesi"),
                 ],
                 [
                     InlineKeyboardButton(text="Kembali", callback_data="setong"),
+                ],
+                [
+                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
                 ],
             ]
         ),
@@ -247,7 +252,7 @@ async def setdah(_, query):
 async def setdah(_, query: CallbackQuery):
     return await query.edit_message_text(
         f"""
-    <b> ☺️ Apa yang kamu butuhkan ?.</b>""",
+    <b> ☺️Halo sayang ! \n Apa yang kamu butuhkan ?.</b>""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -336,9 +341,10 @@ async def otp_and_numbereeee(_, message):
             f"<code>{message.text} user_id userbot yang aktif</code>",
             reply_to_message_id=message.id,
         )
-    elif message.from_user.id not in DEVS:
+    user_id = message.from_user.id
+    elif user_id == OWNER and user_id not in DEVS:
         return await message.reply(
-            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini"
+            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya OWNER yang bisa menggunakan perintah ini"
         )
     try:
         for X in botlist:
@@ -376,7 +382,7 @@ async def close(_, query: CallbackQuery):
     try:
         var = await app.ask(
             user_id,
-            "<b>Silakan masukkan variabel.\nContoh : CMD_HNDL\n\nKetik /cancel untuk membatalkan proses.</b>",
+            "<b>Silakan masukkan variabel.\nContoh : SESSION2\n\nKetik /cancel untuk membatalkan proses.</b>",
             timeout=120,
         )
     except asyncio.TimeoutError:
@@ -390,7 +396,7 @@ async def close(_, query: CallbackQuery):
     try:
         val = await app.ask(
             user_id,
-            "<b>Silakan masukkan value.\nContoh : ?\n\nKetik /cancel untuk membatalkan proses.</b>",
+            "<b>Silakan masukkan value.\nContoh : 02ODJDOEMXNXXXXX\n\nKetik /cancel untuk membatalkan proses.</b>",
             timeout=120,
         )
     except asyncio.TimeoutError:
@@ -415,7 +421,7 @@ async def close(_, query: CallbackQuery):
         ]
         await app.send_message(
             user_id,
-            f"**Berhasil mengatur variable {variable} dengan value {value}**",
+            f"**Berhasil mengatur variable `{variable}` dengan value `{value}`\n\nJangan lupa untuk melakukan restart setelah menambah variabel baru.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
         herotod.update_config(config_vars)
@@ -432,7 +438,7 @@ async def close(_, query: CallbackQuery):
             ]
             await app.send_message(
                 user_id,
-                f"**Berhasil mengatur variable {variable} dengan value {value}**",
+                f"**Berhasil mengatur variable `{variable}` dengan value `{value}`\n\nJangan lupa untuk melakukan restart setelah menambah variabel baru.**",
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
 
@@ -443,3 +449,144 @@ async def batal(query, text):
         await app.send_message(user_id, "<b>Dibatalkan !</b>")
         return True
     return False
+
+
+@app.on_callback_query(filters.regex("remsesi"))
+async def close(_, query: CallbackQuery):
+    user_id = query.from_user.id
+    await query.message.delete()
+    try:
+        var = await app.ask(
+            user_id,
+            "<b>Silakan masukkan variabel.\nContoh : SESSION2\n\nKetik /cancel untuk membatalkan proses.</b>",
+            timeout=120,
+        )
+    except asyncio.TimeoutError:
+        return await app.send_message(user_id, "Waktu Telah Habis")
+
+    if await batal(query, var.text):
+        return
+
+    variable = var.text
+    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
+        api_key = os.environ["HEROKU_API_KEY"]
+        app_name = os.environ["HEROKU_APP_NAME"]
+        heroku = heroku3.from_key(api_key)
+        herotod = heroku.apps()[app_name]
+        config_vars = herotod.config()
+        del config_vars[variable]
+        buttons = [
+            [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+            ],
+        ]
+        await app.send_message(
+            user_id,
+            f"**Berhasil menghapus variable `{variable}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+        herotod.update_config(config_vars)
+    else:
+        path = ".env"
+        dotenv.unset_key(path, variable)
+        
+        if dotenv.get_key(path, variable) is None:
+            buttons = [
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            await app.send_message(
+                user_id,
+                f"**Berhasil menghapus variable `{variable}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
+                reply_markup=InlineKeyboardMarkup(buttons),
+            )
+            
+            
+@app.on_callback_query(filters.regex("getsesi"))
+async def close(_, query: CallbackQuery):
+    user_id = query.from_user.id
+    await query.message.delete()
+    try:
+        var = await app.ask(
+            user_id,
+            "<b>Silakan masukkan variabel.\nContoh : SESSION2\n\nKetik /cancel untuk membatalkan proses.</b>",
+            timeout=120,
+        )
+    except asyncio.TimeoutError:
+        return await app.send_message(user_id, "Waktu Telah Habis")
+
+    if await batal(query, var.text):
+        return
+
+    variable = var.text
+    if anu_heroku():
+        if variable in os.environ:
+            buttons = [
+              [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+              ],
+              [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            return await app.send_message(
+            user_id,
+            f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
+            reply_markup=InlineKeyboardMarkup(buttons),
+            )
+        else:
+            buttons = [
+              [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+              ],
+              [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            return await app.send_message(
+            user_id,
+            f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
+            reply_markup=InlineKeyboardMarkup(buttons),
+            )
+    else:
+        path = ".env"
+        output = dotenv.get_key(path, variable)
+        if not output:
+            buttons = [
+              [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+              ],
+              [
+                InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            return await app.send_message(
+            user_id,
+            f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
+            reply_markup=InlineKeyboardMarkup(buttons),
+            )
+        else:
+            buttons = [
+                [
+                InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                InlineKeyboardButton(text="Hapus Variabel", callback_data="remsesi"),
+                ],
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            await app.send_message(
+            user_id,
+            f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
+            reply_markup=InlineKeyboardMarkup(buttons),
+            )
