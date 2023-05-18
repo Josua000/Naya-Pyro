@@ -4,9 +4,9 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-
+import dotenv
 import heroku3
-
+from dotenv import load_dotenv
 HAPP = None
 import urllib3
 from pyrogram.raw.functions import Ping
