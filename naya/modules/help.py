@@ -103,7 +103,7 @@ async def _(client, inline_query):
 @app.on_callback_query(filters.regex("^alv_cls"))
 async def _(cln, cq):
     get_id = cq.data.split()
-    if not cq.from_user.id == cq.me.id:
+    if not cq.from_user.id == cln.me.id:
         return await cq.answer(
             f"**❌ GAUSAH PENCET ANJENG, GUE JIJIK.**",
             True,
