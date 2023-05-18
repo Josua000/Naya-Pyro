@@ -137,13 +137,13 @@ async def upstream(client: Client, message: Message):
                 await client.send_document(
                     message.chat.id,
                     "output.txt",
-                    caption=f"**Ketik** `{cmd}update deploy` **Untuk Mengupdate Userbot.**",
+                    caption=f"**Ketik** `{cmd}update gas` **Untuk Mengupdate Userbot.**",
                     reply_to_message_id=status.id,
                 )
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\n**Ketik** `{cmd}update deploy` **Untuk Mengupdate Userbot.**",
+                    f"{changelog_str}\n**Ketik** `{cmd}update gas` **Untuk Mengupdate Userbot.**",
                     disable_web_page_preview=True,
                 )
         else:
@@ -273,6 +273,6 @@ __HELP__ = f"""
 ๏ Perintah: <code>{cmd}update gas</code>
 ◉ Penjelasan: Untuk melakukan update heroku deploy Naya-Pyro.
 
-๏ Perintah: <code>{cmd}gasupdate</code>
+๏ Perintah: <code>{cmd}goupdate</code>
 ◉ Penjelasan: Untuk melakukan update vps deploy Naya-Pyro.
 """
