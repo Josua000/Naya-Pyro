@@ -33,6 +33,8 @@ from naya.config import *
 
 from . import *
 
+HAPP = None
+
 if GIT_TOKEN:
     GIT_USERNAME = REPO_URL.split("com/")[1].split("/")[0]
     TEMP_REPO = REPO_URL.split("https://")[1]
