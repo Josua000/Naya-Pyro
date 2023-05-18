@@ -4,8 +4,8 @@ import re
 import sys
 from datetime import datetime
 from os import environ, execle
-
 import heroku3
+from dotenv import dotenv_values, set_key
 
 HAPP = None
 import urllib3
@@ -212,75 +212,6 @@ async def close(_, query: CallbackQuery):
     await query.message.delete()
 
 
-@app.on_callback_query(filters.regex("sesi"))
-async def close(_, query: CallbackQuery):
-    user_id = query.from_user.id
-    await query.message.delete()
-    try:
-        var = await app.ask(
-            user_id,
-            "<b>Silakan masukkan variabel.\nContoh : CMD_HNDL\n\nKetik /cancel untuk membatalkan proses.</b>",
-            timeout=120,
-        )
-    except asyncio.TimeoutError:
-        return await app.send_message(user_id, "Waktu Telah Habis")
-
-    if await batal(query, var.text):
-        return
-
-    variable = var.text
-
-    try:
-        val = await app.ask(
-            user_id,
-            "<b>Silakan masukkan value.\nContoh : ?\n\nKetik /cancel untuk membatalkan proses.</b>",
-            timeout=120,
-        )
-    except asyncio.TimeoutError:
-        return await app.send_message(user_id, "Waktu Telah Habis")
-
-    if await batal(query, var.text):
-        return
-
-    value = val.text
-    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
-        api_key = os.environ["HEROKU_API_KEY"]
-        app_name = os.environ["HEROKU_APP_NAME"]
-        heroku = heroku3.from_key(api_key)
-        herotod = heroku.apps()[app_name]
-        config_vars = herotod.config()
-        if variable in config_vars:
-            config_vars[variable] = value
-            buttons = [
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
-                ],
-            ]
-            await app.send_message(
-                user_id,
-                f"**Berhasil mengatur variable {variabel} dengan value {value}",
-                reply_markup=InlineKeyboardMarkup(buttons),
-            )
-            herotod.update_config(config_vars)
-        else:
-            path = ".env"
-            with open(path, "a") as file:
-                file.write(f"\n{variable}={value}")
-            if dotenv.get_key(path, variable):
-                buttons = [
-                    [
-                        InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                        InlineKeyboardButton("Tutup", callback_data="cl_ad"),
-                    ],
-                ]
-                return await app.send_message(
-                    user_id,
-                    f"**Berhasil mengatur variable {variabel} dengan value {value}",
-                    reply_markup=InlineKeyboardMarkup(buttons),
-                )
-
-
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
     return await query.edit_message_text(
@@ -443,9 +374,79 @@ async def otp_and_numbereeee(_, message):
         )
 
 
-async def batal(callback_query, text):
+@app.on_callback_query(filters.regex("sesi"))
+async def close(_, query: CallbackQuery):
+    user_id = query.from_user.id
+    await query.message.delete()
+    try:
+        var = await app.ask(
+            user_id,
+            "<b>Silakan masukkan variabel.\nContoh : CMD_HNDL\n\nKetik /cancel untuk membatalkan proses.</b>",
+            timeout=120,
+        )
+    except asyncio.TimeoutError:
+        return await app.send_message(user_id, "Waktu Telah Habis")
+
+    if await batal(query, var.text):
+        return
+
+    variable = var.text
+
+    try:
+        val = await app.ask(
+            user_id,
+            "<b>Silakan masukkan value.\nContoh : ?\n\nKetik /cancel untuk membatalkan proses.</b>",
+            timeout=120,
+        )
+    except asyncio.TimeoutError:
+        return await app.send_message(user_id, "Waktu Telah Habis")
+
+    if await batal(query, val.text):
+        return
+
+    value = val.text
+    if "HEROKU_APP_NAME" in os.environ and "HEROKU_API_KEY" in os.environ:
+        api_key = os.environ["HEROKU_API_KEY"]
+        app_name = os.environ["HEROKU_APP_NAME"]
+        heroku = heroku3.from_key(api_key)
+        herotod = heroku.apps()[app_name]
+        config_vars = herotod.config()
+        if variable in config_vars:
+            config_vars[variable] = value
+            buttons = [
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            await app.send_message(
+                user_id,
+                f"**Berhasil mengatur variable {variable} dengan value {value}**",
+                reply_markup=InlineKeyboardMarkup(buttons),
+            )
+            herotod.update_config(config_vars)
+        else:
+            path = ".env"
+            with open(path, "a") as file:
+                file.write(f"\n{variable}={value}")
+            if dotenv.get_key(path, variable):
+                buttons = [
+                    [
+                        InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                        InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                    ],
+                ]
+                await app.send_message(
+                    user_id,
+                    f"**Berhasil mengatur variable {variable} dengan value {value}**",
+                    reply_markup=InlineKeyboardMarkup(buttons),
+                )
+
+
+
+async def batal(query, text):
     if text.startswith("/cancel"):
-        user_id = callback_query.from_user.id
+        user_id = query.from_user.id
         await app.send_message(user_id, "<b>Dibatalkan !</b>")
         return True
     return False
