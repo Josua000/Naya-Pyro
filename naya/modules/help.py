@@ -99,6 +99,7 @@ async def _(client, inline_query):
             ],
         )
 
+
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
     msg = f"<b>Menu Bantuan\nPerintah: <code>{cmd}</code></b>"
@@ -191,13 +192,14 @@ async def usereee(_, message):
 
 @app.on_callback_query(filters.regex("^alv_cls"))
 async def _(cln, cq):
-    get_id = cq.data.split()
+    cq.data.split()
     unPacked = unpackInlineMessage(cq.inline_message_id)
     for bot in botlist:
         if cq.from_user.id == int(bot.me.id):
             await bot.delete_messages(
                 unPacked.chat_id, [int(bot.me.id), unPacked.message_id]
             )
+
 
 @app.on_callback_query(filters.regex("cl_ad"))
 async def close(_, query: CallbackQuery):
