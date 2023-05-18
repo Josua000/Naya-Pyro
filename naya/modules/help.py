@@ -428,9 +428,9 @@ async def close(_, query: CallbackQuery):
                   InlineKeyboardButton(text="Kembali", callback_data="multi"),
                   InlineKeyboardButton("Tutup", callback_data="cl_ad"),
                 ],
-              ]
-              await app.send_message(user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
-              reply_markup=InlineKeyboardMarkup(buttons),
+            ]
+            await app.send_message(user_id, f"**Berhasil mengatur variable {variable} dengan value {value}**",
+            reply_markup=InlineKeyboardMarkup(buttons),
               )
 
 
