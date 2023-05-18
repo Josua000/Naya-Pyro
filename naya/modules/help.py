@@ -221,12 +221,12 @@ async def close(_, query: CallbackQuery):
         )
     except asyncio.TimeoutError:
         return await app.send_message(user_id, "Waktu Telah Habis")
-    
+
     if await batal(query, var.text):
         return
-    
+
     variable = var.text
-    
+
     try:
         val = await app.ask(
             user_id,
@@ -235,17 +235,16 @@ async def close(_, query: CallbackQuery):
         )
     except asyncio.TimeoutError:
         return await app.send_message(user_id, "Waktu Telah Habis")
-    
+
     if await batal(query, var.text):
         return
-        
+
     value = val.text
 
-    env_vars = dotenv_values('.env')
+    env_vars = dotenv_values(".env")
     env_vars[variable] = value
-    set_key('.env', variable, value)
-        
-        
+    set_key(".env", variable, value)
+
 
 @app.on_callback_query(filters.regex("multi"))
 async def close(_, query: CallbackQuery):
