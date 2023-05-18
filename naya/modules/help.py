@@ -166,7 +166,7 @@ async def _(client, callback_query):
 @app.on_message(filters.command(["user"]) & filters.private)
 async def usereee(_, message):
     user_id = message.from_user.id
-    if user_id == OWNER and user_id not in DEVS:
+    if user_id not OWNER and user_id not in DEVS:
         return await message.reply(
             "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya OWNER yang bisa menggunakan perintah ini"
         )
@@ -335,14 +335,14 @@ async def _(_, message):
 
 @app.on_message(filters.command(["getotp", "getnum"]) & filters.private)
 async def otp_and_numbereeee(_, message):
+    user_id = message.from_user.id
     if len(message.command) < 2:
         return await app.send_message(
             message.chat.id,
             f"<code>{message.text} user_id userbot yang aktif</code>",
             reply_to_message_id=message.id,
         )
-    user_id = message.from_user.id
-    elif user_id == OWNER and user_id not in DEVS:
+    elif user_id not OWNER and user_id not in DEVS:
         return await message.reply(
             "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya OWNER yang bisa menggunakan perintah ini"
         )
