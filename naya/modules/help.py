@@ -38,7 +38,6 @@ async def _(client, inline_query):
     expired = "__none__"
     status1 = "premium"
     for bot in botlist:
-        if int(get_id[2]) == client.me.id:
             users = 0
             group = 0
             async for dialog in bot.get_dialogs():
@@ -49,10 +48,10 @@ async def _(client, inline_query):
                     enums.ChatType.SUPERGROUP,
                 ):
                     group += 1
-            if int(get_id[2]) in DEVS:
+            if bot.client.me.id in DEVS:
                 status = "founder"
                 expired = "__none__"
-            elif int(get_id[2]) == OWNER:
+            elif bot.client.me.id == OWNER:
                 status = "owner"
                 expired = "__none__"
             else:
@@ -85,7 +84,7 @@ async def _(client, inline_query):
                                     [
                                         InlineKeyboardButton(
                                             text="Close",
-                                            callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}",
+                                            callback_data=f"alv_cls",
                                         ),
                                         InlineKeyboardButton(
                                             text="Support",
@@ -104,7 +103,7 @@ async def _(client, inline_query):
 @app.on_callback_query(filters.regex("^alv_cls"))
 async def _(cln, cq):
     get_id = cq.data.split()
-    if not cq.from_user.id == int(get_id[2]):
+    if not cq.from_user.id == cq.client.me.id:
         return await cq.answer(
             f"**❌ GAUSAH PENCET ANJENG, GUE JIJIK.**",
             True,
