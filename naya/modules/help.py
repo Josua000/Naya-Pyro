@@ -217,9 +217,7 @@ async def close(_, query: CallbackQuery):
             [
                 [
                     InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="hapus"
-                    ),
+                    InlineKeyboardButton(text="Hapus Variabel", callback_data="hapus"),
                 ],
                 [
                     InlineKeyboardButton(text="Cek Variabel", callback_data="get"),
