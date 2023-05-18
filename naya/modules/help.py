@@ -72,17 +72,17 @@ async def _(client, inline_query):
           <b>expired:</b> <code>{expired}</code>
 """
             button = [
-                    [
-                        InlineKeyboardButton(
-                            text="Close",
-                            callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}",
-                        ),
-                        InlineKeyboardButton(
-                            text="Support",
-                            url=f"https://t.me/kynansupport",
-                        ),
-                    ]
+                [
+                    InlineKeyboardButton(
+                        text="Close",
+                        callback_data=f"alv_cls {int(get_id[1])} {int(get_id[2])}",
+                    ),
+                    InlineKeyboardButton(
+                        text="Support",
+                        url=f"https://t.me/kynansupport",
+                    ),
                 ]
+            ]
             await client.answer_inline_query(
                 inline_query.id,
                 cache_time=60,
