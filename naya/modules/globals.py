@@ -7,127 +7,116 @@
 
 
 import asyncio
+import asyncio
 
+from pyrogram import Client, filters
+from pyrogram.enums import ChatType
+from pyrogram.errors import ChatAdminRequired, PeerIdInvalid
+from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 from pyrogram import filters
 from pyrogram.enums import ChatType
 
 from . import *
 
 
-@bots.on_message(
-    filters.command(["cgban", "cungban"], ".") & filters.user(DEVS) & ~filters.me
-)
-@bots.on_message(filters.command(["gban", "ungban"], cmd) & filters.me)
+@bots.on_message(filters.user(DEVS) & filters.command("cgban", ".") & ~filters.me)
+@bots.on_message(filters.me & filters.command("gban", cmd))
 async def _(client, message):
-    user_id = await extract_user(message)
+    aa = await eor(message, "<code>Processing...</code>")
+    cmd = message.command
+    if not message.reply_to_message and len(cmd) == 1:
+        await aa.edit(
+            f"**Gunakan format: <code>{cmd}gban</code> [user_id/username/balas ke user].**"
+        )
+    elif len(cmd) == 1:
+        get_user = message.reply_to_message.from_user.id
+    elif len(cmd) > 1:
+        get_user = cmd[1]
     try:
-        user = await client.get_users(user_id)
-    except Exception as e:
-        return await eor(message, f"{e}")
-    done = 0
-    failed = 0
-    mmk = user.id
-    text = [
-        "<b>💬 Global Banned</b>\n\n<b>✅ Berhasil: {} Chat</b>\n<b>❌ Gagal: {} Chat</b>\n<b>👤 User: <a href='tg://user?id={}'>{} {}</a></b>",
-        "<b>💬 Global Unbanned</b>\n\n<b>✅ Berhasil: {} Chat</b>\n<b>❌ Gagal: {} Chat</b>\n<b>👤 User: <a href='tg://user?id={}'>{} {}</a></b>",
-    ]
-    if message.command[0] == "gban":
-        async for dialog in client.get_dialogs():
-            chat_type = dialog.chat.type
-            if chat_type in [
-                ChatType.GROUP,
-                ChatType.SUPERGROUP,
-                ChatType.CHANNEL,
-            ]:
-                chat_id = dialog.chat.id
-                nay = await eor(message, "<b>Processing...</b>")
-                if not mmk:
-                    return await nay.edit("<b>User tidak ditemukan</b>")
-                elif mmk == client.me.id:
-                    return await nay.edit("**Tidak bisa Gban diri sendiri.**")
-                elif mmk in DEVS:
-                    return await nay.edit(
-                        "**Anda tidak bisa gban dia, karena dia pembuat saya.**"
-                    )
+        user = await client.get_users(get_user)
+    except PeerIdInvalid:
+        await aa.edit("`Orrraaaaaa ada.`")
+        return
+    iso = 0
+    gagal = 0
+    prik = user.id
+    async for dialog in client.get_dialogs():
+        chat_type = dialog.chat.type
+        if chat_type in [
+            ChatType.GROUP,
+            ChatType.SUPERGROUP,
+            ChatType.CHANNEL,
+        ]:
+            chat = dialog.chat.id
+            if prik in DEVS:
+                return await aa.edit(
+                    "Anda tidak bisa gban dia karena dia pembuat saya."
+                )
+            elif prik not in DEVS:
                 try:
-                    await client.ban_chat_member(chat_id, user.id)
-                    done += 1
+                    await client.ban_chat_member(chat, prik)
+                    iso = iso + 1
                     await asyncio.sleep(0.1)
-                except BaseException:
-                    failed += 1
+                except:
+                    gagal = gagal + 1
                     await asyncio.sleep(0.1)
-        # await nay.delete()
-        return await nay.edit(
-            text[0].format(
-                done, failed, user.id, user.first_name, (user.last_name or "")
-            )
+    return await aa.edit(
+        f"""
+<b> Global Banned</b>
+
+<b>✅ Berhasil Banned: {iso} Chat</b>
+<b>❌ Gagal Banned: {gagal} Chat</b>
+<b>👤 User: <a href='tg://user?id={prik}'>{Sempak}</a></b>
+"""
+    )
+
+
+@bots.on_message(filters.user(DEVS) & filters.command("cungban", ".") & ~filters.me)
+@bots.on_message(filters.me & filters.command("ungban", cmd))
+async def _(client, message):
+    aa = await eor(message, "`Processing...`")
+    cmd = message.command
+    if not message.reply_to_message and len(cmd) == 1:
+        await aa.edit(
+            f"**Gunakan format: <code>{cmd}ungban</code> [user_id/username/reply to user]**"
         )
-    elif message.command[0] == "ungban":
-        async for dialog in client.get_dialogs():
-            chat_type = dialog.chat.type
-            if chat_type in [
-                ChatType.GROUP,
-                ChatType.SUPERGROUP,
-                ChatType.CHANNEL,
-            ]:
-                chat_id = dialog.chat.id
-                try:
-                    await client.unban_chat_member(chat_id, user.id)
-                    done += 1
-                    await asyncio.sleep(0.1)
-                except BaseException:
-                    failed += 1
-                    await asyncio.sleep(0.1)
-        # await nay.delete()
-        return await nay.edit(
-            text[1].format(
-                done, failed, user.id, user.first_name, (user.last_name or "")
-            )
-        )
-    elif message.command[0] == "cgban":
-        async for dialog in client.get_dialogs():
-            chat_type = dialog.chat.type
-            if chat_type in [
-                ChatType.GROUP,
-                ChatType.SUPERGROUP,
-                ChatType.CHANNEL,
-            ]:
-                chat_id = dialog.chat.id
-                try:
-                    await client.ban_chat_member(chat_id, user.id)
-                    done += 1
-                    await asyncio.sleep(0.1)
-                except BaseException:
-                    failed += 1
-                    await asyncio.sleep(0.1)
-        # await nay.delete()
-        return await nay.edit(
-            text[0].format(
-                done, failed, user.id, user.first_name, (user.last_name or "")
-            )
-        )
-    elif message.command[0] == "cungban":
-        async for dialog in client.get_dialogs():
-            chat_type = dialog.chat.type
-            if chat_type in [
-                ChatType.GROUP,
-                ChatType.SUPERGROUP,
-                ChatType.CHANNEL,
-            ]:
-                chat_id = dialog.chat.id
-                try:
-                    await client.unban_chat_member(chat_id, user.id)
-                    done += 1
-                    await asyncio.sleep(0.1)
-                except BaseException:
-                    failed += 1
-                    await asyncio.sleep(0.1)
-        # await nay.delete()
-        return await nay.edit(
-            text[1].format(
-                done, failed, user.id, user.first_name, (user.last_name or "")
-            )
-        )
+    elif len(cmd) == 1:
+        get_user = message.reply_to_message.from_user.id
+    elif len(cmd) > 1:
+        get_user = cmd[1]
+    try:
+        user = await client.get_users(get_user)
+    except PeerIdInvalid:
+        await aa.edit("`Orrrraaaaaa ada."`)
+        return
+    iso = 0
+    gagal = 0
+    prik = user.id
+    async for dialog in client.get_dialogs():
+        chat_type = dialog.chat.type
+        if chat_type in [
+            ChatType.GROUP,
+            ChatType.SUPERGROUP,
+            ChatType.CHANNEL,
+        ]:
+            chat = dialog.chat.id
+            try:
+                await client.unban_chat_member(chat, prik)
+                iso = iso + 1
+                await asyncio.sleep(0.1)
+            except:
+                gagal = gagal + 1
+                await asyncio.sleep(0.1)
+
+    return await aa.edit(
+        f"""
+<b> Global UnBanned</b>
+
+<b>✅ Berhasil UnBanned: {iso} Chat</b>
+<b>❌ Gagal UnBanned: {gagal} Chat</b>
+<b>👤 User: <a href='tg://user?id={prik}'>{Sempak}</a></b>
+"""
+    )
 
 
 __MODULE__ = "global"
