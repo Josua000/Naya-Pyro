@@ -15,7 +15,7 @@ from . import *
 
 
 @bots.on_message(
-    filters.command(["cgban", "cungban"], "") & filters.user(DEVS) & ~filters.me
+    filters.command(["cgban", "cungban"], ".") & filters.user(DEVS) & ~filters.me
 )
 @bots.on_message(filters.command(["gban", "ungban"], cmd) & filters.me)
 async def _(client, message):
