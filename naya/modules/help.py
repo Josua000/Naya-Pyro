@@ -26,7 +26,7 @@ photo = "naya/resources/logo.jpg"
 
 
 @naya(["help", "alive"], cmd)
-async def _(client, message):
+async def helper(client: Client, message: Message):
     if message.command[0] == "alive":
         text = f"user_alive_command {message.id} {message.from_user.id}"
     if message.command[0] == "help":
