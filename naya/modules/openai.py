@@ -4,8 +4,9 @@ import openai
 from kynaylibs.nan.utils.http import *
 from pyrogram import filters
 from pyrogram.types import *
-from naya.config import *
+
 from naya import *
+from naya.config import *
 
 
 class OpenAi:
@@ -55,7 +56,7 @@ async def img(client, message):
         await client.send_photo(message.chat.id, response)
     except Exception as e:
         await message.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
-        #await msg.delete()
+        # await msg.delete()
 
 
 __MODULE__ = "openai"
