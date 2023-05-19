@@ -10,9 +10,9 @@ __HELP__ = f"""
 """
 
 
-
-from naya.config import OPENAI_API
 from naya import *
+from naya.config import OPENAI_API
+
 from . import *
 
 
