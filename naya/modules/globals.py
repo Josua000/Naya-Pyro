@@ -6,19 +6,20 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
+from pyrogram import Client, errors, filters
+from pyrogram.types import ChatPermissions, Message
+from pyrogram import Client 
+from pyrogram.enums import ChatType
 import asyncio
-
-from kynaylibs.nan import *
+from kynaylibs import *
 from kynaylibs.nan.utils.misc import *
 from kynaylibs.nan.utils.tools import *
-from pyrogram import filters
-from pyrogram.enums import ChatType
-
+from kynaylibs.nan.utils.PyroHelpers import get_ub_chats
 from naya import *
 
 
 @bots.on_message(
-    filters.command(["cgban", "cungban"], "") & filters.user(DEVS) & ~filters.me
+    filters.command(["cgban", "cungban"], ".") & filters.user(DEVS) & ~filters.me
 )
 @bots.on_message(filters.command(["gban", "ungban"], cmd) & filters.me)
 async def _(client, message):
