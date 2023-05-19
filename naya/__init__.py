@@ -97,7 +97,6 @@ bot1 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION1,
-        in_memory=False,
     )
     if SESSION1
     else None
@@ -109,7 +108,6 @@ bot2 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION2,
-        in_memory=False,
     )
     if SESSION2
     else None
@@ -121,7 +119,6 @@ bot3 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION3,
-        in_memory=False,
     )
     if SESSION3
     else None
@@ -133,7 +130,6 @@ bot4 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION4,
-        in_memory=False,
     )
     if SESSION4
     else None
@@ -145,7 +141,6 @@ bot5 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION5,
-        in_memory=False,
     )
     if SESSION5
     else None
@@ -156,7 +151,6 @@ bot6 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION6,
-        in_memory=False,
     )
     if SESSION6
     else None
@@ -168,7 +162,6 @@ bot7 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION7,
-        in_memory=False,
     )
     if SESSION7
     else None
@@ -180,7 +173,6 @@ bot8 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION8,
-        in_memory=False,
     )
     if SESSION8
     else None
@@ -192,7 +184,6 @@ bot9 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION9,
-        in_memory=False,
     )
     if SESSION9
     else None
@@ -204,7 +195,6 @@ bot10 = (
         api_id=API_ID,
         api_hash=API_HASH,
         session_string=SESSION10,
-        in_memory=False,
     )
     if SESSION10
     else None
