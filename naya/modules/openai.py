@@ -55,7 +55,7 @@ async def img(client, message):
         await client.send_photo(message.chat.id, response)
     except Exception as e:
         await message.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
-        #await msg.delete()
+        # await msg.delete()
 
 
 __MODULE__ = "openai"
