@@ -69,29 +69,8 @@ if not BOT_TOKEN:
     sys.exit()
 
 
-class Ubot(Client):
-    _bots = []
-
-    def __init__(self, name, **kwargs):
-        super().__init__(name=name, **kwargs)
-        self.group_call = GroupCallFactory(self).get_group_call()
-
-    def on_message(self, filters=filters.Filter, group=-1):
-        def decorator(func):
-            for bot in self._bots:
-                bot.add_handler(MessageHandler(func, filters), group)
-            return func
-
-        return decorator
-
-    async def start(self):
-        await super().start()
-        if self not in self._bots:
-            self._bots.append(self)
-
-
 bot1 = (
-    Ubot(
+    Client(
         name="bot1",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -103,7 +82,7 @@ bot1 = (
 )
 
 bot2 = (
-    Ubot(
+    Client(
         name="bot2",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -115,7 +94,7 @@ bot2 = (
 )
 
 bot3 = (
-    Ubot(
+    Client(
         name="bot3",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -127,7 +106,7 @@ bot3 = (
 )
 
 bot4 = (
-    Ubot(
+    Client(
         name="bot4",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -139,7 +118,7 @@ bot4 = (
 )
 
 bot5 = (
-    Ubot(
+    Client(
         name="bot5",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -150,7 +129,7 @@ bot5 = (
     else None
 )
 bot6 = (
-    Ubot(
+    Client(
         name="bot6",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -162,7 +141,7 @@ bot6 = (
 )
 
 bot7 = (
-    Ubot(
+    Client(
         name="bot7",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -174,7 +153,7 @@ bot7 = (
 )
 
 bot8 = (
-    Ubot(
+    Client(
         name="bot8",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -186,7 +165,7 @@ bot8 = (
 )
 
 bot9 = (
-    Ubot(
+    Client(
         name="bot9",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -198,7 +177,7 @@ bot9 = (
 )
 
 bot10 = (
-    Ubot(
+    Client(
         name="bot10",
         api_id=API_ID,
         api_hash=API_HASH,
@@ -208,11 +187,11 @@ bot10 = (
     if SESSION10
     else None
 )
-bots = Ubot(name="bots")
 
 botlist = [
     bot for bot in [bot1, bot2, bot3, bot4, bot5, bot6, bot7, bot8, bot9, bot10] if bot
 ]
 
 for bot in botlist:
-    bots._bots.append(bot)
+    if not hasattr(bot, "group_call"):
+        setattr(bot, "group_call", GroupCallFactory(bot).get_group_call())
