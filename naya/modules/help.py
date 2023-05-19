@@ -376,15 +376,14 @@ async def _(_, message):
 """,
             reply_markup=InlineKeyboardMarkup(
                 [
-                  [
-                    InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
-                    InlineKeyboardButton(text="Info", callback_data="inpo"),
-                  ],
-                  [
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                  ]
-                ),
-            )
+                    [
+                        InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
+                        InlineKeyboardButton(text="Info", callback_data="inpo"),
+                    ],
+                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                ]
+            ),
+        )
     else:
         await message.reply_photo(
             photo=photo,
@@ -393,16 +392,15 @@ async def _(_, message):
 💭 Apa ada yang bisa saya bantu ?
 💡 Silakan pilih tombol dibawah untuk kamu perlukan.
 </b>""",
-             reply_markup=InlineKeyboardMarkup(
+            reply_markup=InlineKeyboardMarkup(
                 [
-                  [
-                    InlineKeyboardButton(text="Pengaturan", callback_data="setong"),
-                  ],
-                  [
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                  ]
-                ),
-            )
+                    [
+                        InlineKeyboardButton(text="Pengaturan", callback_data="setong"),
+                    ],
+                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                ]
+            ),
+        )
 
 
 @app.on_message(filters.command(["getotp", "getnum"]) & filters.private)
