@@ -1,12 +1,14 @@
 from io import *
 
+import openai
 from kynaylibs.nan.utils.http import *
 from pyrogram import filters
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
-import openai
+
 from naya import cmd
 from naya.config import OPENAI_API
+
 
 class OpenAi:
     def Text(question):
@@ -26,8 +28,8 @@ class OpenAi:
         openai.api_key = OPENAI_API
         response = openai.Image.create(prompt=question, n=1, size="1024x1024")
         return response["data"][0]["url"]
-        
-        
+
+
 @bots.on_message(filters.me & filters.command(["ai", "ask"], cmd))
 async def ai(client, message):
     if len(message.command) == 1:
