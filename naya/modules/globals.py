@@ -35,8 +35,7 @@ async def _(client, message):
     try:
         user = await client.get_users(get_user)
     except PeerIdInvalid:
-        await aa.edit("`Orrraaaaaa ada.`")
-        return
+        return await aa.edit("`Orrraaaaaa ada.`")
     iso = 0
     gagal = 0
     prik = user.id
@@ -87,7 +86,7 @@ async def _(client, message):
     try:
         user = await client.get_users(get_user)
     except PeerIdInvalid:
-        await aa.edit("`Orrrraaaaaa ada."`)
+        await aa.edit("`Orrraaaaaa ada.`")
         return
     iso = 0
     gagal = 0
