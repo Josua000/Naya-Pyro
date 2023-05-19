@@ -259,7 +259,7 @@ async def _(_, query: CallbackQuery):
 
 @app.on_callback_query(filters.regex("log"))
 async def _(_, query: CallbackQuery):
-    user_id = query.client.me.id
+    user_id = query.message.from_user.id
     await query.message.delete()
     try:
         log = await app.ask(
@@ -274,7 +274,7 @@ async def _(_, query: CallbackQuery):
         return
 
     botlog = log.text
-    await set_botlog(user_id, botlog)
+    await set_botlog(query.client.me.id, botlog)
     buttons = [
         [
             InlineKeyboardButton(text="Kembali", callback_data="multi"),
