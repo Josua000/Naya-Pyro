@@ -9,9 +9,7 @@ from typing import Any, Dict
 
 from aiohttp import ClientSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from pyrogram import Client
-
-from pyrogram import __version__, enums, filters
+from pyrogram import Client, __version__, enums, filters
 from pyrogram.handlers import MessageHandler
 from pyromod import listen
 from pytgcalls import GroupCallFactory
