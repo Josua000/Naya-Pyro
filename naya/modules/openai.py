@@ -9,7 +9,7 @@ from naya import *
 
 
 class OpenAi:
-    def text(self, question):
+    def text(question):
         openai.api_key = "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"
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -22,7 +22,7 @@ class OpenAi:
         )
         return response.choices[0].text
 
-    def photo(self, question):
+    def photo(question):
         openai.api_key = "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"
         response = openai.Image.create(prompt=question, n=1, size="1024x1024")
         return response["data"][0]["url"]
@@ -37,7 +37,7 @@ async def ai(client, message):
     msg = await message.edit_text("`Memproses...`")
     biji = message.text.split(None, 1)[1]
     try:
-        response = OpenAi().text(biji)
+        response = OpenAi.text(biji)
         await msg.edit_text(f"**Q:** {biji}\n\n**A:** {response}")
     except Exception as e:
         await msg.edit_text(f"**Terjadi Kesalahan!!\n`{e}`**")
@@ -54,8 +54,8 @@ async def img(client, message):
         response = OpenAi().photo(biji)
         await client.send_photo(message.chat.id, response)
     except Exception as e:
-        await msg.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
-        await msg.delete()
+        await message.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
+        #await msg.delete()
 
 
 __MODULE__ = "openai"
