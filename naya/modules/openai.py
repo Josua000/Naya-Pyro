@@ -4,13 +4,13 @@ import openai
 from kynaylibs.nan.utils.http import *
 from pyrogram import filters
 from pyrogram.types import *
-
+from naya.config import *
 from naya import *
 
 
 class OpenAi:
     def text(question):
-        openai.api_key = "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"
+        openai.api_key = OPENAI_API
         response = openai.Completion.create(
             model="text-davinci-003",
             prompt=f"Q: {question}\nA:",
@@ -23,7 +23,7 @@ class OpenAi:
         return response.choices[0].text
 
     def photo(question):
-        openai.api_key = "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"
+        openai.api_key = OPENAI_API
         response = openai.Image.create(prompt=question, n=1, size="1024x1024")
         return response["data"][0]["url"]
 
@@ -51,11 +51,11 @@ async def img(client, message):
         )
     try:
         biji = message.text.split(None, 1)[1]
-        response = OpenAi().photo(biji)
+        response = OpenAi.photo(biji)
         await client.send_photo(message.chat.id, response)
     except Exception as e:
         await message.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
-        # await msg.delete()
+        #await msg.delete()
 
 
 __MODULE__ = "openai"
