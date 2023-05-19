@@ -363,44 +363,44 @@ async def _(_, query: CallbackQuery):
 @app.on_message(filters.command(["start"]))
 async def _(_, message):
     user_id = message.from_user.id
-    x = await app.get_me()
-    user = x.id
+    _ubot = []
     for bot in botlist:
-        if user_id in (OWNER, user):
-            await message.reply_photo(
-                photo=photo,
-                caption=f"""
-<b>👋 Halo <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
-💭 Apa ada yang bisa saya bantu ?
-💡 Silakan pilih tombol dibawah untuk kamu perlukan.
-</b>""",
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                text="Pengaturan", callback_data="setong"
-                            )
-                        ],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
-                ),
-            )
-        else:
-            await message.reply_photo(
-                photo=photo,
-                caption=f"""
+        _ubot.append(bot.me.id)
+    if user_id not in _ubot:
+        return await message.reply_photo(
+            photo=photo,
+            caption=f"""
 <b>👋 Halo Jeng <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa gue banting ?
 💡 Gua Milik Owner Dibawah Ni.</b>
 """,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
-                            InlineKeyboardButton(text="Info", callback_data="inpo"),
-                        ],
-                        [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                    ]
+            reply_markup=InlineKeyboardMarkup(
+                [
+                  [
+                    InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
+                    InlineKeyboardButton(text="Info", callback_data="inpo"),
+                  ],
+                  [
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                  ]
+                ),
+            )
+    else:
+        await message.reply_photo(
+            photo=photo,
+            caption=f"""
+<b>👋 Halo <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
+💭 Apa ada yang bisa saya bantu ?
+💡 Silakan pilih tombol dibawah untuk kamu perlukan.
+</b>""",
+             reply_markup=InlineKeyboardMarkup(
+                [
+                  [
+                    InlineKeyboardButton(text="Pengaturan", callback_data="setong"),
+                  ],
+                  [
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                  ]
                 ),
             )
 
