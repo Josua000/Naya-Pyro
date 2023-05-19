@@ -56,8 +56,6 @@ async def ai(client, message):
             )
         ).json()
         await msg.edit_text(response["choices"][0]["text"])
-    except MessageNotModified:
-        pass
     except Exception as e:
         await msg.edit_text(f"**Terjadi Kesalahan!!\n`{e}`**")
 
