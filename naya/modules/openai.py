@@ -1,20 +1,16 @@
+from io import *
+
+from kynaylibs.nan.utils.http import *
+from pyrogram import filters
+from pyrogram.errors import *
+from pyrogram.errors import MessageNotModified
+from pyrogram.types import *
+
 from naya import cmd
 from naya.config import OPENAI_API
-from kynaylibs.nan.utils.http import *
-from pyrogram.types import *
-from pyrogram.errors import *
+
 from . import *
-import io
-from io import *
-import os
-import requests
-import openai
-import shutil
-import random
-from pyrogram import filters
-from pyrogram.types import Message
-from pyrogram.errors import MessageNotModified
-from asyncio import gather
+
 
 @bots.on_message(filters.me & filters.command(["ai", "ask"], cmd))
 async def _(client, message):
