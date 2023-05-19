@@ -6,15 +6,16 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import asyncio
-
-from kynaylibs import *
-from kynaylibs.nan.utils.basic import *
-from kynaylibs.nan.utils.misc import *
-from kynaylibs.nan.utils.tools import *
-from pyrogram import filters
+from pyrogram import Client, errors, filters
+from pyrogram.types import ChatPermissions, Message
+from pyrogram import Client 
 from pyrogram.enums import ChatType
-
+import asyncio
+from kynaylibs import *
+from kynaylibs.nan.utils.misc import *
+from kynaylibs.nan.utils.basic import *
+from kynaylibs.nan.utils.tools import *
+from kynaylibs.nan.utils.PyroHelpers import get_ub_chats
 from naya import *
 
 
@@ -24,20 +25,19 @@ from naya import *
 @bots.on_message(filters.command(["gban", "ungban"], cmd) & filters.me)
 async def _(client, message):
     user_id = await extract_user(message)
+    nay = await eor(message, "<b>Processing...</b>")
+    if not user_id:
+        return await nay.edit("<b>User tidak ditemukan</b>")
+    elif user_id == client.me.id:
+        return await nay.edit("**Tidak bisa Gban diri sendiri.**")
+    elif user_id in DEVS:
+        return await nay.edit("**Anda tidak bisa gban dia, karena dia pembuat saya.**")
     try:
         user = await client.get_users(user_id)
     except Exception as e:
-        return await message.edit(e)
-    nay = await eor(message, "<b>Processing...</b>")
+        return await nay.edit(e)
     done = 0
     failed = 0
-    mmk = user.id
-    if not mmk:
-        return await nay.edit("<b>User tidak ditemukan</b>")
-    elif mmk == client.me.id:
-        return await nay.edit("**Tidak bisa Gban diri sendiri.**")
-    elif mmk in DEVS:
-        return await nay.edit("**Anda tidak bisa gban dia, karena dia pembuat saya.**")
     text = [
         "<b>💬 Global Banned</b>\n\n<b>✅ Berhasil: {} Chat</b>\n<b>❌ Gagal: {} Chat</b>\n<b>👤 User: <a href='tg://user?id={}'>{} {}</a></b>",
         "<b>💬 Global Unbanned</b>\n\n<b>✅ Berhasil: {} Chat</b>\n<b>❌ Gagal: {} Chat</b>\n<b>👤 User: <a href='tg://user?id={}'>{} {}</a></b>",
