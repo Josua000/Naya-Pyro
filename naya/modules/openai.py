@@ -39,7 +39,7 @@ async def ai(client, message):
     question = message.text.split(" ", maxsplit=1)[1]
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {OPENAI_API}",
+        "Authorization": "Bearer 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",
     }
 
     json_data = {
