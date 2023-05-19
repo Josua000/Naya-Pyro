@@ -258,8 +258,8 @@ async def _(_, query: CallbackQuery):
 
 
 @app.on_callback_query(filters.regex("log"))
-async def _(client, query):
-    user_id = client.me.id
+async def _(_, query: CallbackQuery):
+    user_id = query.client.me.id
     await query.message.delete()
     try:
         log = await app.ask(
