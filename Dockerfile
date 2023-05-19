@@ -5,7 +5,6 @@ RUN apt-get update && apt-get -y install \
 RUN apt-get install git curl python3-pip ffmpeg -y
 ARG USER=root
 USER $USER
-RUN python3 -m venv venv
 WORKDIR /app
 COPY . .
 RUN pip3 install -r requirements.txt
