@@ -20,6 +20,7 @@ from . import *
 @bots.on_message(filters.command(["gban", "ungban"], cmd) & filters.me)
 async def _(client, message):
     user_id = await extract_user(message)
+    nay = await eor(message, "<b>Processing...</b>")
     try:
         user = await client.get_users(user_id)
     except Exception as error:
@@ -40,7 +41,6 @@ async def _(client, message):
                 ChatType.CHANNEL,
             ]:
                 chat_id = dialog.chat.id
-                nay = await message.reply("<b>Processing...</b>")
                 if not mmk:
                     return await nay.edit("<b>User tidak ditemukan</b>")
                 elif mmk == client.me.id:
