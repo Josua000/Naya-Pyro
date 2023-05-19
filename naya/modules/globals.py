@@ -6,12 +6,16 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import asyncio
-
-from pyrogram import filters
+from pyrogram import Client, errors, filters
+from pyrogram.types import ChatPermissions, Message
+from pyrogram import Client 
 from pyrogram.enums import ChatType
-
-from . import *
+import asyncio
+from kynaylibs.nan import *
+from kynaylibs.nan.utils.misc import *
+from kynaylibs.nan.utils.tools import *
+from kynaylibs.nan.utils.PyroHelpers import get_ub_chats
+from naya import *
 
 
 @bots.on_message(
