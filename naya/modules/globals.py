@@ -7,10 +7,14 @@
 
 
 import asyncio
+import asyncio
 
+from pyrogram import Client, filters
+from pyrogram.enums import ChatType
+from pyrogram.errors import ChatAdminRequired, PeerIdInvalid
+from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 from pyrogram import filters
 from pyrogram.enums import ChatType
-from pyrogram.errors import PeerIdInvalid
 
 from . import *
 
@@ -70,15 +74,12 @@ async def _(client, message):
 @bots.on_message(filters.me & filters.command("ungban", cmd))
 async def _(client, message):
     aa = await eor(message, "`Processing...`")
-    cmd = message.command
-    if not message.reply_to_message and len(cmd) == 1:
-        await aa.edit(
+    ajg = message.command
+    get_user = message.reply_to_message.from_user.id
+    if not message.reply_to_message and len(ajg) == 1:
+        return await aa.edit(
             f"**Gunakan format: <code>{cmd}ungban</code> [user_id/username/reply to user]**"
         )
-    elif len(cmd) == 1:
-        get_user = message.reply_to_message.from_user.id
-    elif len(cmd) > 1:
-        get_user = cmd[1]
     try:
         user = await client.get_users(get_user)
     except PeerIdInvalid:
