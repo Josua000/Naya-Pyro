@@ -1,6 +1,7 @@
 from naya import cmd
 from naya.config import OPENAI_API
-
+from pyrogram.types import *
+from pyrogram.errors import *
 from . import *
 
 
