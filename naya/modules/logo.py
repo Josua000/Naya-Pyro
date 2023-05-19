@@ -4,7 +4,6 @@ import random
 
 from kynaylibs.nan.utils import eor
 from PIL import Image, ImageDraw, ImageFont
-from pyrogram import Client as bots
 from pyrogram import enums, filters
 
 from naya import *

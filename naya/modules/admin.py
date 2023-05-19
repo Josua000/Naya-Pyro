@@ -14,7 +14,7 @@ from pyrogram.types import Message
 from . import *
 
 
-@naya(["admins"], cmd)
+@bots.on_message(filters.me & filters.command(["admins"], cmd))
 async def adminlist(client, message):
     replyid = None
     toolong = False
@@ -77,7 +77,7 @@ async def adminlist(client, message):
         await eor(message, teks)
 
 
-@naya(["report"], cmd)
+@bots.on_message(filters.me & filters.command(["report"], cmd))
 async def report_admin(client: Client, message: Message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -124,7 +124,7 @@ async def report_admin(client: Client, message: Message):
         )
 
 
-@naya(["bots"], cmd)
+@bots.on_message(filters.me & filters.command(["bots"], cmd))
 async def get_list_bots(client: Client, message: Message):
     replyid = None
     if len(message.text.split()) >= 2:

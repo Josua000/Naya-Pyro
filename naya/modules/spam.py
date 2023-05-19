@@ -8,9 +8,7 @@
 
 import asyncio
 
-from pyrogram import Client
-from pyrogram import Client as bots
-from pyrogram import enums, filters
+from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
 from naya import *

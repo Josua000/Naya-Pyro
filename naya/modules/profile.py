@@ -10,7 +10,6 @@ from asyncio import sleep
 
 from kynaylibs.nan.utils import eor
 from pyrogram import Client
-from pyrogram import Client as bots
 from pyrogram.types import Message
 
 from naya import *

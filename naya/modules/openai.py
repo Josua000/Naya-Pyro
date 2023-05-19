@@ -2,7 +2,6 @@ from io import *
 
 import openai
 from kynaylibs.nan.utils.http import *
-from pyrogram import Client as bots
 from pyrogram import filters
 from pyrogram.types import *
 
