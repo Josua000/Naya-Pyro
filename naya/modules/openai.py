@@ -5,7 +5,7 @@ from pyrogram import filters
 from pyrogram.errors import *
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
-import random
+
 from naya import cmd
 from naya.config import OPENAI_API
 
