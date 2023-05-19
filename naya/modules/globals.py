@@ -47,8 +47,6 @@ async def _(client, message):
                 ChatType.CHANNEL,
             ]:
                 chat_id = dialog.chat.id
-                
-            if user_id:
                 try:
                     await client.ban_chat_member(chat_id, user.id)
                     done += 1
