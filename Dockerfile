@@ -8,5 +8,5 @@ USER $USER
 RUN python3 -m venv venv
 WORKDIR /app
 COPY . .
-RUN pip3 install -U -r requirements.txt
+RUN pip3 install -r requirements.txt
 CMD bash start
