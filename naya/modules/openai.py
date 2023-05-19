@@ -10,7 +10,7 @@ __HELP__ = f"""
 """
 
 
-from naya import *
+from naya import cmd
 from naya.config import OPENAI_API
 
 from . import *
