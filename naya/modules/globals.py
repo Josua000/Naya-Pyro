@@ -7,14 +7,10 @@
 
 
 import asyncio
-import asyncio
 
-from pyrogram import Client, filters
-from pyrogram.enums import ChatType
-from pyrogram.errors import ChatAdminRequired, PeerIdInvalid
-from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 from pyrogram import filters
 from pyrogram.enums import ChatType
+from pyrogram.errors import PeerIdInvalid
 
 from . import *
 
