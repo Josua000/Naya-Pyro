@@ -1,10 +1,9 @@
 pyrogram
 tgcrypto
 pytz
-pytgcalls==3.0.0.dev24
 yt-dlp
 youtube-search-python
-motor==3.0.0
+motor
 dnspython
 GitPython
 pykeyboard
