@@ -2,10 +2,9 @@ from io import *
 
 from kynaylibs.nan.utils.http import *
 from pyrogram import filters
-from pyrogram.errors import *
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
-
+import openai
 from naya import cmd
 from naya.config import OPENAI_API
 
@@ -15,8 +14,8 @@ from . import *
 @bots.on_message(filters.me & filters.command(["ai", "ask"], cmd))
 async def ai(client, message):
     if len(message.command) == 1:
-        return await eor(
-            message, f"Ketik <code>{cmd}ai [question]</code> untuk menggunakan OpenAI"
+        return await message.edit_text(
+            f"Ketik <code>{cmd}ai [pertanyaan]</code> untuk menggunakan OpenAI"
         )
     question = message.text.split(" ", maxsplit=1)[1]
     headers = {
@@ -30,18 +29,19 @@ async def ai(client, message):
         "max_tokens": 500,
         "temperature": 0,
     }
-    msg = await eor(message, "`Processing...`")
+    msg = await message.edit_text("`Memproses...`")
     try:
         response = (
             await http.post(
                 "https://api.openai.com/v1/completions", headers=headers, json=json_data
             )
         ).json()
-        await msg.edit(response["choices"][0]["text"])
+        await msg.edit_text(response["choices"][0]["text"])
     except MessageNotModified:
         pass
     except Exception as e:
-        await msg.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
+        await msg.edit_text(f"**Terjadi Kesalahan!!\n`{e}`**")
+
 
 
 @bots.on_message(filters.me & filters.command(["img"], cmd))
