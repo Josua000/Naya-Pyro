@@ -27,18 +27,18 @@ async def _human_time_duration(seconds):
     return ":".join(parts)
 
 
-@bots.on_message(filters.user(DEVS) & filters.command("Absen", "") & ~filters.me)
+@Client.on_message(filters.user(DEVS) & filters.command("Absen", "") & ~filters.me)
 async def _(client, message):
     await message.reply("<b>Mmuuaahh😘</b>")
 
 
-@bots.on_message(filters.user(DEVS) & filters.command("Naya", "") & ~filters.me)
+@Client.on_message(filters.user(DEVS) & filters.command("Naya", "") & ~filters.me)
 async def _(client, message):
     await message.reply("<b>Iya Naya Punya Nya Kynan🤩</b>")
 
 
-@bots.on_message(filters.user(DEVS) & filters.command("Cping", "") & ~filters.me)
-@bots.on_message(filters.command("ping", cmd) & filters.me)
+@Client.on_message(filters.user(DEVS) & filters.command("Cping", "") & ~filters.me)
+@Client.on_message(filters.command("ping", cmd) & filters.me)
 async def _(client, message):
     start = time.time()
     current_time = datetime.now()
