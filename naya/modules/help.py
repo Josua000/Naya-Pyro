@@ -274,7 +274,7 @@ async def _(_, query: CallbackQuery):
         return
 
     botlog = log.text
-    await set_botlog(query.me.id, botlog)
+    await set_botlog(user_id, botlog)
     buttons = [
         [
             InlineKeyboardButton(text="Kembali", callback_data="multi"),
