@@ -277,14 +277,14 @@ async def _(_, query: CallbackQuery):
     await set_botlog(user_id, botlog)
     buttons = [
         [
-          InlineKeyboardButton(text="Kembali", callback_data="multi"),
-          InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+            InlineKeyboardButton(text="Kembali", callback_data="multi"),
+            InlineKeyboardButton("Tutup", callback_data="cl_ad"),
         ],
     ]
     await app.send_message(
-    user_id,
-    f"**Berhasil mengatur botlog grup menjadi `{variable}` dengan value `{value}`.**",
-    reply_markup=InlineKeyboardMarkup(buttons),
+        user_id,
+        f"**Berhasil mengatur botlog grup menjadi `{variable}` dengan value `{value}`.**",
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
 
 
