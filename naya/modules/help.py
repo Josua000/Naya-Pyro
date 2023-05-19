@@ -210,12 +210,12 @@ async def _(cln, cq):
 
 
 @app.on_callback_query(filters.regex("cl_ad"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     await query.message.delete()
 
 
 @app.on_callback_query(filters.regex("multi"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     return await query.edit_message_text(
         "<b>Disini kamu bisa menambahkan, menghapus serta melihat variabel dan value, seperti OPENAI_API, SESSION2-SESSION10.</b>",
         reply_markup=InlineKeyboardMarkup(
@@ -239,7 +239,7 @@ async def close(_, query: CallbackQuery):
 
 
 @app.on_callback_query(filters.regex("pm"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     await query.message.delete()
     await query.message.reply_photo(
         photo=photo,
@@ -258,26 +258,38 @@ async def close(_, query: CallbackQuery):
 
 
 @app.on_callback_query(filters.regex("log"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
+    user_id = query.from_user.id
     await query.message.delete()
-    await query.message.reply_photo(
-        photo=photo,
-        caption="<b> ☺️ Fitur ini akan hadir dalam beberapa pekan\n\nTunggu update nya di @KynanSupport.</b>",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="setong"),
-                ],
-                [
-                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
-                ],
-            ]
-        ),
+    try:
+        log = await app.ask(
+            user_id,
+            "<b>Silakan masukkan botlog grup id anda.\nContoh : -100XXXXXX\n\nKetik /cancel untuk membatalkan proses.</b>",
+            timeout=120,
+        )
+    except asyncio.TimeoutError:
+        return await app.send_message(user_id, "Waktu Telah Habis")
+
+    if await batal(query, log.text):
+        return
+
+    botlog = log.text
+    await set_botlog(user_id, botlog)
+    buttons = [
+        [
+          InlineKeyboardButton(text="Kembali", callback_data="multi"),
+          InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+        ],
+    ]
+    await app.send_message(
+    user_id,
+    f"**Berhasil mengatur botlog grup menjadi `{variable}` dengan value `{value}`.**",
+    reply_markup=InlineKeyboardMarkup(buttons),
     )
 
 
 @app.on_callback_query(filters.regex("inpo"))
-async def setdah(_, query):
+async def _(_, query):
     await query.message.delete()
     await query.message.reply_photo(
         photo=photo,
@@ -296,7 +308,7 @@ async def setdah(_, query):
 
 
 @app.on_callback_query(filters.regex("setong"))
-async def setdah(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     return await query.edit_message_text(
         f"""
     <b> ☺️Halo aku adalah <a href=tg://openmessage?user_id={query.message.from_user.id}>{query.message.from_user.first_name} {query.message.from_user.last_name or ''}</a> asisten mu yang siap membantu kamu ! \n Apa yang kamu butuhkan ?.</b>""",
@@ -319,7 +331,7 @@ async def setdah(_, query: CallbackQuery):
 
 
 @app.on_callback_query(filters.regex("restart"))
-async def jadi(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     try:
         await query.edit_message_text("<b>Processing...</b>")
         LOGGER(__name__).info("BOT SERVER RESTARTED !!")
@@ -385,7 +397,7 @@ async def _(_, message):
 
 
 @app.on_message(filters.command(["getotp", "getnum"]) & filters.private)
-async def otp_and_numbereeee(_, message):
+async def _(_, message):
     user_id = message.from_user.id
     if len(message.command) < 2:
         return await app.send_message(
@@ -427,7 +439,7 @@ async def otp_and_numbereeee(_, message):
 
 
 @app.on_callback_query(filters.regex("sesi"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     user_id = query.from_user.id
     await query.message.delete()
     try:
@@ -503,7 +515,7 @@ async def batal(query, text):
 
 
 @app.on_callback_query(filters.regex("hapus"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     user_id = query.from_user.id
     await query.message.delete()
     try:
@@ -537,7 +549,6 @@ async def close(_, query: CallbackQuery):
             f"**Berhasil menghapus variable `{pariabel}`\n\nJangan lupa untuk melakukan restart setelah menghapus variabel.**",
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-        # herotod.update_config(config_vars)
     else:
         path = ".env"
         dotenv.unset_key(path, pariabel)
@@ -557,7 +568,7 @@ async def close(_, query: CallbackQuery):
 
 
 @app.on_callback_query(filters.regex("get"))
-async def close(_, query: CallbackQuery):
+async def _(_, query: CallbackQuery):
     user_id = query.from_user.id
     await query.message.delete()
     try:
