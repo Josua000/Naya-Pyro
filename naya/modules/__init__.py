@@ -5,7 +5,6 @@ from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.utils import *
 from kynaylibs.nan.utils.db import *
-from pyrogram import Client as bots
 from pyrogram import *
 from pyrogram.types import *
 
