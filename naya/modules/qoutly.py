@@ -2,9 +2,11 @@ from io import BytesIO
 
 from kynaylibs.nan.utils import *
 from kynaylibs.nan.utils.http import *
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from pyrogram import Client
 from pyrogram import Client as bots
+from pyrogram import filters
+from pyrogram.types import Message
+
 from naya import *
 
 
