@@ -6,15 +6,16 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import asyncio
-
-from kynaylibs import *
-from kynaylibs.nan.utils.basic import *
-from kynaylibs.nan.utils.misc import *
-from kynaylibs.nan.utils.tools import *
-from pyrogram import filters
+from pyrogram import Client, errors, filters
+from pyrogram.types import ChatPermissions, Message
+from pyrogram import Client 
 from pyrogram.enums import ChatType
-
+import asyncio
+from kynaylibs import *
+from kynaylibs.nan.utils.misc import *
+from kynaylibs.nan.utils.basic import *
+from kynaylibs.nan.utils.tools import *
+from kynaylibs.nan.utils.PyroHelpers import get_ub_chats
 from naya import *
 
 
@@ -26,11 +27,11 @@ async def _(client, message):
     user_id = await extract_user(message)
     nay = await eor(message, "<b>Processing...</b>")
     if not user_id:
-        return await nay.edit("<b>User tidak ditemukan</b>")
+        return await nay.edit("<b>Orrraaaa ada 👨‍🦼</b>")
     elif user_id == client.me.id:
-        return await nay.edit("**Tidak bisa Gban diri sendiri.**")
+        return await nay.edit("**Bunuh diri aja jir.**")
     elif user_id in DEVS:
-        return await nay.edit("**Anda tidak bisa gban dia, karena dia pembuat saya.**")
+        return await nay.edit("**Lah oraaaa jelass.**")
     try:
         user = await client.get_users(user_id)
     except Exception as e:
