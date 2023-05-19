@@ -24,7 +24,7 @@ unmute_permissions = ChatPermissions(
 )
 
 
-@bots.on_message(filters.me & filters.command(["setgpic"], cmd))
+@naya(["setgpic"], cmd)
 async def set_chat_photo(client: Client, message: Message):
     zuzu = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     can_change_admin = zuzu.can_change_info
@@ -41,7 +41,7 @@ async def set_chat_photo(client: Client, message: Message):
         await eor(message, "`Balas ke photo untuk set!`")
 
 
-@bots.on_message(filters.command(["ban", "dban"], cmd) & filters.me)
+@naya(["ban", "dban"], cmd)
 async def member_ban(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
     ky = await eor(message, "`Processing...`")
@@ -74,7 +74,7 @@ async def member_ban(client: Client, message: Message):
         return await ky.edit("**Anda bukan admin di group ini !**")
 
 
-@bots.on_message(filters.command(["unban"], cmd) & filters.me)
+@naya(["unban"], cmd)
 async def member_unban(client: Client, message: Message):
     reply = message.reply_to_message
     zz = await eor(message, "`Processing...`")
@@ -97,7 +97,7 @@ async def member_unban(client: Client, message: Message):
         return await zz.edit("**Anda bukan admin di group ini !**")
 
 
-@bots.on_message(filters.command(["pin", "unpin"], cmd) & filters.me)
+@naya(["pin", "unpin"], cmd)
 async def pin_message(client: Client, message):
     if not message.reply_to_message:
         return await eor(message, "Balas ke pesan untuk pin/unpin .")
@@ -121,7 +121,7 @@ async def pin_message(client: Client, message):
         return await eor(message, "**Anda bukan admin di group ini !**")
 
 
-@bots.on_message(filters.command(["mute"], cmd) & filters.me)
+@naya(["mute"], cmd)
 async def mute(client, message):
     user_id, reason = await extract_user_and_reason(message)
     nay = await eor(message, "`Processing...`")
@@ -148,7 +148,7 @@ async def mute(client, message):
         return await nay.edit("**Anda bukan admin di group ini !**")
 
 
-@bots.on_message(filters.command(["unmute"], cmd) & filters.me)
+@naya(["unmute"], cmd)
 async def unmute(client: Client, message: Message):
     user_id = await extract_user(message)
     kl = await eor(message, "`Processing...`")
@@ -163,7 +163,7 @@ async def unmute(client: Client, message: Message):
         return await kl.edit("**Anda bukan admin di group ini !**")
 
 
-@bots.on_message(filters.command(["kick", "dkick"], cmd) & filters.me)
+@naya(["kick", "dkick"], cmd)
 async def kick_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message)
     ny = await eor(message, "`Processing...`")
@@ -193,9 +193,7 @@ async def kick_user(client: Client, message: Message):
         return await ny.edit("**Anda bukan admin di group ini !**")
 
 
-@bots.on_message(
-    filters.group & filters.command(["promote", "fullpromote"], cmd) & filters.me
-)
+@naya(["promote", "fullpromote"], cmd)
 async def promotte(client: Client, message: Message):
     user_id = await extract_user(message)
     biji = await eor(message, "`Processing...`")
@@ -249,8 +247,8 @@ async def promotte(client: Client, message: Message):
     & filters.user(DEVS)
     & ~filters.me
 )
-@bots.on_message(filters.group & filters.command(["demote"], cmd) & filters.me)
-async def demote(client: Client, message: Message):
+@naya(["demote"], cmd)
+async def demote(client, message):
     user_id = await extract_user(message)
     sempak = await eor(message, "`Processing...`")
     if not user_id:
