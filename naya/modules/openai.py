@@ -5,7 +5,7 @@ from pyrogram import filters
 from pyrogram.errors import *
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
-
+from random import choices
 from naya import cmd
 from naya.config import OPENAI_API
 
@@ -13,7 +13,7 @@ from . import *
 
 
 @bots.on_message(filters.me & filters.command(["ai", "ask"], cmd))
-async def _(client, message):
+async def ai(client, message):
     if len(message.command) == 1:
         return await eor(
             message, f"Ketik <code>{cmd}ai [question]</code> untuk menggunakan OpenAI"
@@ -45,7 +45,7 @@ async def _(client, message):
 
 
 @bots.on_message(filters.me & filters.command(["img"], cmd))
-async def _(client, message):
+async def img(client, message):
     if len(message.command) == 1:
         return await eor(
             message, f"Ketik <code>{cmd}img [question]</code> untuk menggunakan OpenAI"
@@ -70,12 +70,12 @@ async def _(client, message):
                 "https://api.openai.com/v1/image", headers=headers, json=json_data
             )
         ).json()
-        await msg.delete()
         await client.send_photo(message.chat.id, response["data"][0]["url"])
     except MessageNotModified:
         pass
     except Exception as e:
         await msg.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
+        await msg.delete()
 
 
 __MODULE__ = "openai"
