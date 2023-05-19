@@ -19,8 +19,8 @@ from . import *
 @bots.on_message(filters.me & filters.command(["ai", "ask"], cmd))
 async def _(client, message):
     if len(message.command) == 1:
-        return await eor(message,
-            f"Ketik <code>{cmd}ai [question]</code> untuk menggunakan OpenAI"
+        return await eor(
+            message, f"Ketik <code>{cmd}ai [question]</code> untuk menggunakan OpenAI"
         )
     question = message.text.split(" ", maxsplit=1)[1]
     headers = {
@@ -51,8 +51,8 @@ async def _(client, message):
 @bots.on_message(filters.me & filters.command(["img"], cmd))
 async def _(client, message):
     if len(message.command) == 1:
-        return await eor(message,
-            f"Ketik <code>{cmd}img [question]</code> untuk menggunakan OpenAI"
+        return await eor(
+            message, f"Ketik <code>{cmd}img [question]</code> untuk menggunakan OpenAI"
         )
     question = message.text.split(" ", maxsplit=1)[1]
     headers = {
