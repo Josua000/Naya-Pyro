@@ -283,7 +283,7 @@ async def _(_, query: CallbackQuery):
     ]
     await app.send_message(
         user_id,
-        f"**Berhasil mengatur botlog grup menjadi `{variable}` dengan value `{value}`.**",
+        f"**Berhasil mengatur botlog grup anda menjadi `{botlog}`.**",
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
