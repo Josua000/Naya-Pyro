@@ -31,10 +31,5 @@ APScheduler
 kynaylibs==1.6.0
 psutil
 httpx[http2]
-textblob
-tracemoepy
-uwuify
-flask
-gunicorn
 python-dotenv
 uvloop
