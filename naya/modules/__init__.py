@@ -1,6 +1,6 @@
 from glob import glob
 from os.path import basename, dirname, isfile
-
+from pyrogram import Client as bots
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.utils import *
