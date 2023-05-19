@@ -297,7 +297,7 @@ async def _(_, query):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Support", url=f"https://kynansupport"),
+                    InlineKeyboardButton(text="Support", url=f"https://t.me/kynansupport"),
                 ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
@@ -361,39 +361,43 @@ async def _(_, query: CallbackQuery):
 @app.on_message(filters.command(["start"]))
 async def _(_, message):
     user_id = message.from_user.id
-    if user_id == OWNER:
-        await message.reply_photo(
-            photo=photo,
-            caption=f"""
+    x = await bot.get_me()
+    user = x.id
+    for bot in botlist:
+        if user_id in (OWNER, user):
+            await message.reply_photo(
+                photo=photo,
+                caption=f"""
 <b>👋 Halo <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa saya bantu ?
 💡 Silakan pilih tombol dibawah untuk kamu perlukan.
 </b>""",
-            reply_markup=InlineKeyboardMarkup(
-                [
+                reply_markup=InlineKeyboardMarkup(
+                  [
                     [InlineKeyboardButton(text="Pengaturan", callback_data="setong")],
                     [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                ]
-            ),
-        )
-    else:
-        await message.reply_photo(
-            photo=photo,
-            caption=f"""
+                  ]
+                ),
+              )
+        else:
+            await message.reply_photo(
+                photo=photo,
+                caption=f"""
 <b>👋 Halo Jeng <a href=tg://openmessage?user_id={message.from_user.id}>{message.from_user.first_name} {message.from_user.last_name or ''}</a> !
 💭 Apa ada yang bisa gue banting ?
 💡 Gua Milik Owner Dibawah Ni.</b>
 """,
-            reply_markup=InlineKeyboardMarkup(
-                [
+                reply_markup=InlineKeyboardMarkup(
+                  [
                     [
-                        InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
-                        InlineKeyboardButton(text="Info", callback_data="inpo"),
+                      InlineKeyboardButton(text="👮‍♂ Owner", user_id=OWNER),
+                      InlineKeyboardButton(text="Info", callback_data="inpo"),
                     ],
-                    [InlineKeyboardButton("Tutup", callback_data="cl_ad")],
-                ]
-            ),
-        )
+                    [
+                      InlineKeyboardButton("Tutup", callback_data="cl_ad")],
+                    ]
+                  ),
+                )
 
 
 @app.on_message(filters.command(["getotp", "getnum"]) & filters.private)
