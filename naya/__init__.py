@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from typing import Any, Dict
-
+from pyrogram import Client as bots
 from aiohttp import ClientSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from pyrogram import Client, __version__, enums, filters
