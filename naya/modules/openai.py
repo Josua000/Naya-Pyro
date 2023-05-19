@@ -1,14 +1,3 @@
-__MODULE__ = "openai"
-__HELP__ = f"""
-✘ Bantuan Untuk OpenAI
-
-๏ Perintah: <code>{cmd}ai</code> [query]
-◉ Penjelasan: Untuk mengajukan pertanyaan ke AI
-
-๏ Perintah: <code>{cmd}img</code> [query]
-◉ Penjelasan: Untuk mencari gambar ke AI
-"""
-
 
 from naya import cmd
 from naya.config import OPENAI_API
@@ -80,3 +69,15 @@ async def _(client, message):
         pass
     except Exception as e:
         await msg.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
+
+
+__MODULE__ = "openai"
+__HELP__ = f"""
+✘ Bantuan Untuk OpenAI
+
+๏ Perintah: <code>{cmd}ai</code> [query]
+◉ Penjelasan: Untuk mengajukan pertanyaan ke AI
+
+๏ Perintah: <code>{cmd}img</code> [query]
+◉ Penjelasan: Untuk mencari gambar ke AI
+"""
