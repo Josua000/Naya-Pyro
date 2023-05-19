@@ -8,13 +8,12 @@
 
 import asyncio
 
-from pyrogram.errors import ChatAdminRequired
-
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.utils import *
 from kynaylibs.nan.utils.db import *
 from pyrogram import *
+from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import *
 
 from naya import *
