@@ -363,7 +363,7 @@ async def _(_, query: CallbackQuery):
 @app.on_message(filters.command(["start"]))
 async def _(_, message):
     user_id = message.from_user.id
-    x = await bot.get_me()
+    x = await app.get_me()
     user = x.id
     for bot in botlist:
         if user_id in (OWNER, user):
