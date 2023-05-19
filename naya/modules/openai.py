@@ -3,15 +3,14 @@ from io import *
 import openai
 from kynaylibs.nan.utils.http import *
 from pyrogram import filters
-from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
 
 from naya import *
-from naya.config import OPENAI_API
+from naya.config import *
 
 
 class OpenAi:
-    def Text(question):
+    def text(question):
         openai.api_key = OPENAI_API
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -24,7 +23,7 @@ class OpenAi:
         )
         return response.choices[0].text
 
-    def Photo(question):
+    def photo(question):
         openai.api_key = OPENAI_API
         response = openai.Image.create(prompt=question, n=1, size="1024x1024")
         return response["data"][0]["url"]
@@ -36,28 +35,11 @@ async def ai(client, message):
         return await message.edit_text(
             f"Ketik <code>{cmd}ai [pertanyaan]</code> untuk menggunakan OpenAI"
         )
-    question = message.text.split(" ", maxsplit=1)[1]
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {OPENAI_API}",
-    }
-
-    json_data = {
-        "model": "text-davinci-003",
-        "prompt": question,
-        "max_tokens": 500,
-        "temperature": 0,
-    }
     msg = await message.edit_text("`Memproses...`")
+    biji = message.text.split(None, 1)[1]
     try:
-        response = (
-            await http.post(
-                "https://api.openai.com/v1/completions", headers=headers, json=json_data
-            )
-        ).json()
-        await msg.edit_text(response["choices"][0]["text"])
-    except MessageNotModified:
-        pass
+        response = OpenAi.text(biji)
+        await msg.edit_text(f"**Q:** {biji}\n\n**A:** {response}")
     except Exception as e:
         await msg.edit_text(f"**Terjadi Kesalahan!!\n`{e}`**")
 
@@ -68,32 +50,13 @@ async def img(client, message):
         return await eor(
             message, f"Ketik <code>{cmd}img [question]</code> untuk menggunakan OpenAI"
         )
-    question = message.text.split(" ", maxsplit=1)[1]
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {OPENAI_API}",
-    }
-
-    json_data = {
-        "model": "text-davinci-003",
-        "prompt": question,
-        "max_tokens": 500,
-        "n": 1,
-        "size": 1024,
-    }
-    msg = await eor(message, "`Processing...`")
     try:
-        response = (
-            await http.post(
-                "https://api.openai.com/v1/image", headers=headers, json=json_data
-            )
-        ).json()
-        await client.send_photo(message.chat.id, response["data"][0]["url"])
-    except MessageNotModified:
-        pass
+        biji = message.text.split(None, 1)[1]
+        response = OpenAi.photo(biji)
+        await client.send_photo(message.chat.id, response)
     except Exception as e:
-        await msg.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
-        await msg.delete()
+        await message.edit(f"**Terjadi Kesalahan!!\n`{e}`**")
+        # await msg.delete()
 
 
 __MODULE__ = "openai"
