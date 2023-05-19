@@ -8,11 +8,18 @@
 
 import asyncio
 
-from pyrogram import Client, filters
 from pyrogram.errors import ChatAdminRequired
-from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 
-from . import *
+from kynaylibs import *
+from kynaylibs.nan import *
+from kynaylibs.nan.utils import *
+from kynaylibs.nan.utils.db import *
+from pyrogram import *
+from pyrogram.types import *
+
+from naya import *
+
+BL_UBOT = [-1001812143750]
 
 unmute_permissions = ChatPermissions(
     can_send_messages=True,
