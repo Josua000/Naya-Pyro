@@ -6,7 +6,7 @@ from pyrogram import filters
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
 
-from naya import cmd
+from naya import *
 from naya.config import OPENAI_API
 
 
