@@ -4,7 +4,7 @@ from kynaylibs.nan.utils.http import *
 from pyrogram import filters
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
-import openai
+
 from naya import cmd
 from naya.config import OPENAI_API
 
@@ -41,7 +41,6 @@ async def ai(client, message):
         pass
     except Exception as e:
         await msg.edit_text(f"**Terjadi Kesalahan!!\n`{e}`**")
-
 
 
 @bots.on_message(filters.me & filters.command(["img"], cmd))
