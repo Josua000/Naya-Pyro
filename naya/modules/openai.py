@@ -3,11 +3,9 @@ from io import *
 import openai
 from kynaylibs.nan.utils.http import *
 from pyrogram import filters
-from pyrogram.errors import MessageNotModified
 from pyrogram.types import *
 
 from naya import *
-from naya.config import OPENAI_API
 
 
 class OpenAi:
