@@ -45,13 +45,13 @@ async def main():
                 LOGGER("Info").warning(f"{a}")
             LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
             ids.append(ex.id)
+            LOGGER("Info").info("Startup Completed")
         except Exception as e:
             LOGGER("X").info(f"{e}")
     install()
     await loadprem()
     await idle()
     await aiosession.close()
-    LOGGER("Info").info("Startup Completed")
 
 
 if __name__ == "__main__":
