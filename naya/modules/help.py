@@ -128,7 +128,7 @@ async def _(client, inline_query):
                     reply_markup=InlineKeyboardMarkup(
                         paginate_modules(0, CMD_HELP, "help")
                     ),
-                    input_message_content=InputTextMessageContent(f"{msg}"),
+                    input_message_content=InputTextMessageContent(msg),
                 )
             )
         ],
