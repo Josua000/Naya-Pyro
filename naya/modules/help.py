@@ -150,28 +150,30 @@ async def _(client, callback_query):
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )
-    top_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+    prev_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if prev_match:
         curr_page = int(prev_match.group(1))
         await callback_query.edit_message_text(
-            top_text,
+            text=prev_text,
             reply_markup=InlineKeyboardMarkup(
                 paginate_modules(curr_page - 1, CMD_HELP, "help")
             ),
             disable_web_page_preview=True,
         )
+    next_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if next_match:
         next_page = int(next_match.group(1))
         await callback_query.edit_message_text(
-            top_text,
+            text=next_text,
             reply_markup=InlineKeyboardMarkup(
                 paginate_modules(next_page + 1, CMD_HELP, "help")
             ),
             disable_web_page_preview=True,
         )
+    back_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if back_match:
         await callback_query.edit_message_text(
-            top_text,
+            text=back_text,
             reply_markup=InlineKeyboardMarkup(paginate_modules(0, CMD_HELP, "help")),
             disable_web_page_preview=True,
         )
