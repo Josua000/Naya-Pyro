@@ -109,26 +109,28 @@ async def _(client, inline_query):
 
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
-  for x in botlist:
-    try:
-        msg = f"<b>❏ Owner : <a href=tg://user?id={x.me.id}>{X.me.first_name} {x.me.last_name or ''}</a>\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>",
-        await client.answer_inline_query(
-            inline_query.id,
-            cache_time=0,
-            results=[
-                (
-                  InlineQueryResultArticle(
-                    title="Help Menu!",
-                    reply_markup=InlineKeyboardMarkup(
-                      paginate_modules(0, CMD_HELP, "help")
-                      ),
-                      input_message_content=InputTextMessageContent(msg),
+    for x in botlist:
+        try:
+            msg = (
+                f"<b>❏ Owner : <a href=tg://user?id={x.me.id}>{X.me.first_name} {x.me.last_name or ''}</a>\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>",
+            )
+            await client.answer_inline_query(
+                inline_query.id,
+                cache_time=0,
+                results=[
+                    (
+                        InlineQueryResultArticle(
+                            title="Help Menu!",
+                            reply_markup=InlineKeyboardMarkup(
+                                paginate_modules(0, CMD_HELP, "help")
+                            ),
+                            input_message_content=InputTextMessageContent(msg),
+                        )
                     )
-                  )
                 ],
-              )
-    except Exception as e:
-        print(e)
+            )
+        except Exception as e:
+            print(e)
 
 
 @app.on_callback_query(filters.regex(r"help_(.*?)"))
