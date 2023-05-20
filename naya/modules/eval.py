@@ -25,10 +25,11 @@ __HELP__ = f"""
 
 @bots.on_message(filters.command("sh", cmd) & filters.me)
 async def _(client, message):
-    if len(message.command) < 2:
-        return await eor(message, "`Give me commands dude...`")
+    ajg = await get_arg(message)
+    if not ajg:
+      return await eor(message, "`Give me commands dude...`")
     try:
-        await eor(message, "`Processing...`")
+        babi = await eor(message, "`Processing...`")
         screen = (await bash(message.text.split(None, 1)[1]))[0]
         if int(len(str(screen))) > 4096:
             with BytesIO(str.encode(str(screen))) as out_file:
@@ -38,10 +39,10 @@ async def _(client, message):
                 )
                 # await msg.delete()
         else:
-            await eor(message, screen)
-            # await msg.delete()
-    except Exception as error:
-        await eor(message, error)
+            await babi.edit(screen)
+
+    except Exception as e:
+        await babi.edit(f"{e}")
 
 
 @bots.on_message(filters.command("trash", cmd) & filters.me)
@@ -61,7 +62,11 @@ async def _(client, message):
 
 @bots.on_message(filters.command("eval", cmd) & filters.me)
 async def _(client, message):
-    await eor(message, "`Processing ...`")
+    ajg = await get_arg(message)
+    if not ajg:
+      return await eor(message, "`Give me commands dude...`")
+    else:
+        await eor(message, "`Processing ...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
     reply_to_ = message.reply_to_message or message
     old_stderr = sys.stderr
