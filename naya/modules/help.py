@@ -111,7 +111,11 @@ async def _(client, inline_query):
 async def _(client, inline_query):
   for x in botlist:
     try:
-        msg = f"<b>❏ Owner : {<a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>}\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>",
+        msg = f"""
+<b>❏ Owner : {<a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>}
+✘ Menu Bantuan
+๏ Perintah: <code>{cmd}</code></b>
+""",
         await client.answer_inline_query(
             inline_query.id,
             cache_time=0,
