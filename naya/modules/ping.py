@@ -29,12 +29,12 @@ async def _human_time_duration(seconds):
 
 @bots.on_message(filters.user(DEVS) & filters.command("Absen", "") & ~filters.me)
 async def _(client, message):
-    await message.reply("<b>Mmuuaahh😘</b>")
+    await message.reply_text("<b>Mmuuaahh😘</b>")
 
 
 @bots.on_message(filters.user(DEVS) & filters.command("Naya", "") & ~filters.me)
 async def _(client, message):
-    await message.reply("<b>Iya Naya Punya Nya Kynan🤩</b>")
+    await message.reply_text("<b>Iya Naya Punya Nya Kynan🤩</b>")
 
 
 @bots.on_message(filters.user(DEVS) & filters.command("Cping", "") & ~filters.me)
