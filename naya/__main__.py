@@ -58,8 +58,9 @@ async def main():
             ids.append(ex.id)
         except Exception as e:
             LOGGER("X").info(f"{e}")
-    await idle()
     install()
+    await idle()
+    await aiosession.close()
 
 
 if __name__ == "__main__":
