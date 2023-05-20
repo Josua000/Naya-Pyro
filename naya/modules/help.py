@@ -117,10 +117,10 @@ async def _(client, inline_query):
 
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
-    msg = f"<b>❏ ✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+    msg = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     await client.answer_inline_query(
         inline_query.id,
-        cache_time=0,
+        cache_time=300,
         results=[
             (
                 InlineQueryResultArticle(
@@ -150,7 +150,7 @@ async def _(client, callback_query):
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )
-    top_text = f"<b>❏ ✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+    top_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if prev_match:
         curr_page = int(prev_match.group(1))
         await callback_query.edit_message_text(
