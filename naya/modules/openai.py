@@ -14,7 +14,7 @@ class OpenAi:
         openai.api_key = OPENAI_API
         response = openai.Completion.create(
             model="text-davinci-003",
-            prompt=f"Q: {question}\nA:",
+            prompt=f"<b>Q: <code>{question}</code>\nA:</b>",
             temperature=0,
             max_tokens=500,
             top_p=1.0,
