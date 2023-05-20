@@ -119,20 +119,20 @@ async def _(client, inline_query):
 async def _(client, inline_query):
     msg = f"<b>❏ ✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     await client.answer_inline_query(
-                inline_query.id,
-                cache_time=0,
-                results=[
-                    (
-                        InlineQueryResultArticle(
-                            title="Help Menu!",
-                            reply_markup=InlineKeyboardMarkup(
-                                paginate_modules(0, CMD_HELP, "help")
-                            ),
-                            input_message_content=InputTextMessageContent(f"{msg}"),
-                        )
-                    )
-                ],
+        inline_query.id,
+        cache_time=0,
+        results=[
+            (
+                InlineQueryResultArticle(
+                    title="Help Menu!",
+                    reply_markup=InlineKeyboardMarkup(
+                        paginate_modules(0, CMD_HELP, "help")
+                    ),
+                    input_message_content=InputTextMessageContent(f"{msg}"),
+                )
             )
+        ],
+    )
 
 
 @app.on_callback_query(filters.regex(r"help_(.*?)"))
