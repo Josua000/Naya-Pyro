@@ -142,7 +142,7 @@ async def _(client, callback_query):
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )
-    top_text = f"<b>❏ Owner : {client.me.mention}\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+    top_text = f"<b>❏ Owner : {callback_query.bots.me.mention}\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if prev_match:
         curr_page = int(prev_match.group(1))
         await callback_query.edit_message_text(
