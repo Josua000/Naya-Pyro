@@ -127,6 +127,8 @@ async def _(client, inline_query):
                   )
                 ],
               )
+    except Exception as e:
+        print(e)
 
 
 @app.on_callback_query(filters.regex(r"help_(.*?)"))
