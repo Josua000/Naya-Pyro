@@ -27,7 +27,7 @@ __HELP__ = f"""
 async def _(client, message):
     ajg = await get_arg(message)
     if not ajg:
-      return await eor(message, "`Give me commands dude...`")
+        return await eor(message, "`Give me commands dude...`")
     try:
         babi = await eor(message, "`Processing...`")
         screen = (await bash(message.text.split(None, 1)[1]))[0]
@@ -64,7 +64,7 @@ async def _(client, message):
 async def _(client, message):
     ajg = await get_arg(message)
     if not ajg:
-      return await eor(message, "`Give me commands dude...`")
+        return await eor(message, "`Give me commands dude...`")
     else:
         await eor(message, "`Processing ...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
