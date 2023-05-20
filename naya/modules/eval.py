@@ -25,7 +25,7 @@ __HELP__ = f"""
 
 @bots.on_message(filters.command("sh", cmd) & filters.me)
 async def _(client, message):
-    ajg = await get_arg(message)
+    ajg = get_arg(message)
     if not ajg:
         return await eor(message, "`Give me commands dude...`")
     try:
