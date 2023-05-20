@@ -11,7 +11,7 @@ import asyncio
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
-from naya import *
+from . import *
 
 
 @bots.on_message(filters.command(["spam", "dspam"], cmd) & filters.me)
