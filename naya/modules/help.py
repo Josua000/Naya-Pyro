@@ -112,7 +112,7 @@ async def _(client, inline_query):
   for x in botlist:
     try:
         msg = f"""
-<b>❏ Owner : {<a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>}
+<b>❏ Owner : <a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>
 ✘ Menu Bantuan
 ๏ Perintah: <code>{cmd}</code></b>
 """,
