@@ -14,10 +14,6 @@ from pyrogram.types import Message
 from naya import *
 
 
-
-
-import asyncio
-
 @bots.on_message(filters.command(["spam", "dspam"], cmd) & filters.me)
 async def spam_cmd(client, message):
     if message.command[0] == "spam":
@@ -57,7 +53,10 @@ async def spam_cmd(client, message):
     elif message.command[0] == "dspam":
         if message.reply_to_message:
             if len(message.command) < 3:
-                return await eor(message, f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**")
+                return await eor(
+                    message,
+                    f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**",
+                )
             spam = await eor(message, "`Processing...`")
             try:
                 quantity = int(message.text.split(None, 3)[1])
@@ -72,7 +71,10 @@ async def spam_cmd(client, message):
                 await asyncio.sleep(delay_msg)
         else:
             if len(message.command) < 4:
-                return await eor(message, f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**")
+                return await eor(
+                    message,
+                    f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**",
+                )
             else:
                 spam = await eor(message, "`Processing...`")
                 try:
@@ -87,7 +89,6 @@ async def spam_cmd(client, message):
                 for i in range(quantity):
                     await client.send_message(message.chat.id, spam_text)
                     await asyncio.sleep(delay_msg)
-
 
 
 @bots.on_message(filters.me & filters.command("bspam", cmd))
