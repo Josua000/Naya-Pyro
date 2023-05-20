@@ -119,8 +119,9 @@ async def _(client, inline_query):
 async def _(client, inline_query):
     for x in botlist:
         try:
+            x = await bot.get_me()
             msg = f"""
-<b>❏ Owner : <a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>
+<b>❏ Owner : <a href=tg://user?id={x.id}>{x.first_name} {x.last_name or ''}</a>
 ✘ Menu Bantuan
 ๏ Perintah: <code>{cmd}</code></b>
 """
@@ -160,8 +161,9 @@ async def _(client, callback_query):
         )
     for x in botlist:
         try:
+            x = await bot.get_me()
             top_text = f"""
-<b>❏ Owner : <a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>
+<b>❏ Owner : <a href=tg://user?id={x.id}>{x.first_name} {x.last_name or ''}</a>
 ✘ Menu Bantuan
 ๏ Perintah: <code>{cmd}</code></b>
 """
