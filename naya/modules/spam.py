@@ -2,7 +2,7 @@
 # Gay Teriak Gay Anjeng
 # @Rizzvbss | @Kenapanan
 # Kok Bacot
-# © @KynanSupport
+# © @KynanSupport | XtomiX Somplak
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
