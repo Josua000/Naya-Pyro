@@ -14,55 +14,80 @@ from pyrogram.types import Message
 from naya import *
 
 
-@bots.on_message(filters.me & filters.command("dspam", cmd))
-async def delayspammer(client, message):
-    try:
-        args = message.text.split(" ", 3)
-        delay = float(args[1])
-        count = int(args[2])
+
+
+import asyncio
+
+@bots.on_message(filters.command(["spam", "dspam"], cmd) & filters.me)
+async def spam_cmd(client, message):
+    if message.command[0] == "spam":
         if message.reply_to_message:
-            msg = await message.reply_to_message.text
+            spam = await eor(message, "`Processing...`")
+            try:
+                quantity = int(message.text.split(None, 2)[1])
+                spam_text = message.text.split(None, 2)[2]
+            except Exception as error:
+                return await spam.edit(error)
+            await asyncio.sleep(1)
+            await message.delete()
+            await spam.delete()
+            for i in range(quantity):
+                await client.send_message(
+                    message.chat.id,
+                    spam_text,
+                    reply_to_message_id=message.reply_to_message.id,
+                )
+                await asyncio.sleep(0.3)
         else:
-            msg = str(args[3])
-    except BaseException:
-        return await message.edit(
-            f"**Penggunaan :** {cmd}dspam [waktu] [jumlah] [balas pesan]"
-        )
-    await message.delete()
-    try:
-        for i in range(count):
-            await client.send_message(message.chat.id, msg)
-            await asyncio.sleep(delay)
-    except Exception as u:
-        await client.send_message(message.chat.id, f"**Error :** `{u}`")
+            if len(message.command) < 3:
+                await eor(message, f"**Gunakan format:\n`{cmd}spam [jumlah] [pesan]`**")
+            else:
+                spam = await eor(message, "`Processing...`")
+                try:
+                    quantity = int(message.text.split(None, 2)[1])
+                    spam_text = message.text.split(None, 2)[2]
+                except Exception as error:
+                    return await spam.edit(error)
+                await asyncio.sleep(1)
+                await message.delete()
+                await spam.delete()
+                for i in range(quantity):
+                    await client.send_message(message.chat.id, spam_text)
+                    await asyncio.sleep(0.3)
+    elif message.command[0] == "dspam":
+        if message.reply_to_message:
+            if len(message.command) < 3:
+                return await eor(message, f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**")
+            spam = await eor(message, "`Processing...`")
+            try:
+                quantity = int(message.text.split(None, 3)[1])
+                delay_msg = int(message.text.split(None, 3)[2])
+            except Exception as error:
+                return await spam.edit(error)
+            await asyncio.sleep(1)
+            await message.delete()
+            await spam.delete()
+            for i in range(quantity):
+                await message.reply_to_message.copy(message.chat.id)
+                await asyncio.sleep(delay_msg)
+        else:
+            if len(message.command) < 4:
+                return await eor(message, f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**")
+            else:
+                spam = await eor(message, "`Processing...`")
+                try:
+                    quantity = int(message.text.split(None, 3)[1])
+                    delay_msg = int(message.text.split(None, 3)[2])
+                    spam_text = message.text.split(None, 3)[3]
+                except Exception as error:
+                    return await spam.edit(error)
+                await asyncio.sleep(1)
+                await message.delete()
+                await spam.delete()
+                for i in range(quantity):
+                    await client.send_message(message.chat.id, spam_text)
+                    await asyncio.sleep(delay_msg)
 
-
-@bots.on_message(filters.me & filters.command("spam", cmd))
-async def spammer(client, message):
-    text = message.text
-    if message.reply_to_message:
-        if not len(text.split()) >= 2:
-            return await message.edit("`Gunakan dalam Format yang Tepat`")
-        spam_message = message.reply_to_message
-    else:
-        if not len(text.split()) >= 3:
-            return await message.edit(
-                "`Membalas Pesan atau Memberikan beberapa Teks ..`"
-            )
-        spam_message = text.split(maxsplit=2)[2]
-    counter = text.split()[1]
-    try:
-        counter = int(counter)
-        if counter >= 100:
-            return await message.edit(
-                "`Maksimal jumlah 100, Gunakan bspam untuk jumlah lebih dari 100`"
-            )
-    except BaseException:
-        return await message.edit("`Gunakan dalam Format yang Tepat`")
-    await asyncio.wait(
-        [client.send_message(message.chat.id, spam_message) for i in range(counter)]
-    )
-    await message.delete()
 
 
 @bots.on_message(filters.me & filters.command("bspam", cmd))
@@ -126,7 +151,7 @@ __MODULE__ = "spam"
 __HELP__ = f"""
 ✘ Bantuan Untuk Spam
 
-๏ Perintah: <code>{cmd}dspam</code> [waktu] [jumlah] [balas pesan]
+๏ Perintah: <code>{cmd}dspam</code> [jumlah] [waktu delay] [balas pesan]
 ◉ Penjelasan: Untuk melakukan delay spam.
 
 ๏ Perintah: <code>{cmd}spam</code> [jumlah] [kata]
