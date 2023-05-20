@@ -109,32 +109,26 @@ async def _(client, inline_query):
 
 @app.on_inline_query(filters.regex("^user_help_command"))
 async def _(client, inline_query):
-    for x in botlist:
-        try:
-            msg = (
-                f"""
-<b>❏ Owner : <a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>
-✘ Menu Bantuan
-๏ Perintah: <code>{cmd}</code></b>
-""",
-            )
-            await client.answer_inline_query(
-                inline_query.id,
-                cache_time=0,
-                results=[
-                    (
-                        InlineQueryResultArticle(
-                            title="Help Menu!",
-                            reply_markup=InlineKeyboardMarkup(
-                                paginate_modules(0, CMD_HELP, "help")
-                            ),
-                            input_message_content=InputTextMessageContent(msg),
-                        )
+  for x in botlist:
+    try:
+        msg = f"<b>❏ Owner : <a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+        await client.answer_inline_query(
+            inline_query.id,
+            cache_time=0,
+            results=[
+                (
+                  InlineQueryResultArticle(
+                    title="Help Menu!",
+                    reply_markup=InlineKeyboardMarkup(
+                      paginate_modules(0, CMD_HELP, "help")
+                      ),
+                      input_message_content=InputTextMessageContent(f"{msg}"),
                     )
+                  )
                 ],
-            )
-        except Exception as e:
-            print(e)
+              )
+    except Exception as e:
+        print(e)
 
 
 @app.on_callback_query(filters.regex(r"help_(.*?)"))
@@ -152,7 +146,11 @@ async def _(client, callback_query):
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )
-    top_text = f"<b>❏ Owner : \n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+    for x in botlist:
+        try:
+            top_text = f"<b>❏ Owner : <a href=tg://user?id={x.me.id}>{x.me.first_name} {x.me.last_name or ''}</a>\n✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
+        except Exception as e:
+            print(f"{e}")
     if prev_match:
         curr_page = int(prev_match.group(1))
         await callback_query.edit_message_text(
