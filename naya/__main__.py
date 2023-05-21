@@ -36,13 +36,7 @@ async def main():
             user_id = ex.id
             await ajg(bot)
             await babi(bot)
-            botlog_chat_id = await get_botlog(user_id)
-            try:
-                await bot.send_message(
-                    botlog_chat_id, MSG_ON.format(nan, py(), pyro, nay, CMD_HNDLR)
-                )
-            except BaseException as a:
-                LOGGER("Info").warning(f"{a}")
+            LOGGER("Info").warning(f"{a}")
             LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
