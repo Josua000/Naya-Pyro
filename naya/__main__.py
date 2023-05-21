@@ -28,11 +28,10 @@ async def main():
     for bot in botlist:
         try:
             await bot.start()
-            ex = await bot.get_me()
-            ex.id
+            ex = bot.me
             await ajg(bot)
             await babi(bot)
-            LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
+            LOGGER("✓").info(f"Started as {ex.first_name} {ex.last_name or ''} | {ex.id} ")
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
         except Exception as e:
