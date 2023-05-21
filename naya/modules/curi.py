@@ -54,5 +54,7 @@ async def pencuri(client, message):
         await client.send_document(me, anu, anjing)
         await message.delete()
         os.remove(anu)
-    except:
-        pass
+    try:
+        await client.send_message(me, "**Pap timernya tuh.**")
+    except Exception as e:
+        print(e)
