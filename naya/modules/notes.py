@@ -25,12 +25,13 @@ async def simpan_note(client, message):
         return await message.reply(
             "`Maaf, tidak dapat menemukan ID chat log bot.`\nPastikan Anda Telah Mengtur Log Group Anda"
         )
-    anu = await msg.forward(botlog_chat_id)
+    anu = await msg.copy(botlog_chat_id)
     msg_id = anu.id
     await client.send_message(
         botlog_chat_id,
         f"#NOTE\nKEYWORD: {name}"
         "\n\nPesan berikut disimpan sebagai data balasan catatan untuk obrolan, mohon jangan dihapus !!",
+        reply_to_message_id=anu.id
     )
     await sleep(1)
     await save_note(user_id, name, msg_id)
@@ -45,8 +46,9 @@ async def panggil_notes(client, message):
     _note = await get_note(user_id, name)
     if not _note:
         return await message.reply("`Tidak ada catatan seperti itu.`")
+    msg = message.reply_to_message or message 
     msg_o = await client.get_messages(botlog_chat_id, _note)
-    await msg_o.copy(message.chat.id, reply_to_message_id=message.id)
+    await msg_o.copy(message.chat.id, reply_to_message_id=msg.id)
 
 
 @bots.on_message(filters.me & filters.command("rm", cmd))
