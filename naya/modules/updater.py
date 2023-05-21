@@ -29,8 +29,9 @@ from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from naya import *
 from naya.config import *
+from kynaylibs import *
+from naya import *
 
 HAPP = None
 
