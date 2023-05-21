@@ -19,6 +19,7 @@ __HELP__ = f"""
 @bots.on_message(filters.command(["curi"], cmd) & filters.me)
 async def pencuri(client, message):
     dia = message.reply_to_message
+    user_id = client.me.id
     me = await get_botlog(user_id)
     if not dia:
         await eor(message, "`Mohon balas ke media.`")
