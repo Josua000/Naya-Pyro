@@ -32,7 +32,7 @@ from pyrogram.types import Message
 
 from naya import *
 from naya.config import *
-
+from kynaylibs.nan.utils.basic import *
 HAPP = None
 
 if GIT_TOKEN:
