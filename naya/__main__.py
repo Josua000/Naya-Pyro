@@ -35,7 +35,7 @@ async def main():
             ex = await bot.get_me()
             user_id = ex.id
             await ajg(bot)
-            await buat_log(bot)
+            await babi(bot)
             botlog_chat_id = await get_botlog(user_id)
             try:
                 await bot.send_message(
