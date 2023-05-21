@@ -63,6 +63,7 @@ app = Client(
     api_hash=API_HASH,
     api_id=API_ID,
     bot_token=BOT_TOKEN,
+    in_memory=True
 )
 
 if not BOT_TOKEN:
