@@ -31,7 +31,7 @@ from pyrogram.types import Message
 
 from naya.config import *
 
-from . import *
+from naya import *
 
 HAPP = None
 
@@ -54,6 +54,76 @@ def restart():
 
 async def is_heroku():
     return "heroku" in socket.getfqdn()
+
+
+async def gen_chlog(repo, diff):
+    ch_log = ""
+    d_form = "%d/%m/%y"
+    for c in repo.iter_commits(diff):
+        ch_log += (
+            f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+        )
+    return ch_log
+
+
+def get_arg(message: Message):
+    msg = message.text
+    msg = msg.replace(" ", "", 1) if msg[1] == " " else msg
+    split = msg[1:].replace("\n", " \n").split(" ")
+    if " ".join(split[1:]).strip() == "":
+        return ""
+    return " ".join(split[1:])
+
+
+async def post(url: str, *args, **kwargs):
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, *args, **kwargs) as resp:
+            try:
+                data = await resp.json()
+            except Exception:
+                data = await resp.text()
+        return data
+
+
+async def PasteBin(text):
+    resp = await post(f"{BASE}api/v2/paste", data=text)
+    if not resp["success"]:
+        return
+    link = BASE + resp["message"]
+    return link
+
+
+if GIT_TOKEN:
+    GIT_USERNAME = REPO_URL.split("com/")[1].split("/")[0]
+    TEMP_REPO = REPO_URL.split("https://")[1]
+    UPSTREAM_REPO = f"https://{GIT_USERNAME}:{GIT_TOKEN}@{TEMP_REPO}"
+    UPSTREAM_REPO_URL = UPSTREAM_REPO
+else:
+    UPSTREAM_REPO_URL = REPO_URL
+
+requirements_path = path.join(
+    path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
+)
+
+
+def restart():
+    os.execvp(sys.executable, [sys.executable, "-m", "naya"])
+
+
+async def is_heroku():
+    return "heroku" in socket.getfqdn()
+
+
+async def bash(cmd):
+    process = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    stdout, stderr = await process.communicate()
+    err = stderr.decode().strip()
+    out = stdout.decode().strip()
+    return out, err
 
 
 async def gen_chlog(repo, diff):
