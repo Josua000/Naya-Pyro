@@ -24,7 +24,8 @@ async def pencuri(client, message):
     if not dia:
         await eor(message, "`Mohon balas ke media.`")
     anjing = dia.caption or None
-    await eor(message, "`Processing...`")
+    mmk = await message.edit("`Processing...`")
+    await mmk.delete()
     if dia.text:
         await dia.copy(me)
         await message.delete()
@@ -54,4 +55,4 @@ async def pencuri(client, message):
         await message.delete()
         os.remove(anu)
     else:
-        await eor(message, "**Sepertinya terjadi kesalahan.**")
+        await bots.send_message(me, "**Sepertinya terjadi kesalahan.**")
