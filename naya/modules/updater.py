@@ -26,12 +26,12 @@ from os import environ, execle, path, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
+from kynaylibs import *
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from naya.config import *
-from kynaylibs import *
 from naya import *
+from naya.config import *
 
 HAPP = None
 
