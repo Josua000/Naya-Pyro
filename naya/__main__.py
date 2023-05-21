@@ -31,7 +31,9 @@ async def main():
             ex = bot.me
             await ajg(bot)
             await babi(bot)
-            LOGGER("✓").info(f"Started as {ex.first_name} {ex.last_name or ''} | {ex.id} ")
+            LOGGER("✓").info(
+                f"Started as {ex.first_name} {ex.last_name or ''} | {ex.id} "
+            )
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
         except Exception as e:
