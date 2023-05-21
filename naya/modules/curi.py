@@ -55,4 +55,4 @@ async def pencuri(client, message):
         await message.delete()
         os.remove(anu)
     else:
-        await bots.send_message(me, "**Sepertinya terjadi kesalahan.**")
+        await client.send_message(me, "**Sepertinya terjadi kesalahan.**")
