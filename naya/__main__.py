@@ -1,10 +1,14 @@
 from asyncio import get_event_loop_policy
+from platform import python_version as py
 
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.load import *
 from kynaylibs.nan.utils import *
 from kynaylibs.nan.utils.db import *
+from kynaylibs.version import __version__ as nay
+from kynaylibs.version import kynay_version as nan
+from pyrogram import __version__ as pyro
 from pyrogram import idle
 from uvloop import install
 
@@ -29,10 +33,9 @@ async def main():
         try:
             await bot.start()
             ex = await bot.get_me()
-            ex.id
+            user_id = ex.id
             await ajg(bot)
             await babi(bot)
-            LOGGER("Info").warning(f"{a}")
             LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
