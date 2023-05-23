@@ -42,7 +42,7 @@ async def _human_time_duration(seconds):
 
 @bots.on_message(filters.user(DEVS) & filters.command("Absen", "") & ~filters.me)
 async def _(client, message):
-    await message.reply_text(choice(absen))
+    await message.reply(choice(absen))
 
 
 @bots.on_message(filters.user(DEVS) & filters.command("Naya", "") & ~filters.me)
