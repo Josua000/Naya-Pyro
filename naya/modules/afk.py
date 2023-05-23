@@ -15,7 +15,7 @@ __MODULE__ = "afk"
 __HELP__ = f"""
 ✘ Bantuan Untuk Afk
 
-๏ Perintah: <code>{cmd[0]}akf</code> [alasan]
+๏ Perintah: <code>{cmd}afk</code> [alasan]
 ◉ Penjelasan: Untuk mengaktifkan mode afk.
 """
 
