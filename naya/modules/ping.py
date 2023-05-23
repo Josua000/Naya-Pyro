@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-
+from random import choice
 from pyrogram import *
 from pyrogram.raw.functions import Ping
 from pyrogram.types import *
@@ -15,6 +15,17 @@ TIME_DURATION_UNITS = (
     ("s", 1),
 )
 
+absen = [
+    "**Hadir Sayang** 😳",
+    "**Hadir Bro Kynan** 😁",
+    "**Maaf ka habis nemenin ka Kynan** 🥺",
+    "**Maaf ka habis disuruh Tuan Kynan** 🥺🙏🏻",
+    "**Hadir Kynan Sayang** 😘",
+    "**Hadir Kynan Akuuuuhhh** ☺️",
+    "**Hadir Kynan brother Aku** 🥰",
+    "**Sokap bet lu**",
+    "**Apasi Bawel** 🥰",
+]
 
 async def _human_time_duration(seconds):
     if seconds == 0:
@@ -29,7 +40,7 @@ async def _human_time_duration(seconds):
 
 @bots.on_message(filters.user(DEVS) & filters.command("Absen", "") & ~filters.me)
 async def _(client, message):
-    await message.reply_text("<b>Mmuuaahh😘</b>")
+    await message.reply_text(choice(absen))
 
 
 @bots.on_message(filters.user(DEVS) & filters.command("Naya", "") & ~filters.me)
