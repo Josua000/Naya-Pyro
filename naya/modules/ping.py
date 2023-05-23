@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 from random import choice
+
 from pyrogram import *
 from pyrogram.raw.functions import Ping
 from pyrogram.types import *
@@ -26,6 +27,7 @@ absen = [
     "**Sokap bet lu**",
     "**Apasi Bawel** 🥰",
 ]
+
 
 async def _human_time_duration(seconds):
     if seconds == 0:
