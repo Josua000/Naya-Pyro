@@ -32,13 +32,15 @@ async def main():
     for bot in botlist:
         try:
             await bot.start()
-            ex = bot.me
+            ex = await bot.get_me()
             user = ex.id
             await ajg(bot)
             await babi(bot)
             botlog = await get_botlog(user)
             try:
-                await bot.send_message(botlog, MSG_ON.format(nan, py(), pyro, ,nay, cmd))
+                await bot.send_message(
+                    botlog, MSG_ON.format(nan, py(), pyro, ,nay, cmd)
+                )
             except BaseException as a:
                 LOGGER("Info").warning(f"{a}")
             LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
