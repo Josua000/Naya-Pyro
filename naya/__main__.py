@@ -34,16 +34,17 @@ async def main():
             await bot.start()
             ex = bot.me
             user = ex.id
-            botlog = await get_botlog(user)
             await ajg(bot)
             await babi(bot)
+            botlog = await get_botlog(user)
+            try:
+                await bot.send_message(botlog, MSG_ON.format(nan, py(), pyro, ,nay, cmd))
+            except BaseException as a:
+                LOGGER("Info").warning(f"{a}")
             LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
-            try:
-                await bot.send_message(botlog, MSG_ON.format(nan, py(), pyro, ,nay, cmd))
-            except Exception as e:
-                LOGGER("X").info(f"{e}")
+            
         except Exception as e:
             LOGGER("X").info(f"{e}")
     install()
