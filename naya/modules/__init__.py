@@ -6,6 +6,7 @@ from kynaylibs import DEVS
 from kynaylibs.nan import *
 from kynaylibs.nan.utils import *
 from kynaylibs.nan.utils.db import *
+from kynaylibs.nan.utils.db.permit import *
 from pyrogram import *
 from pyrogram.types import *
 from requests import get
