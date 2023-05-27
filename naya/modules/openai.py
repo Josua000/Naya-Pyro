@@ -10,11 +10,11 @@ from naya.config import *
 
 
 class OpenAi:
-    def text(question):
+    def text(self):
         openai.api_key = OPENAI_API
         response = openai.Completion.create(
             model="text-davinci-003",
-            prompt=f"<b>Q: <code>{question}</code>\nA:</b>",
+            prompt=f"<b>Q: <code>{self}</code>\nA:</b>",
             temperature=0,
             max_tokens=500,
             top_p=1.0,
@@ -23,9 +23,9 @@ class OpenAi:
         )
         return response.choices[0].text
 
-    def photo(question):
+    def photo(self):
         openai.api_key = OPENAI_API
-        response = openai.Image.create(prompt=question, n=1, size="1024x1024")
+        response = openai.Image.create(prompt=self, n=1, size="1024x1024")
         return response["data"][0]["url"]
 
 

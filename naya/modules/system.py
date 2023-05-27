@@ -70,19 +70,18 @@ async def restart_bot(_, message):
 
 @bots.on_message(filters.command("usage", cmd) & filters.me)
 async def usage_dynos(client, message):
-    if await is_heroku():
-        if HEROKU_API_KEY == cmd and HEROKU_APP_NAME == cmd:
-            return await eor(
-                message,
-                "<b>Menggunakan App Heroku!</b>\n\nMasukan/atur  `HEROKU_API_KEY` dan `HEROKU_APP_NAME` untuk bisa melakukan update!",
-            )
-        elif HEROKU_API_KEY == cmd or HEROKU_APP_NAME == cmd:
-            return await eor(
-                message,
-                "<b>Menggunakan App Heroku!</b>\n\n<b>pastikan</b> `HEROKU_API_KEY` **dan** `HEROKU_APP_NAME` <b>sudah di configurasi dengan benar!</b>",
-            )
-    else:
+    if not await is_heroku():
         return await eor(message, "Hanya untuk Heroku Deployment")
+    if HEROKU_API_KEY == cmd and HEROKU_APP_NAME == cmd:
+        return await eor(
+            message,
+            "<b>Menggunakan App Heroku!</b>\n\nMasukan/atur  `HEROKU_API_KEY` dan `HEROKU_APP_NAME` untuk bisa melakukan update!",
+        )
+    elif HEROKU_API_KEY == cmd or HEROKU_APP_NAME == cmd:
+        return await eor(
+            message,
+            "<b>Menggunakan App Heroku!</b>\n\n<b>pastikan</b> `HEROKU_API_KEY` **dan** `HEROKU_APP_NAME` <b>sudah di configurasi dengan benar!</b>",
+        )
     try:
         Heroku = heroku3.from_key(HEROKU_API_KEY)
         Heroku.app(HEROKU_APP_NAME)
@@ -102,8 +101,8 @@ async def usage_dynos(client, message):
         "Authorization": f"Bearer {HEROKU_API_KEY}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
-    path = "/accounts/" + account_id + "/actions/get-quota"
-    r = requests.get("https://api.heroku.com" + path, headers=headers)
+    path = f"/accounts/{account_id}/actions/get-quota"
+    r = requests.get(f"https://api.heroku.com{path}", headers=headers)
     if r.status_code != 200:
         return await dyno.edit("Unable to fetch.")
     result = r.json()
@@ -254,21 +253,18 @@ async def varget_(client, message):
     babi = await eor(message, "`Processing...`")
     check_var = message.text.split(None, 2)[1]
     if anu_heroku():
-        if check_var in os.environ:
-            return await babi.edit(
-                f"<b>{check_var}:</b> <code>{os.environ[check_var]}</code>"
-            )
-        else:
-            return await babi.edit(f"**Tidak dapat menemukan var `{check_var}`.**")
+        return (
+            await babi.edit(f"<b>{check_var}:</b> <code>{os.environ[check_var]}</code>")
+            if check_var in os.environ
+            else await babi.edit(f"**Tidak dapat menemukan var `{check_var}`.**")
+        )
+    path = ".env"
+    if not os.path.exists(path):
+        return await babi.edit("`.env file not found.`")
+    if output := dotenv.get_key(path, check_var):
+        return await babi.edit(f"<b>{check_var}:</b> <code>{str(output)}</code>")
     else:
-        path = ".env"
-        if not os.path.exists(path):
-            return await babi.edit("`.env file not found.`")
-        output = dotenv.get_key(path, check_var)
-        if not output:
-            await babi.edit(f"**Tidak dapat menemukan var `{check_var}`.**")
-        else:
-            return await babi.edit(f"<b>{check_var}:</b> <code>{str(output)}</code>")
+        await babi.edit(f"**Tidak dapat menemukan var `{check_var}`.**")
 
 
 @bots.on_message(filters.command("setdb", cmd) & filters.me)

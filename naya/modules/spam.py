@@ -27,29 +27,28 @@ async def spam_cmd(client, message):
             await asyncio.sleep(1)
             await message.delete()
             await spam.delete()
-            for i in range(quantity):
+            for _ in range(quantity):
                 await client.send_message(
                     message.chat.id,
                     spam_text,
                     reply_to_message_id=message.reply_to_message.id,
                 )
                 await asyncio.sleep(0.3)
+        elif len(message.command) < 3:
+            await eor(message, f"**Gunakan format:\n`{cmd}spam [jumlah] [pesan]`**")
         else:
-            if len(message.command) < 3:
-                await eor(message, f"**Gunakan format:\n`{cmd}spam [jumlah] [pesan]`**")
-            else:
-                spam = await eor(message, "`Processing...`")
-                try:
-                    quantity = int(message.text.split(None, 2)[1])
-                    spam_text = message.text.split(None, 2)[2]
-                except Exception as error:
-                    return await spam.edit(error)
-                await asyncio.sleep(1)
-                await message.delete()
-                await spam.delete()
-                for i in range(quantity):
-                    await client.send_message(message.chat.id, spam_text)
-                    await asyncio.sleep(0.3)
+            spam = await eor(message, "`Processing...`")
+            try:
+                quantity = int(message.text.split(None, 2)[1])
+                spam_text = message.text.split(None, 2)[2]
+            except Exception as error:
+                return await spam.edit(error)
+            await asyncio.sleep(1)
+            await message.delete()
+            await spam.delete()
+            for _ in range(quantity):
+                await client.send_message(message.chat.id, spam_text)
+                await asyncio.sleep(0.3)
     elif message.command[0] == "dspam":
         if message.reply_to_message:
             if len(message.command) < 3:
@@ -66,7 +65,7 @@ async def spam_cmd(client, message):
             await asyncio.sleep(1)
             await message.delete()
             await spam.delete()
-            for i in range(quantity):
+            for _ in range(quantity):
                 await message.reply_to_message.copy(message.chat.id)
                 await asyncio.sleep(delay_msg)
         else:
@@ -75,36 +74,33 @@ async def spam_cmd(client, message):
                     message,
                     f"**Gunakan format:\n`{cmd}dspam[jumlah] [waktu delay] [balas pesan]`**",
                 )
-            else:
-                spam = await eor(message, "`Processing...`")
-                try:
-                    quantity = int(message.text.split(None, 3)[1])
-                    delay_msg = int(message.text.split(None, 3)[2])
-                    spam_text = message.text.split(None, 3)[3]
-                except Exception as error:
-                    return await spam.edit(error)
-                await asyncio.sleep(1)
-                await message.delete()
-                await spam.delete()
-                for i in range(quantity):
-                    await client.send_message(message.chat.id, spam_text)
-                    await asyncio.sleep(delay_msg)
+            spam = await eor(message, "`Processing...`")
+            try:
+                quantity = int(message.text.split(None, 3)[1])
+                delay_msg = int(message.text.split(None, 3)[2])
+                spam_text = message.text.split(None, 3)[3]
+            except Exception as error:
+                return await spam.edit(error)
+            await asyncio.sleep(1)
+            await message.delete()
+            await spam.delete()
+            for _ in range(quantity):
+                await client.send_message(message.chat.id, spam_text)
+                await asyncio.sleep(delay_msg)
 
 
 @bots.on_message(filters.me & filters.command("bspam", cmd))
 async def bigspam(client, message):
     text = message.text
     if message.reply_to_message:
-        if not len(text.split()) >= 2:
+        if len(text.split()) < 2:
             return await message.edit(
                 "`Gunakan dalam Format yang Tepat` **Contoh** : bspam [jumlah] [kata]"
             )
         spam_message = message.reply_to_message
+    elif len(text.split()) < 3:
+        return await message.edit("`Membalas Pesan atau Memberikan beberapa Teks ..`")
     else:
-        if not len(text.split()) >= 3:
-            return await message.edit(
-                "`Membalas Pesan atau Memberikan beberapa Teks ..`"
-            )
         spam_message = text.split(maxsplit=2)[2]
     counter = text.split()[1]
     try:
@@ -112,7 +108,7 @@ async def bigspam(client, message):
     except BaseException:
         return await message.edit("`Gunakan dalam Format yang Tepat`")
     await asyncio.wait(
-        [client.send_message(message.chat.id, spam_message) for i in range(counter)]
+        [client.send_message(message.chat.id, spam_message) for _ in range(counter)]
     )
     await message.delete()
 
@@ -130,10 +126,9 @@ async def spam_stick(client: Client, message: Message):
         )
         return
     else:
-        i = 0
         times = message.command[1]
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-            for i in range(int(times)):
+            for _ in range(int(times)):
                 sticker = message.reply_to_message.sticker.file_id
                 await client.send_sticker(
                     message.chat.id,
@@ -142,7 +137,7 @@ async def spam_stick(client: Client, message: Message):
                 await asyncio.sleep(0.10)
 
         if message.chat.type == enums.ChatType.PRIVATE:
-            for i in range(int(times)):
+            for _ in range(int(times)):
                 sticker = message.reply_to_message.sticker.file_id
                 await client.send_sticker(message.chat.id, sticker)
                 await asyncio.sleep(0.10)

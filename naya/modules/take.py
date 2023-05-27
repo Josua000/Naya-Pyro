@@ -24,13 +24,12 @@ async def _(client, message):
         return await TM.edit(
             f"<code><b>{message.text} from_chat msg_filter msg_limit to_chat</code></b>"
         )
+    if message.command[2] in results:
+        msg_ = results[message.command[2]]
     else:
-        if message.command[2] in results:
-            msg_ = results[message.command[2]]
-        else:
-            return await TM.edit(
-                f"❌ msg_filter {message.command[2]} tidak bisa diproses\n\n✅ msg_filter yang tersedia adalah: <code>dokumen</code> <code>photo</code> <code>audio</code> <code>video</code>"
-            )
+        return await TM.edit(
+            f"❌ msg_filter {message.command[2]} tidak bisa diproses\n\n✅ msg_filter yang tersedia adalah: <code>dokumen</code> <code>photo</code> <code>audio</code> <code>video</code>"
+        )
     await TM.edit("Sedang Memproses")
     try:
         done = 0

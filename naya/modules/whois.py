@@ -97,11 +97,10 @@ async def _(client, message):
         else:
             if message.chat.type == ChatType.PRIVATE:
                 return await Tm.edit(
-                    f"Gunakan perintah ini di dalam grup atau gunakan !cinfo [group username atau id]`"
+                    "Gunakan perintah ini di dalam grup atau gunakan !cinfo [group username atau id]`"
                 )
-            else:
-                chatid = message.chat.id
-                chat = await client.get_chat(chatid)
+            chatid = message.chat.id
+            chat = await client.get_chat(chatid)
         h = f"{chat.type}"
         if h.startswith("ChatType"):
             y = h.replace("ChatType.", "")

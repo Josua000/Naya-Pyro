@@ -89,46 +89,43 @@ def gen_font(text, new_font):
 
 @bots.on_message(filters.me & filters.command(["font"], cmd))
 async def font_ubot(client, message):
-    if message.reply_to_message or get_arg(message):
-        font = get_arg(message)
-        text = message.reply_to_message.text
-        if not font:
-            return await eor(
-                message, f"<code>{font} Tidak ada dalam daftar font...</code>"
-            )
-        if font == "1":
-            nan = gen_font(text, _font1)
-        elif font == "2":
-            nan = gen_font(text, _font2)
-        elif font == "3":
-            nan = gen_font(text, _font3)
-        elif font == "4":
-            nan = gen_font(text, _font4)
-        elif font == "5":
-            nan = gen_font(text, _font5)
-        elif font == "6":
-            nan = gen_font(text, _font6)
-        elif font == "7":
-            nan = gen_font(text, _font7)
-        elif font == "8":
-            nan = gen_font(text, _font8)
-        elif font == "9":
-            nan = gen_font(text, _font9)
-        elif font == "10":
-            nan = gen_font(text, _font10)
-        elif font == "11":
-            nan = gen_font(text, _font11)
-        elif font == "12":
-            nan = gen_font(text, _font12)
-        elif font == "13":
-            nan = gen_font(text, _font13)
-        elif font == "14":
-            nan = gen_font(text, _font14)
-        elif font == "15":
-            nan = gen_font(text, _font15)
-        await eor(message, nan)
-    else:
+    if not message.reply_to_message and not get_arg(message):
         return await eor(message, "Balas Teks Dan Isi Nama Font!!!")
+    font = get_arg(message)
+    text = message.reply_to_message.text
+    if not font:
+        return await eor(message, f"<code>{font} Tidak ada dalam daftar font...</code>")
+    if font == "1":
+        nan = gen_font(text, _font1)
+    elif font == "2":
+        nan = gen_font(text, _font2)
+    elif font == "3":
+        nan = gen_font(text, _font3)
+    elif font == "4":
+        nan = gen_font(text, _font4)
+    elif font == "5":
+        nan = gen_font(text, _font5)
+    elif font == "6":
+        nan = gen_font(text, _font6)
+    elif font == "7":
+        nan = gen_font(text, _font7)
+    elif font == "8":
+        nan = gen_font(text, _font8)
+    elif font == "9":
+        nan = gen_font(text, _font9)
+    elif font == "10":
+        nan = gen_font(text, _font10)
+    elif font == "11":
+        nan = gen_font(text, _font11)
+    elif font == "12":
+        nan = gen_font(text, _font12)
+    elif font == "13":
+        nan = gen_font(text, _font13)
+    elif font == "14":
+        nan = gen_font(text, _font14)
+    elif font == "15":
+        nan = gen_font(text, _font15)
+    await eor(message, nan)
 
 
 @bots.on_message(filters.me & filters.command(["lf", "listfont"], cmd))

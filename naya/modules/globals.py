@@ -41,7 +41,11 @@ async def _(client, message):
         "<b>💬 Global Banned</b>\n\n<b>✅ Berhasil: {} Chat</b>\n<b>❌ Gagal: {} Chat</b>\n<b>👤 User: <a href='tg://user?id={}'>{} {}</a></b>",
         "<b>💬 Global Unbanned</b>\n\n<b>✅ Berhasil: {} Chat</b>\n<b>❌ Gagal: {} Chat</b>\n<b>👤 User: <a href='tg://user?id={}'>{} {}</a></b>",
     ]
-    if message.command[0] == "gban":
+    if (
+        message.command[0] == "gban"
+        or message.command[0] != "ungban"
+        and message.command[0] == "cgban"
+    ):
         async for dialog in client.get_dialogs():
             chat_type = dialog.chat.type
             if chat_type in [
@@ -62,49 +66,7 @@ async def _(client, message):
                 done, failed, user.id, user.first_name, (user.last_name or "")
             )
         )
-    elif message.command[0] == "ungban":
-        async for dialog in client.get_dialogs():
-            chat_type = dialog.chat.type
-            if chat_type in [
-                ChatType.GROUP,
-                ChatType.SUPERGROUP,
-                ChatType.CHANNEL,
-            ]:
-                chat_id = dialog.chat.id
-                try:
-                    await client.unban_chat_member(chat_id, user.id)
-                    done += 1
-                    await asyncio.sleep(0.1)
-                except BaseException:
-                    failed += 1
-                    await asyncio.sleep(0.1)
-        return await nay.edit(
-            text[1].format(
-                done, failed, user.id, user.first_name, (user.last_name or "")
-            )
-        )
-    elif message.command[0] == "cgban":
-        async for dialog in client.get_dialogs():
-            chat_type = dialog.chat.type
-            if chat_type in [
-                ChatType.GROUP,
-                ChatType.SUPERGROUP,
-                ChatType.CHANNEL,
-            ]:
-                chat_id = dialog.chat.id
-                try:
-                    await client.ban_chat_member(chat_id, user.id)
-                    done += 1
-                    await asyncio.sleep(0.1)
-                except BaseException:
-                    failed += 1
-                    await asyncio.sleep(0.1)
-        return await nay.edit(
-            text[0].format(
-                done, failed, user.id, user.first_name, (user.last_name or "")
-            )
-        )
-    elif message.command[0] == "cungban":
+    elif message.command[0] in ["ungban", "cungban"]:
         async for dialog in client.get_dialogs():
             chat_type = dialog.chat.type
             if chat_type in [

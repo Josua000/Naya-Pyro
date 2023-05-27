@@ -16,16 +16,13 @@ from . import *
 
 @bots.on_message(filters.me & filters.command(["admins"], cmd))
 async def adminlist(client, message):
-    replyid = None
     toolong = False
     if len(message.text.split()) >= 2:
         chat = message.text.split(None, 1)[1]
-        grup = await client.get_chat(chat)
     else:
         chat = message.chat.id
-        grup = await client.get_chat(chat)
-    if message.reply_to_message:
-        replyid = message.reply_to_message.id
+    grup = await client.get_chat(chat)
+    replyid = message.reply_to_message.id if message.reply_to_message else None
     creator = []
     admin = []
     badmin = []
@@ -33,7 +30,7 @@ async def adminlist(client, message):
         message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS
     ):
         try:
-            nama = a.user.first_name + " " + a.user.last_name
+            nama = f"{a.user.first_name} {a.user.last_name}"
         except BaseException:
             nama = a.user.first_name
         if nama is None:
@@ -48,29 +45,28 @@ async def adminlist(client, message):
     admin.sort()
     badmin.sort()
     totaladmins = len(creator) + len(admin) + len(badmin)
-    teks = "**Daftar Admin Di {}**\n".format(grup.title)
-    teks += "**Pemilik**\n"
+    teks = f"**Daftar Admin Di {grup.title}**\n" + "**Pemilik**\n"
     for x in creator:
-        teks += "• {}\n\n".format(x)
+        teks += f"• {x}\n\n"
         if len(teks) >= 4096:
             await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
-    teks += "\n**{} Admin**\n".format(len(admin))
+    teks += f"\n**{len(admin)} Admin**\n"
     for x in admin:
-        teks += "• {}\n".format(x)
+        teks += f"• {x}\n"
         if len(teks) >= 4096:
             await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
-    teks += "\n**{} Bot Admin**\n".format(len(badmin))
+    teks += f"\n**{len(badmin)} Bot Admin**\n"
     for x in badmin:
-        teks += "• {}\n".format(x)
+        teks += f"• {x}\n"
         if len(teks) >= 4096:
             await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
-    teks += "\n**Total {} Admins**".format(totaladmins)
+    teks += f"\n**Total {totaladmins} Admins**"
     if toolong:
         await eor(message, message.chat.id, teks, reply_to_message_id=replyid)
     else:
@@ -89,27 +85,20 @@ async def report_admin(client: Client, message: Message):
     async for a in client.get_chat_members(
         message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS
     ):
-        if (
-            a.status == enums.ChatMemberStatus.ADMINISTRATOR
-            or a.status == enums.ChatMemberStatus.OWNER
-        ):
+        if a.status in [
+            enums.ChatMemberStatus.ADMINISTRATOR,
+            enums.ChatMemberStatus.OWNER,
+        ]:
             if not a.user.is_bot:
                 admin.append(mention_html(a.user.id, "\u200b"))
     if message.reply_to_message:
-        if text:
-            teks = "{}".format(text)
-        else:
-            teks = "{} reported to admins.".format(
-                mention_html(
-                    message.reply_to_message.from_user.id,
-                    message.reply_to_message.from_user.first_name,
-                )
-            )
+        teks = (
+            f"{text}"
+            if text
+            else f"{mention_html(message.reply_to_message.from_user.id, message.reply_to_message.from_user.first_name)} reported to admins."
+        )
     else:
-        if text:
-            teks = "{}".format(html.escape(text))
-        else:
-            teks = "Calling admins in {}.".format(grup.title)
+        teks = f"{html.escape(text)}" if text else f"Calling admins in {grup.title}."
     teks += "".join(admin)
     if message.reply_to_message:
         await client.send_message(
@@ -126,31 +115,27 @@ async def report_admin(client: Client, message: Message):
 
 @bots.on_message(filters.me & filters.command(["bots"], cmd))
 async def get_list_bots(client: Client, message: Message):
-    replyid = None
     if len(message.text.split()) >= 2:
         chat = message.text.split(None, 1)[1]
-        grup = await client.get_chat(chat)
     else:
         chat = message.chat.id
-        grup = await client.get_chat(chat)
-    if message.reply_to_message:
-        replyid = message.reply_to_message.id
+    grup = await client.get_chat(chat)
+    replyid = message.reply_to_message.id if message.reply_to_message else None
     getbots = client.get_chat_members(chat)
     bots = []
     async for a in getbots:
         try:
-            nama = a.user.first_name + " " + a.user.last_name
+            nama = f"{a.user.first_name} {a.user.last_name}"
         except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = "☠️ Deleted account"
         if a.user.is_bot:
             bots.append(mention_markdown(a.user.id, nama))
-    teks = "**Daftar Bot Di {}**\n".format(grup.title)
-    teks += "Bots\n"
+    teks = f"**Daftar Bot Di {grup.title}**\n" + "Bots\n"
     for x in bots:
-        teks += "• {}\n".format(x)
-    teks += "Total {} Bot".format(len(bots))
+        teks += f"• {x}\n"
+    teks += f"Total {len(bots)} Bot"
     if replyid:
         await client.send_message(message.chat.id, teks, reply_to_message_id=replyid)
     else:

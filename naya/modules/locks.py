@@ -49,9 +49,9 @@ async def tg_lock(client, message, permissions: list, perm: str, lock: bool):
         if perm not in permissions:
             return await eor(message, "<b>🔒 Sudah Terkunci.</b>")
         permissions.remove(perm)
+    elif perm in permissions:
+        return await eor(message, "<b>🔓 Sudah Terbuka.</b>")
     else:
-        if perm in permissions:
-            return await eor(message, "<b>🔓 Sudah Terbuka.</b>")
         permissions.append(perm)
 
     permissions = {perm: True for perm in list(set(permissions))}
@@ -85,13 +85,7 @@ async def locks_func(client, message):
     permissions = await current_chat_permissions(client, chat_id)
 
     if parameter in data:
-        await tg_lock(
-            client,
-            message,
-            permissions,
-            data[parameter],
-            bool(state == "lock"),
-        )
+        await tg_lock(client, message, permissions, data[parameter], state == "lock")
     elif parameter == "all" and state == "lock":
         await client.set_chat_permissions(chat_id, ChatPermissions())
         await eor(
@@ -124,10 +118,7 @@ async def locktypes(client, message):
     if not permissions:
         return await eor(message, "<code>Anda bukan Admin.</code>.")
 
-    perms = ""
-    for i in permissions:
-        perms += f"__<b>{i}</b>__\n"
-
+    perms = "".join(f"__<b>{i}</b>__\n" for i in permissions)
     await eor(message, perms)
 
 
@@ -143,8 +134,7 @@ async def url_detector(client, message):
     if user.id in mods:
         return
 
-    check = get_urls_from_text(text)
-    if check:
+    if check := get_urls_from_text(text):
         permissions = await current_chat_permissions(client, chat_id)
         if "can_add_web_page_previews" not in permissions:
             try:

@@ -47,5 +47,5 @@ async def _(client, message):
             await Tm.edit(f"Silahkan isi sesuai {tau}")
     else:
         await Tm.edit(
-            f"Silahkan balas ke audio atau mp3, contoh : <code>!efek bengek</code> sambil balas ke audio atau mp3"
+            "Silahkan balas ke audio atau mp3, contoh : <code>!efek bengek</code> sambil balas ke audio atau mp3"
         )

@@ -37,7 +37,7 @@ async def _(client, message):
         if not stalk:
             NotFound = await client.send_message(client.me.id, "Tidak ada komentar")
             await NotFound.delete()
-        elif stalk:
+        else:
             await message.reply(stalk.text)
     user_info = await client.resolve_peer(bot)
     return await client.send(DeleteHistory(peer=user_info, max_id=0, revoke=True))

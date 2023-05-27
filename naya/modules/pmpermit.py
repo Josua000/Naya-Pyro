@@ -124,15 +124,14 @@ async def set_msg(client, message):
 async def set_limit(client, message):
     r_msg = message.reply_to_message
     args_txt = get_arg(message)
-    if r_msg:
-        if args_txt.isnumeric():
-            pm_limit = int(args_txt)
-        else:
-            return await babi.edit("`Silakan balas ke pesan untuk angka limit !`")
-    else:
+    if not r_msg:
         return await babi.edit(
             f"`Silakan balas ke pesan atau berikan pesan untuk dijadikan angka limit !\n**Contoh :** {cmd[0]}setlimit 5`"
         )
+    if args_txt.isnumeric():
+        pm_limit = int(args_txt)
+    else:
+        return await babi.edit("`Silakan balas ke pesan untuk angka limit !`")
     await set_var(user_id, "CUSTOM_PM_WARNS_LIMIT", pm_limit)
     await babi.edit(f"**Pesan Limit berhasil diatur menjadi : `{args_txt}`.**")
 

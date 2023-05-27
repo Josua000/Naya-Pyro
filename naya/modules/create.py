@@ -15,7 +15,7 @@ from . import *
 async def create(client: Client, message: Message):
     if len(message.command) < 3:
         return await message.reply(
-            f"**buat gc => Untuk Membuat Grup, buat ch => Untuk Mebuat Channel**"
+            "**buat gc => Untuk Membuat Grup, buat ch => Untuk Mebuat Channel**"
         )
     group_type = message.command[1]
     split = message.command[2:]

@@ -63,30 +63,29 @@ async def inv(client, message):
         return await Tm.edit_text(
             "Sedang menginvite member silahkan coba lagi nanti atau gunakan perintah: <code>{cancel}</code>"
         )
-    else:
-        invte_id.append(tgchat.id)
-        await Tm.edit_text(f"mengundang anggota dari {chat.title}")
-        done = 0
-        async for member in client.get_chat_members(chat.id):
-            user = member.user
-            zxb = [
-                UserStatus.ONLINE,
-                UserStatus.OFFLINE,
-                UserStatus.RECENTLY,
-                UserStatus.LAST_WEEK,
-            ]
-            if user.status in zxb:
-                try:
-                    await client.add_chat_members(tgchat.id, user.id)
-                    done += 1
-                    await asyncio.sleep(int(colldown))
-                except:
-                    pass
-        invte_id.remove(tgchat.id)
-        await Tm.delete()
-        return await eor(
-            message, f"<b>✅ <code>{done}</code> Anggota Telah Berhasil Diundang</b>"
-        )
+    invte_id.append(tgchat.id)
+    await Tm.edit_text(f"mengundang anggota dari {chat.title}")
+    done = 0
+    async for member in client.get_chat_members(chat.id):
+        user = member.user
+        zxb = [
+            UserStatus.ONLINE,
+            UserStatus.OFFLINE,
+            UserStatus.RECENTLY,
+            UserStatus.LAST_WEEK,
+        ]
+        if user.status in zxb:
+            try:
+                await client.add_chat_members(tgchat.id, user.id)
+                done += 1
+                await asyncio.sleep(int(colldown))
+            except:
+                pass
+    invte_id.remove(tgchat.id)
+    await Tm.delete()
+    return await eor(
+        message, f"<b>✅ <code>{done}</code> Anggota Telah Berhasil Diundang</b>"
+    )
 
 
 @bots.on_message(filters.command("cancel", cmd) & filters.me)

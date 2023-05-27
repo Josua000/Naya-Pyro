@@ -21,22 +21,13 @@ __HELP__ = f"""
 @bots.on_message(filters.me & filters.command("tts", cmd))
 async def _(_, message):
     if message.reply_to_message:
-        if len(message.command) < 2:
-            language = "id"
-            words_to_say = (
-                message.reply_to_message.text or message.reply_to_message.caption
-            )
-        else:
-            language = message.text.split(None, 2)[1]
-            words_to_say = (
-                message.reply_to_message.text or message.reply_to_message.caption
-            )
+        language = "id" if len(message.command) < 2 else message.text.split(None, 2)[1]
+        words_to_say = message.reply_to_message.text or message.reply_to_message.caption
     else:
         if len(message.command) < 3:
             return
-        else:
-            language = message.text.split(None, 2)[1]
-            words_to_say = message.text.split(None, 2)[2]
+        language = message.text.split(None, 2)[1]
+        words_to_say = message.text.split(None, 2)[2]
     speech = gtts.gTTS(words_to_say, lang=language)
     speech.save("text_to_speech.oog")
     reply_me_or_user = message.reply_to_message or message
@@ -65,25 +56,14 @@ async def _(_, message):
 async def _(client, message):
     trans = Translator()
     if message.reply_to_message:
-        if len(message.command) < 2:
-            dest = "id"
-            to_translate = (
-                message.reply_to_message.text or message.reply_to_message.caption
-            )
-            source = await trans.detect(to_translate)
-        else:
-            dest = message.text.split(None, 2)[1]
-            to_translate = (
-                message.reply_to_message.text or message.reply_to_message.caption
-            )
-            source = await trans.detect(to_translate)
+        dest = "id" if len(message.command) < 2 else message.text.split(None, 2)[1]
+        to_translate = message.reply_to_message.text or message.reply_to_message.caption
     else:
         if len(message.command) < 3:
             return
-        else:
-            dest = message.text.split(None, 2)[1]
-            to_translate = message.text.split(None, 2)[2]
-            source = await trans.detect(to_translate)
+        dest = message.text.split(None, 2)[1]
+        to_translate = message.text.split(None, 2)[2]
+    source = await trans.detect(to_translate)
     translation = await trans(to_translate, sourcelang=source, targetlang=dest)
     reply = f"<b>Bahasa {source} Ke Bahasa {dest}</b>:\n<code>{translation.text}</code>"
     reply_me_or_user = message.reply_to_message or message

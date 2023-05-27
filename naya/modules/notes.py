@@ -57,9 +57,9 @@ async def remove_notes(client, message):
     user_id = message.from_user.id
     deleted = await delete_note(user_id, name)
     if deleted:
-        await message.reply("**Berhasil Menghapus Catatan:** `{}`".format(name))
+        await message.reply(f"**Berhasil Menghapus Catatan:** `{name}`")
     else:
-        await message.reply("**Tidak dapat menemukan catatan:** `{}`".format(name))
+        await message.reply(f"**Tidak dapat menemukan catatan:** `{name}`")
 
 
 @bots.on_message(filters.me & filters.command("notes", cmd))
