@@ -16,7 +16,7 @@ __HELP__ = f"""
 
 
 async def take_screenshot(url: str, full: bool = False):
-    url = "https://" + url if not url.startswith("http") else url
+    url = f"https://{url}" if not url.startswith("http") else url
     payload = {
         "url": url,
         "width": 1920,

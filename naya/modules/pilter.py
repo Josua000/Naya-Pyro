@@ -111,8 +111,7 @@ async def filters_re(client, message):
             if data_type == "text":
                 keyb = None
                 if re.findall(r"\[.+\,.+\]", data):
-                    keyboard = extract_text_and_keyb(ikb, data)
-                    if keyboard:
+                    if keyboard := extract_text_and_keyb(ikb, data):
                         data, keyb = keyboard
 
                 if message.reply_to_message:

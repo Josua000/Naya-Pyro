@@ -31,10 +31,7 @@ onlinestr = """
 async def is_afk_(f, client, message):
     user_id = client.me.id
     af_k_c = await check_afk(user_id)
-    if af_k_c:
-        return bool(True)
-    else:
-        return bool(False)
+    return bool(af_k_c)
 
 
 is_afk = filters.create(func=is_afk_, name="is_afk_")

@@ -52,6 +52,7 @@ async def _(client, inline_query):
     inline_query.query.split()
     expired = "__none__"
     status1 = "premium"
+    expired = "__none__"
     for bot in botlist:
         users = 0
         group = 0
@@ -65,13 +66,10 @@ async def _(client, inline_query):
                 group += 1
         if bot.me.id in DEVS:
             status = "founder"
-            expired = "__none__"
         elif bot.me.id == OWNER:
             status = "owner"
-            expired = "__none__"
         else:
             status = "admin"
-            expired = "__none__"
         start = datetime.now()
         await bot.invoke(Ping(ping_id=0))
         ping = (datetime.now() - start).microseconds / 1000
@@ -91,25 +89,22 @@ async def _(client, inline_query):
             inline_query.id,
             cache_time=300,
             results=[
-                (
-                    InlineQueryResultArticle(
-                        title="💬",
-                        reply_markup=InlineKeyboardMarkup(
+                InlineQueryResultArticle(
+                    title="💬",
+                    reply_markup=InlineKeyboardMarkup(
+                        [
                             [
-                                [
-                                    InlineKeyboardButton(
-                                        text="Close",
-                                        callback_data=f"alv_cls",
-                                    ),
-                                    InlineKeyboardButton(
-                                        text="Support",
-                                        url=f"https://t.me/kynansupport",
-                                    ),
-                                ],
-                            ],
-                        ),
-                        input_message_content=InputTextMessageContent(msg),
-                    )
+                                InlineKeyboardButton(
+                                    text="Close", callback_data="alv_cls"
+                                ),
+                                InlineKeyboardButton(
+                                    text="Support",
+                                    url="https://t.me/kynansupport",
+                                ),
+                            ]
+                        ]
+                    ),
+                    input_message_content=InputTextMessageContent(msg),
                 )
             ],
         )
@@ -142,7 +137,7 @@ async def _(client, callback_query):
     next_match = re.match(r"help_next\((.+?)\)", callback_query.data)
     back_match = re.match(r"help_back", callback_query.data)
     if mod_match:
-        module = (mod_match.group(1)).replace(" ", "_")
+        module = mod_match[1].replace(" ", "_")
         text = f"<b>{CMD_HELP[module].__HELP__}</b>\n"
         button = [[InlineKeyboardButton("❮", callback_data="help_back")]]
         await callback_query.edit_message_text(
@@ -152,7 +147,7 @@ async def _(client, callback_query):
         )
     prev_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if prev_match:
-        curr_page = int(prev_match.group(1))
+        curr_page = int(prev_match[1])
         await callback_query.edit_message_text(
             text=prev_text,
             reply_markup=InlineKeyboardMarkup(
@@ -162,7 +157,7 @@ async def _(client, callback_query):
         )
     next_text = f"<b>✘ Menu Bantuan\n๏ Perintah: <code>{cmd}</code></b>"
     if next_match:
-        next_page = int(next_match.group(1))
+        next_page = int(next_match[1])
         await callback_query.edit_message_text(
             text=next_text,
             reply_markup=InlineKeyboardMarkup(
@@ -198,7 +193,7 @@ async def usereee(_, message):
 """
         except BaseException:
             pass
-    if int(len(str(user))) > 4096:
+    if len(str(user)) > 4096:
         with BytesIO(str.encode(str(user))) as out_file:
             out_file.name = "userbot.txt"
             await message.reply_document(
@@ -308,8 +303,8 @@ async def _(_, query):
             [
                 [
                     InlineKeyboardButton(
-                        text="Support", url=f"https://t.me/kynansupport"
-                    ),
+                        text="Support", url="https://t.me/kynansupport"
+                    )
                 ],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
@@ -365,7 +360,7 @@ async def _(_, query: CallbackQuery):
         ],
     ]
     await query.edit_message_text(
-        f"<b>Apakah kamu yakin ingin Melakukan Restart ?</b>",
+        "<b>Apakah kamu yakin ingin Melakukan Restart ?</b>",
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
@@ -373,9 +368,7 @@ async def _(_, query: CallbackQuery):
 @app.on_message(filters.command(["start"]))
 async def _(_, message):
     user_id = message.from_user.id
-    _ubot = []
-    for bot in botlist:
-        _ubot.append(bot.me.id)
+    _ubot = [bot.me.id for bot in botlist]
     if user_id not in _ubot:
         return await message.reply_photo(
             photo=photo,
@@ -640,26 +633,7 @@ async def _(_, query: CallbackQuery):
             )
     else:
         path = ".env"
-        output = dotenv.get_key(path, variable)
-        if not output:
-            buttons = [
-                [
-                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
-                    InlineKeyboardButton(
-                        text="Hapus Variabel", callback_data="remsesi"
-                    ),
-                ],
-                [
-                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
-                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
-                ],
-            ]
-            return await app.send_message(
-                user_id,
-                f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
-                reply_markup=InlineKeyboardMarkup(buttons),
-            )
-        else:
+        if output := dotenv.get_key(path, variable):
             buttons = [
                 [
                     InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
@@ -675,5 +649,23 @@ async def _(_, query: CallbackQuery):
             await app.send_message(
                 user_id,
                 f"<b>{variable}:</b> <code>{os.environ[variable]}</code>",
+                reply_markup=InlineKeyboardMarkup(buttons),
+            )
+        else:
+            buttons = [
+                [
+                    InlineKeyboardButton(text="Tambah Variabel", callback_data="sesi"),
+                    InlineKeyboardButton(
+                        text="Hapus Variabel", callback_data="remsesi"
+                    ),
+                ],
+                [
+                    InlineKeyboardButton(text="Kembali", callback_data="multi"),
+                    InlineKeyboardButton("Tutup", callback_data="cl_ad"),
+                ],
+            ]
+            return await app.send_message(
+                user_id,
+                f"<b>Tidak ada <code>{variable}</code> ditemukan.</b>",
                 reply_markup=InlineKeyboardMarkup(buttons),
             )

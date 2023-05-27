@@ -40,13 +40,12 @@ async def _(client, message: Message):
         if dialog.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
             if message.reply_to_message:
                 send = message.reply_to_message
+            elif len(message.command) < 2:
+                return await msg.edit(
+                    "<code>Berikan pesan atau balas pesan...</code>"
+                )
             else:
-                if len(message.command) < 2:
-                    return await msg.edit(
-                        "<code>Berikan pesan atau balas pesan...</code>"
-                    )
-                else:
-                    send = message.text.split(None, 1)[1]
+                send = message.text.split(None, 1)[1]
             chat_id = dialog.chat.id
             if chat_id not in list_blchat and chat_id not in BL_GCAST:
                 try:
@@ -72,11 +71,10 @@ async def _(client, message: Message):
         if dialog.chat.type == ChatType.PRIVATE:
             if message.reply_to_message:
                 send = message.reply_to_message
+            elif len(message.command) < 2:
+                return await msg.edit("Mohon berikan pesan atau balas ke pesan...")
             else:
-                if len(message.command) < 2:
-                    return await msg.edit("Mohon berikan pesan atau balas ke pesan...")
-                else:
-                    send = message.text.split(None, 1)[1]
+                send = message.text.split(None, 1)[1]
             chat_id = dialog.chat.id
             if chat_id not in DEVS:
                 try:

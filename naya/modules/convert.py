@@ -40,26 +40,24 @@ async def _(client, message):
                 content = f.read()
             os.remove(path)
             get_photo = BytesIO(content)
-        else:
-            if message.command[1] in ["foto", "profil", "photo"]:
-                chat = (
-                    message.reply_to_message.from_user
-                    or message.reply_to_message.sender_chat
-                )
-                type = "Foto"
-                get = await client.get_chat(chat.id)
-                photo = get.photo.big_file_id
-                get_photo = await client.download_media(photo)
+        elif message.command[1] in ["foto", "profil", "photo"]:
+            type = "Foto"
+            chat = (
+                message.reply_to_message.from_user
+                or message.reply_to_message.sender_chat
+            )
+            get = await client.get_chat(chat.id)
+            photo = get.photo.big_file_id
+            get_photo = await client.download_media(photo)
     else:
         if len(message.command) < 2:
             return await Tm.edit(
                 "Balas ke foto dan saya akan merubah foto anda menjadi anime"
             )
-        else:
-            type = "Foto"
-            get = await client.get_chat(message.command[1])
-            photo = get.photo.big_file_id
-            get_photo = await client.download_media(photo)
+        type = "Foto"
+        get = await client.get_chat(message.command[1])
+        photo = get.photo.big_file_id
+        get_photo = await client.download_media(photo)
     await client.unblock_user("@qq_neural_anime_bot")
     Tm_S = await client.send_photo("@qq_neural_anime_bot", get_photo)
     await Tm.edit("<b>Sedang diproses...</b>")
@@ -76,9 +74,7 @@ async def _(client, message):
                     reply_to_message_id=message.id,
                 )
                 await Tm.delete()
-            elif "Failed" in anime.text:
-                await Tm.edit(anime.text)
-            elif "You're" in anime.text:
+            elif "Failed" in anime.text or "You're" in anime.text:
                 await Tm.edit(anime.text)
         except:
             await Tm.edit(
@@ -101,7 +97,7 @@ async def _(client, message):
             message=replied,
             file_name="naya/resources/",
         )
-        out_file = file + ".mp3"
+        out_file = f"{file}.mp3"
         try:
             await Tm.edit("<code>Processing. . .</code>")
             cmd = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"

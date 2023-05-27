@@ -31,7 +31,7 @@ async def face_detect(c: Client, m: Message):
     img = cv2.imread(file_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     face_cascade = cv2.CascadeClassifier(
-        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+        f"{cv2.data.haarcascades}haarcascade_frontalface_default.xml"
     )
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
 

@@ -31,7 +31,7 @@ async def _(client, message):
     try:
         babi = await eor(message, "`Processing...`")
         screen = (await bash(message.text.split(None, 1)[1]))[0]
-        if int(len(str(screen))) > 4096:
+        if len(str(screen)) > 4096:
             with BytesIO(str.encode(str(screen))) as out_file:
                 out_file.name = "result.txt"
                 await message.reply_document(
@@ -47,26 +47,23 @@ async def _(client, message):
 
 @bots.on_message(filters.command("trash", cmd) & filters.me)
 async def _(client, message):
-    if message.reply_to_message:
-        if int(len(str(message.reply_to_message))) > 4096:
-            with BytesIO(str.encode(str(message.reply_to_message))) as out_file:
-                out_file.name = "result.txt"
-                return await message.reply_document(
-                    document=out_file,
-                )
-        else:
-            return await message.reply_text(message.reply_to_message)
-    else:
+    if not message.reply_to_message:
         return await eor(message, "`Reply ke pesan/media`")
+    if len(str(message.reply_to_message)) <= 4096:
+        return await message.reply_text(message.reply_to_message)
+    with BytesIO(str.encode(str(message.reply_to_message))) as out_file:
+        out_file.name = "result.txt"
+        return await message.reply_document(
+            document=out_file,
+        )
 
 
 @bots.on_message(filters.command("eval", cmd) & filters.me)
 async def _(client, message):
-    ajg = get_arg(message)
-    if not ajg:
-        return await eor(message, "`Give me commands dude...`")
-    else:
+    if ajg := get_arg(message):
         await eor(message, "`Processing ...`")
+    else:
+        return await eor(message, "`Give me commands dude...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
     reply_to_ = message.reply_to_message or message
     old_stderr = sys.stderr

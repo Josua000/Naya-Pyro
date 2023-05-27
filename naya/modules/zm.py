@@ -15,7 +15,6 @@ __HELP__ = f"""
 async def _(client, message):
     chat_id = message.chat.id
     deleted_users = []
-    banned_users = 0
     m = await eor(
         message, "<code>Sedang mencari akun-akun depresi ditinggal kawin...</code>"
     )
@@ -23,7 +22,8 @@ async def _(client, message):
     async for i in client.get_chat_members(chat_id):
         if i.user.is_deleted:
             deleted_users.append(i.user.id)
-    if len(deleted_users) > 0:
+    if deleted_users:
+        banned_users = 0
         for deleted_user in deleted_users:
             try:
                 await message.chat.ban_member(deleted_user)

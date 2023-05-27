@@ -10,7 +10,7 @@ RMBG_API = os.environ.get("RMBG_API", "a6qxsmMJ3CsNo7HyxuKGsP1o")
 
 DOWN_PATH = "dowloads/"
 
-IMG_PATH = DOWN_PATH + "naya.jpg"
+IMG_PATH = f"{DOWN_PATH}naya.jpg"
 
 __MODULE__ = "rmbg"
 __HELP__ = f"""
@@ -35,7 +35,7 @@ async def remove_bg(client, message):
         try:
             rmbg = RemoveBg(RMBG_API, "rm_bg_error.log")
             rmbg.remove_background_from_img_file(IMG_PATH)
-            remove_img = IMG_PATH + "_no_bg.png"
+            remove_img = f"{IMG_PATH}_no_bg.png"
             await client.send_photo(
                 chat_id=message.chat.id,
                 photo=remove_img,

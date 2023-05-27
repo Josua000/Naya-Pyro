@@ -57,7 +57,7 @@ async def get_chat_(client, chat_):
             return (await client.get_chat(int(chat_))).id
         except ValueError:
             chat_ = chat_.split("-100")[1]
-            chat_ = "-" + str(chat_)
+            chat_ = f"-{str(chat_)}"
             return int(chat_)
 
 
@@ -98,7 +98,6 @@ async def skip_m(client, message):
         return await eor(message, "<code>Tidak sedang memutar apa-apa!</code>")
     if not s_d:
         return await eor(message, "<code>Antrian kosong!</code>")
-        await group_call.stop()
     next_song = s_d.pop(0)
     raw_file_name = next_song["raw"]
     vid_title = next_song["song_name"]
@@ -136,24 +135,7 @@ async def skip_m(client, message):
 async def play_m(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
     u_s = await eor(message, "<code>Processing..</code>")
-    input_str = get_text(message)
-    if not input_str:
-        if not message.reply_to_message:
-            return await u_s.edit("<b>Berikan Judul Lagu/Balas Ke File Audio..</b>")
-        if not message.reply_to_message.audio:
-            return await u_s.edit("<b>Berikan Judul Lagu/Balas Ke File Audio..</b>")
-        audio = message.reply_to_message.audio
-        audio_original = await message.reply_to_message.download()
-        vid_title = audio.title or audio.file_name
-        uploade_r = message.reply_to_message.audio.performer or "Unknown Artist."
-        dura_ = message.reply_to_message.audio.duration
-        dur = timedelta(seconds=dura_)
-        raw_file_name = (
-            "".join(random.choice(string.ascii_lowercase) for i in range(5)) + ".raw"
-        )
-
-        url = message.reply_to_message.link
-    else:
+    if input_str := get_text(message):
         search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
         rt = search.result()
         result_s = rt.get("search_result")
@@ -170,9 +152,27 @@ async def play_m(client, message):
         except BaseException as e:
             return await u_s.edit(f"<b>Error :<b> <code>{str(e)}</code>")
         raw_file_name = (
-            "".join(random.choice(string.ascii_lowercase) for i in range(5)) + ".raw"
+            "".join(random.choice(string.ascii_lowercase) for _ in range(5))
+            + ".raw"
         )
 
+    else:
+        if not message.reply_to_message:
+            return await u_s.edit("<b>Berikan Judul Lagu/Balas Ke File Audio..</b>")
+        if not message.reply_to_message.audio:
+            return await u_s.edit("<b>Berikan Judul Lagu/Balas Ke File Audio..</b>")
+        audio = message.reply_to_message.audio
+        audio_original = await message.reply_to_message.download()
+        vid_title = audio.title or audio.file_name
+        uploade_r = message.reply_to_message.audio.performer or "Unknown Artist."
+        dura_ = message.reply_to_message.audio.duration
+        dur = timedelta(seconds=dura_)
+        raw_file_name = (
+            "".join(random.choice(string.ascii_lowercase) for _ in range(5))
+            + ".raw"
+        )
+
+        url = message.reply_to_message.link
     try:
         raw_file_name = await convert_to_raw(audio_original, raw_file_name)
     except BaseException as e:
@@ -258,7 +258,7 @@ def download_progress_hook(d, message, client, start):
         d.get("_eta_str", "N/A")
         d.get("_percent_str", "N/A")
         d.get("_speed_str", "N/A")
-        to_edit = f"<b>🔄 Processing</b>"
+        to_edit = "<b>🔄 Processing</b>"
         threading.Thread(target=edit_msg, args=(client, message, to_edit)).start()
 
 
@@ -295,7 +295,7 @@ async def no_song_play(client, message):
     if not group_call.is_connected:
         await eor(message, "<b>Tidak Ada Pemutaran</b>")
         return
-    await eor(message, f"⏸ <b>Pemutaran Dijeda.</b>")
+    await eor(message, "⏸ <b>Pemutaran Dijeda.</b>")
     group_call.pause_playout()
 
 
@@ -324,7 +324,7 @@ async def leave_vc_test(client, message):
     if os.path.exists(group_call.input_filename):
         os.remove(group_call.input_filename)
     await group_call.stop()
-    await eor(message, f"❌ <b>Pemutaran Dihentikan.</b>")
+    await eor(message, "❌ <b>Pemutaran Dihentikan.</b>")
     del GPC[(message.chat.id, client.me.id)]
 
 

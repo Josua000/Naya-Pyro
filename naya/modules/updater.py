@@ -58,22 +58,18 @@ async def is_heroku():
 
 
 async def gen_chlog(repo, diff):
-    ch_log = ""
     d_form = "%d/%m/%y"
-    for c in repo.iter_commits(diff):
-        ch_log += (
-            f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
-        )
-    return ch_log
+    return "".join(
+        f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+        for c in repo.iter_commits(diff)
+    )
 
 
 def get_arg(message: Message):
     msg = message.text
     msg = msg.replace(" ", "", 1) if msg[1] == " " else msg
     split = msg[1:].replace("\n", " \n").split(" ")
-    if " ".join(split[1:]).strip() == "":
-        return ""
-    return " ".join(split[1:])
+    return "" if not " ".join(split[1:]).strip() else " ".join(split[1:])
 
 
 async def post(url: str, *args, **kwargs):
@@ -90,8 +86,7 @@ async def PasteBin(text):
     resp = await post(f"{BASE}api/v2/paste", data=text)
     if not resp["success"]:
         return
-    link = BASE + resp["message"]
-    return link
+    return BASE + resp["message"]
 
 
 if GIT_TOKEN:
@@ -128,13 +123,11 @@ async def bash(cmd):
 
 
 async def gen_chlog(repo, diff):
-    ch_log = ""
     d_form = "%d/%m/%y"
-    for c in repo.iter_commits(diff):
-        ch_log += (
-            f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
-        )
-    return ch_log
+    return "".join(
+        f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+        for c in repo.iter_commits(diff)
+    )
 
 
 async def updateme_requirements():
@@ -172,8 +165,6 @@ async def upstream(client: Client, message: Message):
         repo.__del__()
         return
     except InvalidGitRepositoryError:
-        if conf != "gas":
-            pass
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
@@ -200,23 +191,21 @@ async def upstream(client: Client, message: Message):
     if "gas" not in conf:
         if changelog:
             changelog_str = f"**Tersedia Pembaruan Untuk Branch [{ac_br}]:\n\nCHANGELOG:**\n\n`{changelog}`"
-            if len(changelog_str) > 4096:
-                await status.edit("**Changelog terlalu besar, dikirim sebagai file.**")
-                file = open("output.txt", "w+")
-                file.write(changelog_str)
-                file.close()
-                await client.send_document(
-                    message.chat.id,
-                    "output.txt",
-                    caption=f"**Ketik** `{cmd}update gas` **Untuk Mengupdate Userbot.**",
-                    reply_to_message_id=status.id,
-                )
-                remove("output.txt")
-            else:
+            if len(changelog_str) <= 4096:
                 return await status.edit(
                     f"{changelog_str}\n**Ketik** `{cmd}update gas` **Untuk Mengupdate Userbot.**",
                     disable_web_page_preview=True,
                 )
+            await status.edit("**Changelog terlalu besar, dikirim sebagai file.**")
+            with open("output.txt", "w+") as file:
+                file.write(changelog_str)
+            await client.send_document(
+                message.chat.id,
+                "output.txt",
+                caption=f"**Ketik** `{cmd}update gas` **Untuk Mengupdate Userbot.**",
+                reply_to_message_id=status.id,
+            )
+            remove("output.txt")
         else:
             await status.edit(
                 f"\n`Your BOT is`  **up-to-date**  `with branch`  **[{ac_br}]**\n",
@@ -228,7 +217,6 @@ async def upstream(client: Client, message: Message):
         import heroku3
 
         heroku = heroku3.from_key(HEROKU_API_KEY)
-        heroku_app = None
         heroku_applications = heroku.apps()
         if not HEROKU_APP_NAME:
             await status.edit(
@@ -236,10 +224,14 @@ async def upstream(client: Client, message: Message):
             )
             repo.__del__()
             return
-        for app in heroku_applications:
-            if app.name == HEROKU_APP_NAME:
-                heroku_app = app
-                break
+        heroku_app = next(
+            (
+                app
+                for app in heroku_applications
+                if app.name == HEROKU_APP_NAME
+            ),
+            None,
+        )
         if heroku_app is None:
             await status.edit(
                 f"{txt}\n`Invalid Heroku credentials for updating userbot dyno.`"
@@ -250,7 +242,7 @@ async def upstream(client: Client, message: Message):
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + HEROKU_API_KEY + "@"
+            "https://", f"https://api:{HEROKU_API_KEY}@"
         )
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")
@@ -303,13 +295,14 @@ async def updaterman(client: Client, message: Message):
         verification = str(checks.count())
     if verification == "":
         return await response.edit("Bot is up-to-date!")
-    updates = ""
     ordinal = lambda format: "%d%s" % (
         format,
         "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
     )
-    for info in repo.iter_commits(f"HEAD..origin/{BRANCH}"):
-        updates += f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
+    updates = "".join(
+        f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
+        for info in repo.iter_commits(f"HEAD..origin/{BRANCH}")
+    )
     _update_response_ = "<b>A new update is available for the Bot!</b>\n\n➣ Pushing Updates Now</code>\n\n**<u>Updates:</u>**\n\n"
     _final_updates_ = _update_response_ + updates
     if len(_final_updates_) > 4096:

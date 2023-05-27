@@ -71,7 +71,7 @@ async def yt_video(client, message):
             "geo_bypass": True,
         }
     )
-    await infomsg.edit(f"<code>Uploading...</code>")
+    await infomsg.edit("<code>Uploading...</code>")
     try:
         ytdl_data = await run_sync(ydl.extract_info, link, download=True)
         file_path = ydl.prepare_filename(ytdl_data)
@@ -132,7 +132,7 @@ async def yt_audio(client, message):
             "geo_bypass": True,
         }
     )
-    await infomsg.edit(f"<code>Uploading...</code>")
+    await infomsg.edit("<code>Uploading...</code>")
     try:
         ytdl_data = await run_sync(ydl.extract_info, link, download=True)
         file_path = ydl.prepare_filename(ytdl_data)
