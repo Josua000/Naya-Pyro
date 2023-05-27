@@ -99,9 +99,7 @@ async def bigspam(client, message):
             )
         spam_message = message.reply_to_message
     elif len(text.split()) < 3:
-        return await message.edit(
-            "`Membalas Pesan atau Memberikan beberapa Teks ..`"
-        )
+        return await message.edit("`Membalas Pesan atau Memberikan beberapa Teks ..`")
     else:
         spam_message = text.split(maxsplit=2)[2]
     counter = text.split()[1]
@@ -110,10 +108,7 @@ async def bigspam(client, message):
     except BaseException:
         return await message.edit("`Gunakan dalam Format yang Tepat`")
     await asyncio.wait(
-        [
-            client.send_message(message.chat.id, spam_message)
-            for _ in range(counter)
-        ]
+        [client.send_message(message.chat.id, spam_message) for _ in range(counter)]
     )
     await message.delete()
 
@@ -131,7 +126,6 @@ async def spam_stick(client: Client, message: Message):
         )
         return
     else:
-        i = 0
         times = message.command[1]
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
             for _ in range(int(times)):

@@ -152,8 +152,7 @@ async def play_m(client, message):
         except BaseException as e:
             return await u_s.edit(f"<b>Error :<b> <code>{str(e)}</code>")
         raw_file_name = (
-            "".join(random.choice(string.ascii_lowercase) for _ in range(5))
-            + ".raw"
+            "".join(random.choice(string.ascii_lowercase) for _ in range(5)) + ".raw"
         )
 
     else:
@@ -168,8 +167,7 @@ async def play_m(client, message):
         dura_ = message.reply_to_message.audio.duration
         dur = timedelta(seconds=dura_)
         raw_file_name = (
-            "".join(random.choice(string.ascii_lowercase) for _ in range(5))
-            + ".raw"
+            "".join(random.choice(string.ascii_lowercase) for _ in range(5)) + ".raw"
         )
 
         url = message.reply_to_message.link

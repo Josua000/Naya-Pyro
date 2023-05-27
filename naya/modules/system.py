@@ -254,13 +254,9 @@ async def varget_(client, message):
     check_var = message.text.split(None, 2)[1]
     if anu_heroku():
         return (
-            await babi.edit(
-                f"<b>{check_var}:</b> <code>{os.environ[check_var]}</code>"
-            )
+            await babi.edit(f"<b>{check_var}:</b> <code>{os.environ[check_var]}</code>")
             if check_var in os.environ
-            else await babi.edit(
-                f"**Tidak dapat menemukan var `{check_var}`.**"
-            )
+            else await babi.edit(f"**Tidak dapat menemukan var `{check_var}`.**")
         )
     path = ".env"
     if not os.path.exists(path):

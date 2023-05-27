@@ -301,11 +301,7 @@ async def _(_, query):
         caption="<b> ☺️ Halo mek saya adalah Naya-Pyro Premium\nLu minat punya repo kek gini ? Dateng ae mek ke @KynanSupport.</b>",
         reply_markup=InlineKeyboardMarkup(
             [
-                [
-                    InlineKeyboardButton(
-                        text="Support", url="https://t.me/kynansupport"
-                    )
-                ],
+                [InlineKeyboardButton(text="Support", url="https://t.me/kynansupport")],
                 [
                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
                 ],

@@ -22,9 +22,7 @@ __HELP__ = f"""
 async def _(_, message):
     if message.reply_to_message:
         language = "id" if len(message.command) < 2 else message.text.split(None, 2)[1]
-        words_to_say = (
-            message.reply_to_message.text or message.reply_to_message.caption
-        )
+        words_to_say = message.reply_to_message.text or message.reply_to_message.caption
     else:
         if len(message.command) < 3:
             return
@@ -59,9 +57,7 @@ async def _(client, message):
     trans = Translator()
     if message.reply_to_message:
         dest = "id" if len(message.command) < 2 else message.text.split(None, 2)[1]
-        to_translate = (
-            message.reply_to_message.text or message.reply_to_message.caption
-        )
+        to_translate = message.reply_to_message.text or message.reply_to_message.caption
     else:
         if len(message.command) < 3:
             return

@@ -94,9 +94,7 @@ async def font_ubot(client, message):
     font = get_arg(message)
     text = message.reply_to_message.text
     if not font:
-        return await eor(
-            message, f"<code>{font} Tidak ada dalam daftar font...</code>"
-        )
+        return await eor(message, f"<code>{font} Tidak ada dalam daftar font...</code>")
     if font == "1":
         nan = gen_font(text, _font1)
     elif font == "2":

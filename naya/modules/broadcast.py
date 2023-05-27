@@ -41,9 +41,7 @@ async def _(client, message: Message):
             if message.reply_to_message:
                 send = message.reply_to_message
             elif len(message.command) < 2:
-                return await msg.edit(
-                    "<code>Berikan pesan atau balas pesan...</code>"
-                )
+                return await msg.edit("<code>Berikan pesan atau balas pesan...</code>")
             else:
                 send = message.text.split(None, 1)[1]
             chat_id = dialog.chat.id
