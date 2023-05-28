@@ -28,7 +28,7 @@ LIMIT = 5
 @bots.on_message(filters.command(["pmpermit", "antipm"], cmd) & filters.me)
 async def permitpm(client, message):
     user_id = client.me.id
-    babi = await eor(message, "`Processing...`")
+    babi = await message.edit("`Processing...`")
     bacot = get_arg(message)
     if not bacot:
         return await babi.edit(f"**Gunakan Format : `{cmd[0]}pmpermit on or off`.**")
@@ -49,7 +49,7 @@ async def permitpm(client, message):
 
 @bots.on_message(filters.command(["ok", "a"], cmd) & filters.me)
 async def approve(client, message):
-    babi = await eor(message, "`Processing...`")
+    babi = await message.edit("`Processing...`")
     chat_type = message.chat.type
     if chat_type == "me":
         return await babi.edit("`Apakah anda sudah gila ?`")
@@ -78,7 +78,7 @@ async def approve(client, message):
 
 @bots.on_message(filters.command(["no", "da"], cmd) & filters.me)
 async def disapprove(client, message):
-    babi = await eor(message, "`Processing...`")
+    babi = await message.edit("`Processing...`")
     chat_type = message.chat.type
     if chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         if not message.reply_to_message.from_user:
@@ -99,7 +99,7 @@ async def disapprove(client, message):
 
 @bots.on_message(filters.command(["setmsg"], cmd) & filters.me)
 async def set_msg(client, message):
-    babi = await eor(message, "`Processing...`")
+    babi = await message.edit("`Processing...`")
     user_id = client.me.id
     r_msg = message.reply_to_message
     args_txt = get_arg(message)
@@ -122,17 +122,19 @@ async def set_msg(client, message):
 
 @bots.on_message(filters.command(["setlimit"], cmd) & filters.me)
 async def set_limit(client, message):
-    r_msg = message.reply_to_message
+    babi = await message.edit("`Processing...`")
+    user_id = client.me.id
     args_txt = get_arg(message)
-    if not r_msg:
-        return await babi.edit(
-            f"`Silakan balas ke pesan atau berikan pesan untuk dijadikan angka limit !\n**Contoh :** {cmd[0]}setlimit 5`"
-        )
-    if args_txt.isnumeric():
-        pm_limit = int(args_txt)
+    if args_txt:
+        if args_txt.isnumeric():
+            pm_warns = int(args_txt)
+        else:
+            return await babi.edit("`Silakan berikan untuk angka limit !`")
     else:
-        return await babi.edit("`Silakan balas ke pesan untuk angka limit !`")
-    await set_var(user_id, "CUSTOM_PM_WARNS_LIMIT", pm_limit)
+        return await babi.edit(
+            f"`Silakan berikan pesan untuk dijadikan angka limit !\n**Contoh :** {PREFIX[0]}setlimit 5`"
+        )
+    await set_var(user_id, "CUSTOM_PM_WARNS_LIMIT", pm_warns)
     await babi.edit(f"**Pesan Limit berhasil diatur menjadi : `{args_txt}`.**")
 
 
@@ -151,12 +153,12 @@ async def handle_pmpermit(client, message):
     is_approved = await check_user_approved(in_user.id)
     if is_approved:
         return
-    if in_user.is_fake or in_user.is_scam:
+    elif in_user.is_fake or in_user.is_scam:
         await message.reply("`Sepertinya anda mencurigakan...`")
         return await client.block_user(in_user.id)
-    if in_user.is_support or in_user.is_verified or in_user.is_self:
+    elif in_user.is_support or in_user.is_verified or in_user.is_self:
         return
-    if siapa in DEVS:
+    elif siapa in DEVS:
         try:
             await add_approved_user(chat_id)
             await client.send_message(
@@ -166,6 +168,7 @@ async def handle_pmpermit(client, message):
             )
         except:
             pass
+        return
     master = await client.get_me()
     getc_pm_txt = await get_var(user_id, "CUSTOM_PM_TEXT")
     getc_pm_warns = await get_var(user_id, "CUSTOM_PM_WARNS_LIMIT")
