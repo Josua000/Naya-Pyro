@@ -1,20 +1,9 @@
+import asyncio
+import os
 import sys
 import traceback
 from io import BytesIO, StringIO
-import asyncio
-import pyromod
-from io import BytesIO
-import io
-import os
-import sys
-import re
-import traceback
-import subprocess
-from random import randint
-from typing import Optional
-from contextlib import suppress
-from asyncio import sleep
-from io import StringIO
+
 from pyrogram import *
 from pyrogram.types import *
 
@@ -40,9 +29,9 @@ __HELP__ = f"""
 async def _(client, message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
-    reply_to_id = message.id
+    message.id
     if message.reply_to_message:
-        reply_to_id = message.reply_to_message.id
+        message.reply_to_message.id
 
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
