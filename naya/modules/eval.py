@@ -1,7 +1,20 @@
 import sys
 import traceback
 from io import BytesIO, StringIO
-
+import asyncio
+import pyromod
+from io import BytesIO
+import io
+import os
+import sys
+import re
+import traceback
+import subprocess
+from random import randint
+from typing import Optional
+from contextlib import suppress
+from asyncio import sleep
+from io import StringIO
 from pyrogram import *
 from pyrogram.types import *
 
@@ -25,24 +38,40 @@ __HELP__ = f"""
 
 @bots.on_message(filters.command("sh", cmd) & filters.me)
 async def _(client, message):
-    ajg = get_arg(message)
-    if not ajg:
-        return await eor(message, "`Give me commands dude...`")
-    try:
-        babi = await eor(message, "`Processing...`")
-        screen = (await bash(message.text.split(None, 1)[1]))[0]
-        if len(str(screen)) > 4096:
-            with BytesIO(str.encode(str(screen))) as out_file:
-                out_file.name = "result.txt"
-                await message.reply_document(
-                    document=out_file,
-                )
-                # await msg.delete()
-        else:
-            await babi.edit(screen)
+    cmd = message.text.split(" ", maxsplit=1)[1]
 
-    except Exception as e:
-        await babi.edit(f"{e}")
+    reply_to_id = message.id
+    if message.reply_to_message:
+        reply_to_id = message.reply_to_message.id
+
+    process = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    e = stderr.decode()
+    if not e:
+        e = "No errors"
+    o = stdout.decode()
+    if not o:
+        o = "No output"
+
+    OUTPUT = ""
+    OUTPUT += f"<b>Command:</b>\n<code>{cmd}</code>\n\n"
+    OUTPUT += f"<b>Output</b>: \n<code>{o}</code>\n"
+    OUTPUT += f"<b>Errors</b>: \n<code>{e}</code>"
+
+    if len(OUTPUT) > 4096:
+        with open("exec.text", "w+", encoding="utf8") as out_file:
+            out_file.write(str(OUTPUT))
+        await message.reply_document(
+            document="exec.text",
+            caption=cmd,
+            disable_notification=True,
+            reply_to_message_id=ReplyCheck(message),
+        )
+        os.remove("exec.text")
+    else:
+        await message.reply_text(OUTPUT)
 
 
 @bots.on_message(filters.command("trash", cmd) & filters.me)
