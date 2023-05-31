@@ -1,4 +1,4 @@
-pyrogram
+git+https://github.com/naya1503/pyrogram
 tgcrypto
 pytz
 yt-dlp
