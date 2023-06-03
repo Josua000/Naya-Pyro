@@ -63,7 +63,7 @@ async def _(client, message):
 <b>❏ Pong !!</b> `{delta_ping} ms`
 <b>╰ Aktif:</b> `{uptime}`
 """
-    await eor(message, _ping)
+    await message.reply(_ping)
 
 
 @app.on_callback_query(filters.regex("0_cls"))
