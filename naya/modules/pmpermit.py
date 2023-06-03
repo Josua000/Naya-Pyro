@@ -10,7 +10,7 @@ PM_GUARD_WARNS_DB = {}
 PM_GUARD_MSGS_DB = {}
 
 DEFAULT_TEXT = """
-**Saya adalah Naya-Pyro yang menjaga Room Chat Ini . Jangan Spam Atau Anda Akan Diblokir Otomatis.**
+**Saya adalah Naya-Premium yang menjaga Room Chat Ini . Jangan Spam Atau Anda Akan Diblokir Otomatis.**
 """
 
 PM_WARN = """
