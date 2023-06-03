@@ -40,4 +40,4 @@ async def _(client, message):
         else:
             await message.reply(stalk.text)
     user_info = await client.resolve_peer(bot)
-    return await client.send(DeleteHistory(peer=user_info, max_id=0, revoke=True))
+    return await client.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
