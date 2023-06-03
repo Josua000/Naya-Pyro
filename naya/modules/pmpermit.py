@@ -211,7 +211,7 @@ async def handle_pmpermit(client, message):
             )
         )
     PM_GUARD_MSGS_DB[message.chat.id] = [rplied_msg.id]
-    log = "me"
+    log = await get_botlog(user_id)
     copied = await message.forward(log)
     await copied.reply(
         f"💌 <b><u>MENERUSKAN PESAN BARU</u></b>\n<b> • Dari :</b> {in_user.mention}\n<b> • User ID :</b> <code>{in_user.id}</code>"
