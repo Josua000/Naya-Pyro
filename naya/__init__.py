@@ -59,7 +59,7 @@ def LOGGER(name: str) -> logging.Logger:
 
 
 app = Client(
-    name="ubot", 
+    name="ubot",
     api_hash=API_HASH,
     api_id=API_ID,
     bot_token=BOT_TOKEN,
