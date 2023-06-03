@@ -22,7 +22,7 @@ async def pencuri(client, message):
     user_id = client.me.id
     me = await get_botlog(user_id)
     if not dia:
-        await eor(message, "`Mohon balas ke media.`")
+        await client.send_message(me, "`Mohon balas ke media.`")
     anjing = dia.caption or None
     mmk = await message.edit("`Processing...`")
     await mmk.delete()
