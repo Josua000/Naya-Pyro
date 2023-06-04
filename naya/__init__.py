@@ -58,6 +58,9 @@ def LOGGER(name: str) -> logging.Logger:
     return logging.getLogger(name)
 
 
+loop = asyncio.get_event_loop()
+
+
 app = Client(
     name="ubot",
     api_hash=API_HASH,

@@ -1,4 +1,3 @@
-from asyncio import get_event_loop_policy
 from platform import python_version as py
 
 from kynaylibs import *
@@ -38,21 +37,27 @@ async def main():
             await ajg(bot)
             await babi(bot)
             botlog = await get_botlog(user)
+            LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
             try:
                 await bot.send_message(botlog, MSG_ON.format(nan, py(), pyro, nay, cmd))
             except BaseException as a:
                 LOGGER("Info").warning(f"{a}")
-            LOGGER("✓").info(f"Started as {ex.first_name} | {ex.id} ")
+
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
 
         except Exception as e:
             LOGGER("X").info(f"{e}")
-    install()
     await loadprem()
     await idle()
     await aiosession.close()
 
 
 if __name__ == "__main__":
-    get_event_loop_policy().get_event_loop().run_until_complete(main())
+    install()
+    try:
+        loop.run_until_complete(main())
+    except KeyboardInterrupt:
+        pass
+    finally:
+        LOGGER("Logger").info("Stopping Bot! GoodBye")
