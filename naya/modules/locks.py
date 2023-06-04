@@ -122,30 +122,6 @@ async def locktypes(client, message):
     await eor(message, perms)
 
 
-@bots.on_message(filters.text & ~filters.private, group=4)
-async def url_detector(client, message):
-    user = message.from_user
-    chat_id = message.chat.id
-    text = message.text.lower().strip()
-
-    if not text or not user:
-        return
-    mods = await list_admins(client, chat_id)
-    if user.id in mods:
-        return
-
-    if check := get_urls_from_text(text):
-        permissions = await current_chat_permissions(client, chat_id)
-        if "can_add_web_page_previews" not in permissions:
-            try:
-                await message.delete()
-            except Exception:
-                await eor(
-                    message,
-                    "This message contains a URL, "
-                    + "but i don't have enough permissions to delete it",
-                )
-
 
 __MODULE__ = "locks"
 __HELP__ = f"""
