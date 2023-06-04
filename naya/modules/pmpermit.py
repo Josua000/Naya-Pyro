@@ -148,7 +148,7 @@ async def set_limit(client, message):
     await babi.edit(f"**Pesan Limit berhasil diatur menjadi : `{args_txt}`.**")
 
 
-"""
+
 @bots.on_message(
     filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot
 )
@@ -157,7 +157,30 @@ async def handle_pmpermit(client, message):
     siapa = message.from_user.id
     biji = message.from_user.mention
     chat_id = message.chat.id
+    botlog = await get_log_groups(user_id)
     is_pm_guard_enabled = await get_var(user_id, "ENABLE_PM_GUARD")
+    if message.chat.id != 777000:
+        if LOG_CHATS_.RECENT_USER != message.chat.id:
+            LOG_CHATS_.RECENT_USER = message.chat.id
+            if LOG_CHATS_.NEWPM:
+                await LOG_CHATS_.NEWPM.edit(
+                    LOG_CHATS_.NEWPM.text.replace(
+                        "**💌 #NEW_MESSAGE**",
+                        f" • `{LOG_CHATS_.COUNT}` **Pesan**",
+                    )
+                )
+                LOG_CHATS_.COUNT = 0
+            LOG_CHATS_.NEWPM = await client.send_message(
+                botlog,
+                f"💌 <b><u>MENERUSKAN PESAN BARU</u></b>\n<b> • Dari :</b> {biji}\n<b> • User ID :</b> <code>{siapa}</code>\n",
+                parse_mode=enums.ParseMode.HTML,
+            )
+        try:
+            async for pmlog in client.search_messages(message.chat.id, limit=1):
+                await pmlog.forward(botlog)
+            LOG_CHATS_.COUNT += 1
+        except BaseException:
+            pass
     if not is_pm_guard_enabled:
         return
     in_user = message.from_user
@@ -222,45 +245,11 @@ async def handle_pmpermit(client, message):
             )
         )
     PM_GUARD_MSGS_DB[message.chat.id] = [rplied_msg.id]
-#    log = await get_botlog(user_id)
-#    copied = await message.forward(log)
-#    await copied.reply(
-#        f"💌 <b><u>MENERUSKAN PESAN BARU</u></b>\n<b> • Dari :</b> {in_user.mention}\n<b> • User ID :</b> <code>{in_user.id}</code>"
-#    )
-"""
 
 
-@bots.on_message(
-    filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot
-)
-async def pm_log(client, message):
-    user = message.from_user.id
-    biji = message.from_user.mention
-    message.text
-    user_id = client.me.id
-    botlog = await get_log_groups(user_id)
-    if message.chat.id != 777000:
-        if LOG_CHATS_.RECENT_USER != message.chat.id:
-            LOG_CHATS_.RECENT_USER = message.chat.id
-            if LOG_CHATS_.NEWPM:
-                await LOG_CHATS_.NEWPM.edit(
-                    LOG_CHATS_.NEWPM.text.replace(
-                        "**💌 #NEW_MESSAGE**",
-                        f" • `{LOG_CHATS_.COUNT}` **Pesan**",
-                    )
-                )
-                LOG_CHATS_.COUNT = 0
-            LOG_CHATS_.NEWPM = await client.send_message(
-                botlog,
-                f"💌 <b><u>MENERUSKAN PESAN BARU</u></b>\n<b> • Dari :</b> {biji}\n<b> • User ID :</b> <code>{user}</code>\n",
-                parse_mode=enums.ParseMode.HTML,
-            )
-        try:
-            async for pmlog in client.search_messages(message.chat.id, limit=1):
-                await pmlog.forward(botlog)
-            LOG_CHATS_.COUNT += 1
-        except BaseException:
-            pass
+
+
+
 
 
 __MODULE__ = "antipm"
