@@ -148,7 +148,6 @@ async def set_limit(client, message):
     await babi.edit(f"**Pesan Limit berhasil diatur menjadi : `{args_txt}`.**")
 
 
-
 @bots.on_message(
     filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot
 )
@@ -245,11 +244,6 @@ async def handle_pmpermit(client, message):
             )
         )
     PM_GUARD_MSGS_DB[message.chat.id] = [rplied_msg.id]
-
-
-
-
-
 
 
 __MODULE__ = "antipm"
