@@ -24,7 +24,6 @@ Pesan Keamanan Milik {} 👮!**
 
 LIMIT = 5
 
-
 class LOG_CHATS:
     def __init__(self):
         self.RECENT_USER = None
@@ -33,7 +32,6 @@ class LOG_CHATS:
 
 
 LOG_CHATS_ = LOG_CHATS()
-
 
 @bots.on_message(filters.command(["pmpermit", "antipm"], cmd) & filters.me)
 async def permitpm(client, message):
@@ -147,7 +145,7 @@ async def set_limit(client, message):
     await set_var(user_id, "CUSTOM_PM_WARNS_LIMIT", pm_warns)
     await babi.edit(f"**Pesan Limit berhasil diatur menjadi : `{args_txt}`.**")
 
-
+"""
 @bots.on_message(
     filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot
 )
@@ -221,14 +219,12 @@ async def handle_pmpermit(client, message):
             )
         )
     PM_GUARD_MSGS_DB[message.chat.id] = [rplied_msg.id]
-
-
 #    log = await get_botlog(user_id)
 #    copied = await message.forward(log)
 #    await copied.reply(
 #        f"💌 <b><u>MENERUSKAN PESAN BARU</u></b>\n<b> • Dari :</b> {in_user.mention}\n<b> • User ID :</b> <code>{in_user.id}</code>"
 #    )
-
+"""
 
 @bots.on_message(
     filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot
@@ -261,7 +257,7 @@ async def pm_log(client, message):
             LOG_CHATS_.COUNT += 1
         except BaseException:
             pass
-
+          
 
 __MODULE__ = "antipm"
 __HELP__ = f"""
