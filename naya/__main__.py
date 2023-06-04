@@ -1,4 +1,3 @@
-from asyncio import get_event_loop_policy
 from platform import python_version as py
 
 from kynaylibs import *
@@ -28,6 +27,7 @@ MSG_ON = """
 
 loop = asyncio.get_event_loop()
 
+
 async def main():
     await app.start()
     LOGGER("Startup").info("Memulai Naya-Pyro Premium..")
@@ -44,7 +44,7 @@ async def main():
                 await bot.send_message(botlog, MSG_ON.format(nan, py(), pyro, nay, cmd))
             except BaseException as a:
                 LOGGER("Info").warning(f"{a}")
-            
+
             ids.append(ex.id)
             LOGGER("Info").info("Startup Completed")
 
