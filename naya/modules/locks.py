@@ -122,7 +122,6 @@ async def locktypes(client, message):
     await eor(message, perms)
 
 
-
 __MODULE__ = "locks"
 __HELP__ = f"""
 ✘ Bantuan Untuk Locks
