@@ -24,6 +24,7 @@ Pesan Keamanan Milik {} 👮!**
 
 LIMIT = 5
 
+
 class LOG_CHATS:
     def __init__(self):
         self.RECENT_USER = None
@@ -32,6 +33,7 @@ class LOG_CHATS:
 
 
 LOG_CHATS_ = LOG_CHATS()
+
 
 @bots.on_message(filters.command(["pmpermit", "antipm"], cmd) & filters.me)
 async def permitpm(client, message):
@@ -219,6 +221,8 @@ async def handle_pmpermit(client, message):
             )
         )
     PM_GUARD_MSGS_DB[message.chat.id] = [rplied_msg.id]
+
+
 #    log = await get_botlog(user_id)
 #    copied = await message.forward(log)
 #    await copied.reply(
@@ -257,7 +261,7 @@ async def pm_log(client, message):
             LOG_CHATS_.COUNT += 1
         except BaseException:
             pass
-          
+
 
 __MODULE__ = "antipm"
 __HELP__ = f"""
