@@ -1,5 +1,6 @@
-from platform import python_version as py
 from asyncio import get_event_loop_policy
+from platform import python_version as py
+
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.load import *
