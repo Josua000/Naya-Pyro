@@ -1,6 +1,5 @@
-from asyncio import get_event_loop_policy
 from platform import python_version as py
-
+import asyncio
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.load import *
@@ -57,7 +56,7 @@ async def main():
 if __name__ == "__main__":
     install()
     try:
-        get_event_loop_policy().get_event_loop().run_until_complete(main())
+        loop.run_until_complete(main())
     except KeyboardInterrupt:
         pass
     finally:
