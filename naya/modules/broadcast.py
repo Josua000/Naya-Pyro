@@ -34,7 +34,7 @@ async def _(client, message: Message):
     sent = 0
     failed = 0
     user_id = client.me.id
-    msg = await eor(message, "<code>Processing global broadcast...</code>")
+    msg = await message.reply("<code>Processing global broadcast...</code>")
     list_blchat = await blacklisted_chats(user_id)
     async for dialog in client.get_dialogs():
         if dialog.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
@@ -64,7 +64,7 @@ async def _(client, message: Message):
 async def _(client, message: Message):
     sent = 0
     failed = 0
-    msg = await eor(message, "<code>Processing global broadcast...</code>")
+    msg = await message.reply("<code>Processing global broadcast...</code>")
     async for dialog in client.get_dialogs():
         if dialog.chat.type == ChatType.PRIVATE:
             if message.reply_to_message:
@@ -93,11 +93,11 @@ async def bl_chat(client, message):
     chat_id = message.chat.id
     chat = await client.get_chat(chat_id)
     if chat.type == "private":
-        return await eor(message, "Maaf, perintah ini hanya berlaku untuk grup.")
+        return await message.reply("Maaf, perintah ini hanya berlaku untuk grup.")
     user_id = client.me.id
     bajingan = await blacklisted_chats(user_id)
     if chat in bajingan:
-        return await eor(message, "Obrolan sudah masuk daftar Blacklist Gcast.")
+        return await message.reply("Obrolan sudah masuk daftar Blacklist Gcast.")
     await blacklist_chat(user_id, chat_id)
     await eor(
         message, "Obrolan telah berhasil dimasukkan ke dalam daftar Blacklist Gcast."
@@ -121,7 +121,7 @@ async def del_bl(client, message):
         return await eor(
             message, "Obrolan berhasil dihapus dari daftar Blacklist Gcast."
         )
-    await eor(message, "Sesuatu yang salah terjadi.")
+    await message.reply("Sesuatu yang salah terjadi.")
 
 
 @bots.on_message(filters.me & filters.command("listbl", cmd))
@@ -139,6 +139,6 @@ async def all_chats(client, message):
         j = 1
         text += f"<b>{count}.{title}</b><code{chat_id}</code>\n"
     if j == 0:
-        await eor(message, "Tidak Ada Daftar Blacklist Gcast.")
+        await message.reply("Tidak Ada Daftar Blacklist Gcast.")
     else:
-        await eor(message, text)
+        await message.reply(text)
