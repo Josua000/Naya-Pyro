@@ -1,5 +1,5 @@
 from platform import python_version as py
-import asyncio
+
 from kynaylibs import *
 from kynaylibs.nan import *
 from kynaylibs.nan.load import *
