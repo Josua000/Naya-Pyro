@@ -38,7 +38,7 @@ LOG_CHATS_ = LOG_CHATS()
 @bots.on_message(filters.command(["pmpermit", "antipm"], cmd) & filters.me)
 async def permitpm(client, message):
     user_id = client.me.id
-    babi = await message.edit("`Processing...`")
+    babi = await message.reply("`Processing...`")
     bacot = get_arg(message)
     if not bacot:
         return await babi.edit(f"**Gunakan Format : `{cmd[0]}pmpermit on or off`.**")
@@ -59,7 +59,7 @@ async def permitpm(client, message):
 
 @bots.on_message(filters.command(["ok", "a"], cmd) & filters.me)
 async def approve(client, message):
-    babi = await message.edit("`Processing...`")
+    babi = await message.reply("`Processing...`")
     chat_type = message.chat.type
     if chat_type == "me":
         return await babi.edit("`Apakah anda sudah gila ?`")
@@ -88,7 +88,7 @@ async def approve(client, message):
 
 @bots.on_message(filters.command(["no", "da"], cmd) & filters.me)
 async def disapprove(client, message):
-    babi = await message.edit("`Processing...`")
+    babi = await message.reply("`Processing...`")
     chat_type = message.chat.type
     if chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         if not message.reply_to_message.from_user:
@@ -109,7 +109,7 @@ async def disapprove(client, message):
 
 @bots.on_message(filters.command(["setmsg"], cmd) & filters.me)
 async def set_msg(client, message):
-    babi = await message.edit("`Processing...`")
+    babi = await message.reply("`Processing...`")
     user_id = client.me.id
     r_msg = message.reply_to_message
     args_txt = get_arg(message)
@@ -132,7 +132,7 @@ async def set_msg(client, message):
 
 @bots.on_message(filters.command(["setlimit"], cmd) & filters.me)
 async def set_limit(client, message):
-    babi = await message.edit("`Processing...`")
+    babi = await message.reply("`Processing...`")
     user_id = client.me.id
     args_txt = get_arg(message)
     if args_txt:
