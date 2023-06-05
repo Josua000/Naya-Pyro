@@ -365,7 +365,7 @@ async def _(_, query: CallbackQuery):
 async def _(_, message):
     user_id = message.from_user.id
     _ubot = [bot.me.id for bot in botlist]
-    if user_id not in _ubot:
+    if user_id not in _ubot and user_id not in DEVS:
         return await message.reply_photo(
             photo=photo,
             caption=f"""
