@@ -67,7 +67,7 @@ async def joinvc(client, message):
         chat_id = int(chat_id)
     try:
         await client.vc.start(chat_id)
-        
+
     except Exception as e:
         return await ky.edit(f"ERROR: {e}")
     await ky.edit(
