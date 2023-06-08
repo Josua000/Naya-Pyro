@@ -6,12 +6,12 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import glob
 import os
-import random
+
 from PIL import *
 
 from . import *
+
 
 def text_set(text):
     lines = []
@@ -26,7 +26,8 @@ def text_set(text):
                 k = len(line) // 55
                 lines.extend(line[((z - 1) * 55) : (z * 55)] for z in range(1, k + 2))
     return lines[:25]
-    
+
+
 @bots.on_message(filters.command(["nulis", "nl"], cmd) & filters.me)
 async def handwrite(client, message):
     if message.reply_to_message:
@@ -48,8 +49,7 @@ async def handwrite(client, message):
         img.save(file)
         if os.path.exists(file):
             await message.reply_photo(
-                photo=file,
-                caption=f"<b>Ditulis Oleh :</b> {client.me.mention}"
+                photo=file, caption=f"<b>Ditulis Oleh :</b> {client.me.mention}"
             )
             os.remove(file)
             await nan.delete()
