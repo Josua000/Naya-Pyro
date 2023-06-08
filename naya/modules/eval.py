@@ -1,14 +1,8 @@
+import os
 import sys
 import traceback
 from io import BytesIO, StringIO
-import asyncio
-import os
-import subprocess
-import time
-import psutil
-from os import execvp
-from sys import executable
-from subprocess import Popen, PIPE, TimeoutExpired
+from subprocess import PIPE, Popen, TimeoutExpired
 from time import perf_counter
 
 from pyrogram import *
