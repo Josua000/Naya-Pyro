@@ -1,6 +1,15 @@
 import sys
 import traceback
 from io import BytesIO, StringIO
+import asyncio
+import os
+import subprocess
+import time
+import psutil
+from os import execvp
+from sys import executable
+from subprocess import Popen, PIPE, TimeoutExpired
+from time import perf_counter
 
 from pyrogram import *
 from pyrogram.types import *
@@ -24,25 +33,44 @@ __HELP__ = f"""
 
 
 @bots.on_message(filters.command("sh", cmd) & filters.me)
-async def _(client, message):
-    ajg = get_arg(message)
-    if not ajg:
-        return await eor(message, "`Give me commands dude...`")
+async def shell(_, message: Message):
+    if len(message.command) < 2:
+        return await message.reply("<b>Specify the command in message text</b>")
+    cmd_text = message.text.split(maxsplit=1)[1]
+    cmd_obj = Popen(
+        cmd_text,
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE,
+        text=True,
+    )
+
+    char = "#" if os.getuid() == 0 else "$"
+    text = f"<b>{char}</b> <code>{cmd_text}</code>\n\n"
+
+    mmk = await message.reply(text + "<b>Running...</b>")
     try:
-        babi = await eor(message, "`Processing...`")
-        screen = (await bash(message.text.split(None, 1)[1]))[0]
-        if len(str(screen)) > 4096:
-            with BytesIO(str.encode(str(screen))) as out_file:
+        start_time = perf_counter()
+        stdout, stderr = cmd_obj.communicate(timeout=60)
+    except TimeoutExpired:
+        text += "<b>Timeout expired (60 seconds)</b>"
+    else:
+        stop_time = perf_counter()
+        if stdout:
+            text += f"<b>Output:</b>\n<code>{stdout}</code>\n\n"
+        if stderr:
+            text += f"<b>Error:</b>\n<code>{stderr}</code>\n\n"
+        text += f"<b>Completed in {round(stop_time - start_time, 5)} seconds with code {cmd_obj.returncode}</b>"
+        if int(len(str(text))) > 4096:
+            with BytesIO(str.encode(str(text))) as out_file:
                 out_file.name = "result.txt"
                 await message.reply_document(
                     document=out_file,
                 )
-                # await msg.delete()
+                await mmk.delete()
         else:
-            await babi.edit(screen)
-
-    except Exception as e:
-        await babi.edit(f"{e}")
+            await mmk.edit(text)
+    cmd_obj.kill()
 
 
 @bots.on_message(filters.command("trash", cmd) & filters.me)
