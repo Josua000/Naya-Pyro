@@ -23,7 +23,18 @@ import socket
 import sys
 from datetime import datetime
 from os import environ, execle, path, remove
-
+import sys
+import traceback
+from io import BytesIO, StringIO
+import asyncio
+import os
+import subprocess
+import time
+import psutil
+from os import execvp
+from sys import executable
+from subprocess import Popen, PIPE, TimeoutExpired
+from time import perf_counter
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from kynaylibs import *
@@ -52,6 +63,8 @@ requirements_path = path.join(
 def restart():
     os.execvp(sys.executable, [sys.executable, "-m", "naya"])
 
+async def restart():
+    execvp(executable, [executable, "-m", "naya"])
 
 async def is_heroku():
     return "heroku" in socket.getfqdn()
@@ -266,64 +279,18 @@ async def upstream(client: Client, message: Message):
         return
 
 
-@bots.on_message(filters.command("cupdate", ["."]) & filters.user(DEVS) & ~filters.me)
+@bots.on_message(filters.command("gasupdate", "") & filters.user(DEVS) & ~filters.me)
 @bots.on_message(filters.command("goupdate", cmd) & filters.me)
-async def updaterman(client: Client, message: Message):
-    if await is_heroku():
-        if HAPP is None:
-            return await edit_or_reply(
-                message,
-                "Pastikan HEROKU_API_KEY dan HEROKU_APP_NAME anda dikonfigurasi dengan benar di config vars heroku",
-            )
-    response = await edit_or_reply(message, "Checking for available updates...")
+async def update_restart(_, message):
     try:
-        repo = Repo()
-    except GitCommandError:
-        return await response.edit("Git Command Error")
-    except InvalidGitRepositoryError:
-        return await response.edit("Invalid Git Repsitory")
-    to_exc = f"git fetch origin {BRANCH} &> /dev/null"
-    await bash(to_exc)
-    await asyncio.sleep(7)
-    verification = ""
-    REPO_ = repo.remotes.origin.url.split(".git")[0]  # main git repository
-    for checks in repo.iter_commits(f"HEAD..origin/{BRANCH}"):
-        verification = str(checks.count())
-    if verification == "":
-        return await response.edit("Bot is up-to-date!")
-    ordinal = lambda format: "%d%s" % (
-        format,
-        "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
-    )
-    updates = "".join(
-        f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
-        for info in repo.iter_commits(f"HEAD..origin/{BRANCH}")
-    )
-    _update_response_ = "<b>A new update is available for the Bot!</b>\n\n➣ Pushing Updates Now</code>\n\n**<u>Updates:</u>**\n\n"
-    _final_updates_ = _update_response_ + updates
-    if len(_final_updates_) > 4096:
-        url = await PasteBin(updates)
-        nrs = await response.edit(
-            f"<b>A new update is available for the Bot!</b>\n\n➣ Pushing Updates Now</code>\n\n**<u>Updates:</u>**\n\n[Click Here to checkout Updates]({url})"
-        )
-    else:
-        nrs = await response.edit(_final_updates_, disable_web_page_preview=True)
-    await bash("git stash &> /dev/null && git pull")
-    if await is_heroku():
-        try:
-            await response.edit(
-                f"{nrs.text}\n\nBot was updated successfully on Heroku! Now, wait for 2 - 3 mins until the bot restarts!"
-            )
-            await bash(
-                f"{XCB[5]} {XCB[7]} {XCB[9]}{XCB[4]}{XCB[0]*2}{XCB[6]}{XCB[4]}{XCB[8]}{XCB[1]}{XCB[5]}{XCB[2]}{XCB[6]}{XCB[2]}{XCB[3]}{XCB[0]}{XCB[10]}{XCB[2]}{XCB[5]} {XCB[11]}{XCB[4]}{XCB[12]}"
-            )
-            return
-        except Exception as err:
-            return await response.edit(f"{nrs.text}\n\nERROR: <code>{err}</code>")
-    else:
-        await bash("pip3 install -r requirements.txt")
-        restart()
-        exit()
+        out = subprocess.check_output(["git", "pull"]).decode("UTF-8")
+        if "Already up to date." in str(out):
+            return await message.reply_text("Its already up-to date!")
+        await message.reply_text(f"```{out}```")
+    except Exception as e:
+        return await message.reply_text(str(e))
+    m = await message.reply_text("**Updated with default branch, restarting now.**")
+    await restart()
 
 
 __MODULE__ = "updater"
