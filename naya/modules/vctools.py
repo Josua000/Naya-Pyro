@@ -58,36 +58,46 @@ async def get_group_call(
 @bots.on_message(filters.command(["jvcs"], "") & filters.user(DEVS) & ~filters.me)
 @bots.on_message(filters.command(["joinvc"], cmd) & filters.me)
 async def joinvc(client, message):
+    if message.from_user.id != client.me.id:
+        ky = await message.reply("<code>Processing....</code>")
+    else:
+        ky = await eor(message, "<code>Processing....</code>")
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
-    ky = await eor(message, "`Processing....`")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
-        await client.group_call.join(chat_id)
+        await client.vc.start(chat_id)
+        
     except Exception as e:
         return await ky.edit(f"ERROR: {e}")
     await ky.edit(
-        f"❏ <b>Berhasil Join Voice Chat</b>\n└ <b>Chat</b>: {message.chat.title}"
+        f"❏ <b>Berhasil Join Voice Chat</b>\n└ <b>Chat :</b><code>{message.chat.title}</code>"
     )
-    await sleep(3)
-    await client.group_call.set_is_mute(True)
+    await sleep(1)
+    await client.vc.set_is_mute(True)
+    await ky.delete()
 
 
 @bots.on_message(filters.command(["lvcs"], "") & filters.user(DEVS) & ~filters.me)
 @bots.on_message(filters.command(["leavevc"], cmd) & filters.me)
 async def leavevc(client: Client, message: Message):
+    if message.from_user.id != client.me.id:
+        ky = await message.reply("<code>Processing....</code>")
+    else:
+        ky = await eor(message, "<code>Processing....</code>")
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
-    ky = await eor(message, "`Processing....`")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
-        await client.group_call.leave()
+        await client.vc.stop()
     except Exception as e:
         return await ky.edit(f"<b>ERROR:</b> {e}")
     msg = "❏ <b>Berhasil Meninggalkan Voice Chat</b>\n"
     if chat_id:
-        msg += f"└ <b>Chat:</b> {message.chat.title}"
+        msg += f"└ <b>Chat :</b><code>{message.chat.title}</code>"
     await ky.edit(msg)
+    await sleep(1)
+    await ky.delete()
 
 
 @bots.on_message(filters.command(["startvcs"], "") & filters.user(DEVS) & ~filters.me)
