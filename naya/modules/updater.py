@@ -19,22 +19,13 @@
 #
 
 import asyncio
-import socket
-import sys
-from datetime import datetime
-from os import environ, execle, path, remove
-import sys
-import traceback
-from io import BytesIO, StringIO
-import asyncio
 import os
+import socket
 import subprocess
-import time
-import psutil
-from os import execvp
+import sys
+from os import environ, execle, execvp, path, remove
 from sys import executable
-from subprocess import Popen, PIPE, TimeoutExpired
-from time import perf_counter
+
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from kynaylibs import *
@@ -63,8 +54,10 @@ requirements_path = path.join(
 def restart():
     os.execvp(sys.executable, [sys.executable, "-m", "naya"])
 
+
 async def restart():
     execvp(executable, [executable, "-m", "naya"])
+
 
 async def is_heroku():
     return "heroku" in socket.getfqdn()
@@ -289,7 +282,7 @@ async def update_restart(_, message):
         await message.reply_text(f"```{out}```")
     except Exception as e:
         return await message.reply_text(str(e))
-    m = await message.reply_text("**Updated with default branch, restarting now.**")
+    await message.reply_text("**Updated with default branch, restarting now.**")
     await restart()
 
 
