@@ -66,7 +66,7 @@ async def joinvc(client, message):
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
-        await client.vc.start(chat_id)
+        await client.group_call.start(chat_id)
 
     except Exception as e:
         return await ky.edit(f"ERROR: {e}")
@@ -89,7 +89,7 @@ async def leavevc(client: Client, message: Message):
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
-        await client.vc.stop()
+        await client.group_call.stop()
     except Exception as e:
         return await ky.edit(f"<b>ERROR:</b> {e}")
     msg = "❏ <b>Berhasil Meninggalkan Voice Chat</b>\n"
