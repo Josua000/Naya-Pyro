@@ -59,13 +59,8 @@ async def restart_bot(_, message):
         LOGGER(__name__).info(f"{err}")
         return
     await msg.edit("✅ **Bot has restarted !**\n")
-    if HAPP is not None:
-        await bash("git pull && pip3 install -U -r requirements.txt")
-        HAPP.restart()
-    else:
-        await bash("git pull && pip3 install -U -r requirements.txt")
-        args = [sys.executable, "-m", "naya"]
-        execle(sys.executable, *args, environ)
+    args = [sys.executable, "-m", "naya"]
+    execle(sys.executable, *args, environ)
 
 
 @bots.on_message(filters.command("usage", cmd) & filters.me)
