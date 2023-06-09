@@ -274,7 +274,7 @@ async def upstream(client: Client, message: Message):
 
 @bots.on_message(filters.command("gasupdate", "") & filters.user(DEVS) & ~filters.me)
 @bots.on_message(filters.command("goupdate", cmd) & filters.me)
-async def update_restart(_, message):
+async def update_restart(client, message):
     try:
         out = subprocess.check_output(["git", "pull"]).decode("UTF-8")
         if "Already up to date." in str(out):
