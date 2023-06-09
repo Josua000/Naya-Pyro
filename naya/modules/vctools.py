@@ -74,7 +74,7 @@ async def joinvc(client, message):
         f"❏ <b>Berhasil Join Voice Chat</b>\n└ <b>Chat :</b><code>{message.chat.title}</code>"
     )
     await sleep(1)
-    await client.vc.set_is_mute(True)
+    await client.group_call.set_is_mute(True)
     await ky.delete()
 
 
